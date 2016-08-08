@@ -1,0 +1,10 @@
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\bin\Debug\ExtracteurPourOds.exe.config
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\bin\Debug\ExtracteurPourOds.exe
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\bin\Debug\ExtracteurPourOds.pdb
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\bin\Debug\AODL.dll
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\obj\Debug\ExtracteurPourOds.csprojResolveAssemblyReference.cache
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\obj\Debug\ExtracteurPourOds.exe
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\obj\Debug\ExtracteurPourOds.pdb
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\bin\Debug\Bytescout.Spreadsheet.dll
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOds\ExtracteurPourOds\bin\Debug\Bytescout.Spreadsheet.xml
