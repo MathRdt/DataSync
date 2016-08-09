@@ -1,0 +1,8 @@
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\bin\Debug\ExtracteurPourOdt.exe.config
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\bin\Debug\ExtracteurPourOdt.exe
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\bin\Debug\ExtracteurPourOdt.pdb
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\bin\Debug\AODL.dll
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\obj\Debug\ExtracteurPourOdt.csprojResolveAssemblyReference.cache
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\obj\Debug\ExtracteurPourOdt.exe
+C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\obj\Debug\ExtracteurPourOdt.pdb
