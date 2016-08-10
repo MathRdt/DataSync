@@ -74,6 +74,12 @@ namespace ConsoleApplication1
             return md;
         }
 
+        /// <summary>
+        /// à partir du fichier de configuration, ajoute les aspects et méta données dans le fichier XML
+        /// si un aspect existe déjà, il ne sera pas recopié
+        /// si une méta donnée existe déjà et quelle a une valeur par défaut dans le fichier de configuration, elle prendra la valeur du fichier de conf
+        /// </summary>
+        /// <param name="aspectsToAdd">Liste des aspects extraits du fichier de configuration </param>
         public void addAspects(List<Aspect> aspectsToAdd)
         {
             if(aspectsToAdd != null) {
@@ -83,23 +89,21 @@ namespace ConsoleApplication1
                     {
                         this.aspects.Add(aspectsToAdd[i].name);
                     }
-                        for(int j=0; j< aspectsToAdd[i].metadatas.Mandatory.Count;j++)
-                        {
+                    for(int j=0; j< aspectsToAdd[i].metadatas.Mandatory.Count;j++)
+                    {
 
-                            if ((String) aspectsToAdd[i].metadatas.Mandatory[j].value != "")
-                            {
-                            //Console.WriteLine("valeur de la metadonnee " + aspectsToAdd[i].metadatas.Mandatory[j].type + " est " + aspectsToAdd[i].metadatas.Mandatory[j].value);
-                                this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Mandatory[j].type, aspectsToAdd[i].metadatas.Mandatory[j].value, true);
-                            }
-                        }
-                        for (int j = 0; j < aspectsToAdd[i].metadatas.Optional.Count; j++)
+                        if ((String) aspectsToAdd[i].metadatas.Mandatory[j].value != "")
                         {
-                            if ((String) aspectsToAdd[i].metadatas.Optional[j].value != "")
-                            {
-                            //Console.WriteLine("valeur de la metadonnee " + aspectsToAdd[i].metadatas.Optional[j].type + " est " + aspectsToAdd[i].metadatas.Optional[j].value);
-                            this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Optional[j].type, aspectsToAdd[i].metadatas.Optional[j].value, false);
-                            }
+                            this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Mandatory[j].type, aspectsToAdd[i].metadatas.Mandatory[j].value, true);
                         }
+                    }
+                    for (int j = 0; j < aspectsToAdd[i].metadatas.Optional.Count; j++)
+                    {
+                        if ((String) aspectsToAdd[i].metadatas.Optional[j].value != "")
+                        {
+                            this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Optional[j].type, aspectsToAdd[i].metadatas.Optional[j].value, false);
+                        }
+                    }
                 }
             }
         }

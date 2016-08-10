@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace ConsoleApplication1
@@ -7,8 +6,11 @@ namespace ConsoleApplication1
 
     class Program
     {
-        private static void Main(string[] args)
+        [STAThreadAttribute]
+        private static void Main()
         {
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
             string UserEntry = "";
             do
             {
@@ -28,6 +30,8 @@ namespace ConsoleApplication1
 
 
                 string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\famille1\sousfamille1\";
+                string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\recette\paie\";
+
                 GlobalMetaDatas globalmetadatas = new GlobalMetaDatas();
                 string[] stringPath;
                 string[] stringMetaDatas;
@@ -61,7 +65,7 @@ namespace ConsoleApplication1
 
                     case 3:
                         string file3 = "testPourPdf.pdf";
-                        file3 = chemin + file3;
+                        file3 = cheminBis + file3;
                         string aChercheTitre = "pdf";
 
                         //sotcke pdf dans une chaine de caractère
@@ -127,7 +131,6 @@ namespace ConsoleApplication1
                         break;
 
                     case 5:
-                        string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\recette\paie\";
                         string file5 = "testPourPdf.pdf";
                         string titre = "pdf";
 
@@ -180,23 +183,35 @@ namespace ConsoleApplication1
                                 Console.WriteLine(extractors[i]);
                             }
 
-
                         }
                         catch (NoPathFoundException e)
                         {
                             Console.WriteLine("{0}", e);
                         }
-
-
-
-
-
-
                         break;
 
                     default:
                         Console.WriteLine("Default case");
+                    break;
+
+                    case 6:
+                        string file6 = "testChemin.XML";
+                        file6 = chemin + file6;
+                        stringPath = ExtractPath.conversion_path_xml(file6);
+                        //for (int i = 0; i < stringPath.Length; i++)
+                        //{
+                        //    Console.WriteLine("stringPath " + i + ": " + stringPath[i]);
+                        //}
+
+                        stringMetaDatas = ExtractPath.getMetaData(stringPath);
+
+                        string[] stringMetadaDatasOnlyUntilApp = new string[3];
+                        stringMetadaDatasOnlyUntilApp[0] = stringMetaDatas[0];
+                        stringMetadaDatasOnlyUntilApp[1] = stringMetaDatas[1];
+                        stringMetadaDatasOnlyUntilApp[2] = stringMetaDatas[2];
+                        System.Windows.Forms.Application.Run(new Form1(stringMetadaDatasOnlyUntilApp));
                         break;
+
 
                 }
                 do
