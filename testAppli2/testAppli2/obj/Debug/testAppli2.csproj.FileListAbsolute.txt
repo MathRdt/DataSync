@@ -1,0 +1,9 @@
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\bin\Debug\testAppli2.exe.config
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\bin\Debug\testAppli2.exe
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\bin\Debug\testAppli2.pdb
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\obj\Debug\testAppli2.csprojResolveAssemblyReference.cache
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\obj\Debug\testAppli2.Form1.resources
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\obj\Debug\testAppli2.Properties.Resources.resources
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\obj\Debug\testAppli2.csproj.GenerateResource.Cache
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\obj\Debug\testAppli2.exe
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\obj\Debug\testAppli2.pdb
