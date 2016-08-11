@@ -7,3 +7,12 @@ C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\ob
 C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\obj\Debug\testAppli2.csproj.GenerateResource.Cache
 C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\obj\Debug\testAppli2.exe
 C:\Users\adminprojetindus\Documents\projet indus\chemin\testAppli2\testAppli2\obj\Debug\testAppli2.pdb
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\testAppli2\testAppli2\bin\Debug\testAppli2.exe.config
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\testAppli2\testAppli2\obj\Debug\testAppli2.exe
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\testAppli2\testAppli2\obj\Debug\testAppli2.pdb
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\testAppli2\testAppli2\bin\Debug\testAppli2.exe
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\testAppli2\testAppli2\bin\Debug\testAppli2.pdb
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\testAppli2\testAppli2\obj\Debug\testAppli2.csprojResolveAssemblyReference.cache
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\testAppli2\testAppli2\obj\Debug\testAppli2.Properties.Resources.resources
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\testAppli2\testAppli2\obj\Debug\testAppli2.csproj.GenerateResource.Cache
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\testAppli2\testAppli2\obj\Debug\ConsoleApplication1.Form1.resources

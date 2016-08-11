@@ -1,6 +1,7 @@
 ﻿//fonction module manuel afin de récupérer les méta-données manquantes
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 
@@ -8,7 +9,7 @@ namespace ConsoleApplication1
 {
     public partial class Form1 : Form
     {
-        
+        public List<Famille> listFamilles;
         public Form1()
         {
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace ConsoleApplication1
             labelValueBranche.Text = metaData[0];
             labelValueSociete.Text = metaData[1];
             labelValueApplication.Text = metaData[2];
-
+            labelValueAuteur.Text = metaData[2];
             //si la famille n'existe pas, l'utilisateur choisit une famille parmis la liste des familles existantes
             //création d'une combobox qui permet d'effectuer un choix parmis une liste
             if (metaData[3] != " " && metaData[3] != "")
@@ -97,6 +98,73 @@ namespace ConsoleApplication1
             metaDatas[7] = labelApplication.Text;//auteur = application
             metaDatas[8] = textBoxNomClient.Text;//nom client
             metaDatas[9] = textBoxPrenomClient.Text;//prénom
+        }
+
+        public Form1 (string[] metadatas)
+        {
+            InitializeComponent();
+            int i = 0;
+            
+            int length = metadatas.Length;
+            if(length < 3)
+            {
+                Console.WriteLine("votre fichier doit être placé dans un dossier Fidusync/Branche/Société/Application");
+                return;
+            }
+
+            //branche, société, application ne peuvent pas être modifié par l'utilisateur
+            //affichage de ces méta-données
+            labelValueBranche.Text = metadatas[0];
+            labelValueSociete.Text = metadatas[1];
+            labelValueApplication.Text = metadatas[2];
+            labelValueAuteur.Text = metadatas[2];
+
+            if (length > 3)
+            {
+                //si la famille a été trouvé suppression de la liste déroulante
+                comboBoxFamille.Dispose();
+                //création d'un label pour afficher le résultat
+                Label textbox45 = new Label();
+                textbox45.Left = 115;
+                textbox45.Top = 155;
+                textbox45.Width = 120;
+                textbox45.Height = 30;
+                this.Controls.Add(textbox45);
+                //ce label correspond à la méta-données famille qui est la 4eme de la liste
+                textbox45.Text = metadatas[3];
+            }
+            else
+            {
+                //si la famille n'a pas été trouvé proposition des famille sous forme de menu déroulant
+                comboBoxFamille.Items.Clear();
+                for ( i = 0; i < listFamilles.Count; i++)
+                {
+                    comboBoxFamille.Items.Add(listFamilles[i].name);
+                }
+            }
+
+
+            //si la sous famille n'existe pas l'utilisateur choisi une sous-famille parmi la liste des sous-familles existantes 
+            if (length > 4)
+            {
+                //si la sous-famille est connue suppression de la liste déroulante
+                comboBoxSousFamille.Dispose();
+                //création d'un label pour afficher le résultat
+                Label textbox45 = new Label();
+                textbox45.Left = 115;
+                textbox45.Top = 187;
+                textbox45.Width = 120;
+                textbox45.Height = 30;
+                this.Controls.Add(textbox45);
+                //si l'on connait la sous-famille elle est la 5eme string de la liste
+                textbox45.Text = metadatas[4];
+
+            }
+            else
+            {
+                //si la famille n'a pas été trouvé proposition des famille sous forme de menu déroulant
+                comboBoxSousFamille.Items.Clear();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -204,6 +272,20 @@ namespace ConsoleApplication1
         {
 
         }
-        
+
+        private void comboBoxFamille_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            for(int i = 0; i < listFamilles.Count; i++) {
+                if (listFamilles[i].name.Equals(comboBoxFamille.Text))
+                {
+                    comboBoxSousFamille.Items.Clear();
+                    for (int j = 0; j < listFamilles[i].sousFamille.Count; j++)
+                    {
+                        comboBoxSousFamille.Items.Add(listFamilles[i].sousFamille[j]);
+                    }
+                    break;
+                }
+            }
+        }
     }
 }

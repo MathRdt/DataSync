@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace testAppli2
+namespace ConsoleApplication1
 {
     static class Program
     {
@@ -14,6 +11,7 @@ namespace testAppli2
         [STAThread]
         static void Main()
         {
+         
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

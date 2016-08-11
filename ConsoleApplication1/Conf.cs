@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace ConsoleApplication1
@@ -132,6 +129,66 @@ namespace ConsoleApplication1
                 }
             }
             return extractors;
+        }
+
+        public List<Famille> getListFamilles(string appli)
+        {
+            int i = 0;
+            int j = 0;
+            while (!this.applications[i].user.Equals(appli))
+            {
+                i++;
+            }
+
+            List<Famille> listFamilles = null;
+            Famille famille = new Famille();
+
+            for (j = 0; j < this.applications[i].typeInfos.Count; j++)
+            {
+                for (int k = 0; k < this.applications[i].typeInfos[j].aspects.Count; k++)
+                {
+                    if (this.applications[i].typeInfos[j].aspects[k].name == "fiducial:domainContainer")
+                    {
+                        for (int p = 0; p < this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory.Count; p++)
+                        {
+                            string familleValue;
+                            string sousFamilleValue;
+                            if (this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p].type.Equals("fiducial:domainContainerFamille"))
+                            {
+                                
+                                familleValue = (string)this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p].value;
+                                for (int q = 0; q < this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory.Count - p; q++)
+                                {
+                                    if (this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p + q].type.Equals("fiducial:domainContainerSousFamille"))
+                                    {
+                                        sousFamilleValue = (string)this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p+q].value;
+                                        if (famille.name.Equals(familleValue))
+                                        {
+                                            famille.addSousFamille(sousFamilleValue);
+                                        }
+                                        else {
+                                            if (listFamilles == null)
+                                            {
+                                                listFamilles = new List<Famille>();
+                                                
+
+                                            }
+
+                                            famille = new Famille(familleValue, sousFamilleValue);
+                                            listFamilles.Add(famille);
+
+                                        }
+                                        
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return listFamilles;
         }
 
 

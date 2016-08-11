@@ -172,6 +172,7 @@
             this.comboBoxFamille.Name = "comboBoxFamille";
             this.comboBoxFamille.Size = new System.Drawing.Size(121, 21);
             this.comboBoxFamille.TabIndex = 11;
+            this.comboBoxFamille.SelectedIndexChanged += new System.EventHandler(this.comboBoxFamille_SelectedIndexChanged);
             // 
             // comboBoxSousFamille
             // 
@@ -223,7 +224,7 @@
             // 
             // buttonokTest
             // 
-            this.buttonokTest.Location = new System.Drawing.Point(271, 139);
+            this.buttonokTest.Location = new System.Drawing.Point(258, 142);
             this.buttonokTest.Name = "buttonokTest";
             this.buttonokTest.Size = new System.Drawing.Size(36, 29);
             this.buttonokTest.TabIndex = 17;
