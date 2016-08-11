@@ -1,6 +1,7 @@
 ﻿//fonction module manuel afin de récupérer les méta-données manquantes
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 
@@ -8,7 +9,7 @@ namespace ConsoleApplication1
 {
     public partial class Form1 : Form
     {
-        
+        public List<Famille> listFamilles;
         public Form1()
         {
             InitializeComponent();
@@ -102,20 +103,8 @@ namespace ConsoleApplication1
         public Form1 (string[] metadatas)
         {
             InitializeComponent();
-            for (int i=0; i< metadatas.Length; i++)
-            {
-                Console.WriteLine("métadonnée "+ i+": "+ metadatas[i]);
-            }
-
-            //liste des différentes familles existantes
-            string[] FamilleList = { "Facture", "Paye" };
-            //liste des différentes sous-famille existante en fonction de la famille
-            string[] SousFamilleFacture = { "Facture client", "Facture interne" };
-            string[] SousFamillePaye = { "Paye type 1", "Paye type 2" };
-            //méta-données facultatives
-            string[] MetaFalcSousFamilleFac = { "Nom", "Prénom", "facultative1" };
-            string[] MetaFalcSousFamillePaye = { "Nom", "Prénom", "facultative2" };
-
+            int i = 0;
+            
             int length = metadatas.Length;
             if(length < 3)
             {
@@ -148,15 +137,15 @@ namespace ConsoleApplication1
             {
                 //si la famille n'a pas été trouvé proposition des famille sous forme de menu déroulant
                 comboBoxFamille.Items.Clear();
-                for (int i = 0; i < FamilleList.Length; i++)
+                for ( i = 0; i < listFamilles.Count; i++)
                 {
-                    comboBoxFamille.Items.Add(FamilleList[i]);
+                    comboBoxFamille.Items.Add(listFamilles[i].name);
                 }
             }
 
 
             //si la sous famille n'existe pas l'utilisateur choisi une sous-famille parmi la liste des sous-familles existantes 
-            if (length > 3)
+            if (length > 4)
             {
                 //si la sous-famille est connue suppression de la liste déroulante
                 comboBoxSousFamille.Dispose();
@@ -171,11 +160,11 @@ namespace ConsoleApplication1
                 textbox45.Text = metadatas[4];
 
             }
-
-
-
-
-
+            else
+            {
+                //si la famille n'a pas été trouvé proposition des famille sous forme de menu déroulant
+                comboBoxSousFamille.Items.Clear();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -283,6 +272,20 @@ namespace ConsoleApplication1
         {
 
         }
-        
+
+        private void comboBoxFamille_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            for(int i = 0; i < listFamilles.Count; i++) {
+                if (listFamilles[i].name.Equals(comboBoxFamille.Text))
+                {
+                    comboBoxSousFamille.Items.Clear();
+                    for (int j = 0; j < listFamilles[i].sousFamille.Count; j++)
+                    {
+                        comboBoxSousFamille.Items.Add(listFamilles[i].sousFamille[j]);
+                    }
+                    break;
+                }
+            }
+        }
     }
 }

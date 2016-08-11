@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace ConsoleApplication1
@@ -9,7 +10,7 @@ namespace ConsoleApplication1
         [STAThreadAttribute]
         private static void Main()
         {
-            System.Windows.Forms.Application.EnableVisualStyles();
+        System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
             string UserEntry = "";
             do
@@ -132,7 +133,6 @@ namespace ConsoleApplication1
 
                     case 5:
                         string file5 = "testPourPdf.pdf";
-                        string titre = "pdf";
 
                         int extension = file5.LastIndexOf(".");
                         string XMLfile5 = file5.Remove(extension);
@@ -198,11 +198,7 @@ namespace ConsoleApplication1
                         string file6 = "testChemin.XML";
                         file6 = chemin + file6;
                         stringPath = ExtractPath.conversion_path_xml(file6);
-                        //for (int i = 0; i < stringPath.Length; i++)
-                        //{
-                        //    Console.WriteLine("stringPath " + i + ": " + stringPath[i]);
-                        //}
-
+                       
                         stringMetaDatas = ExtractPath.getMetaData(stringPath);
 
                         string[] stringMetadaDatasOnlyUntilApp = new string[3];
@@ -210,6 +206,25 @@ namespace ConsoleApplication1
                         stringMetadaDatasOnlyUntilApp[1] = stringMetaDatas[1];
                         stringMetadaDatasOnlyUntilApp[2] = stringMetaDatas[2];
                         System.Windows.Forms.Application.Run(new Form1(stringMetadaDatasOnlyUntilApp));
+
+
+
+                        break;
+
+                    case 7:
+                        conf = Conf.Charger(confFile);
+                        List<Famille> listFamille = conf.getListFamilles("App1");
+
+                        for(int i=0;i < listFamille.Count; i++)
+                        {
+                            Console.WriteLine("famille " + i + ": " + listFamille[i].name);
+                            for (int j=0;j< listFamille[i].sousFamille.Count; j++) { 
+                                Console.WriteLine("sous famille " + i + ", "+j+": " + listFamille[i].sousFamille[j]);
+                            }
+                        }
+
+
+
                         break;
 
 
