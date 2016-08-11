@@ -1,0 +1,16 @@
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\bin\Debug\testOcr.exe.config
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\bin\Debug\testOcr.exe
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\bin\Debug\testOcr.pdb
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\bin\Debug\Puma.Net.dll
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\bin\Debug\puma.interop.dll
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\testOcr.csprojResolveAssemblyReference.cache
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\MainWindow.g.cs
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\App.g.cs
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\testOcr_MarkupCompile.cache
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\testOcr_MarkupCompile.lref
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\MainWindow.baml
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\testOcr.g.resources
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\testOcr.Properties.Resources.resources
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\testOcr.csproj.GenerateResource.Cache
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\testOcr.exe
+C:\Users\adminprojetindus\Documents\projet indus\chemin\testOcr\testOcr\obj\Debug\testOcr.pdb

@@ -1,0 +1,19 @@
+﻿<Window x:Class="testOcr.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:testOcr"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button x:Name="button" Content="Select source" HorizontalAlignment="Left" Height="44" Margin="339,0,0,0" VerticalAlignment="Top" Width="168" Click="button_Click"/>
+        <Button x:Name="button1" Content="Read to screen" HorizontalAlignment="Left" Height="42" Margin="10,61,0,0" VerticalAlignment="Top" Width="179" Click="button1_Click"/>
+        <Button x:Name="button2" Content="Select destination" HorizontalAlignment="Left" Height="55" Margin="339,118,0,0" VerticalAlignment="Top" Width="168" Click="button2_Click"/>
+        <Button x:Name="button3" Content="Read to file" HorizontalAlignment="Left" Height="47" Margin="10,203,0,0" VerticalAlignment="Top" Width="241" Click="button3_Click"/>
+        <TextBox x:Name="txt1" HorizontalAlignment="Left" Height="34" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="324" TextChanged="txt1_TextChanged"/>
+        <TextBox x:Name="txt2" HorizontalAlignment="Left" Height="27" Margin="10,146,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="282"/>
+        <TextBox x:Name="txt_display" HorizontalAlignment="Left" Height="24" Margin="234,61,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="256"/>
+
+    </Grid>
+</Window>
