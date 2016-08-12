@@ -10,98 +10,11 @@ namespace ConsoleApplication1
     public partial class Form1 : Form
     {
         public List<Famille> listFamilles;
-        public Form1()
+        public string[] metadatasFromManual=new string[10];
+       
+        public void fillForm (string[] metadatas)
         {
-            InitializeComponent();
-            // a rentrer par rapport à la valeur du xml
-
-            //liste méta-données que l'on a déjà
-            string[] metaData = { "Value Branche", "Value Société", "Value Application", " ", "" };
-            //liste des différentes familles existantes
-            string[] FamilleList = { "Facture", "Paye" };
-            //liste des différentes sous-famille existante en fonction de la famille
-            string[] SousFamilleFacture = { "Facture client", "Facture interne" };
-            string[] SousFamillePaye = { "Paye type 1", "Paye type 2" };
-            //méta-données facultatives
-            string[] MetaFalcSousFamilleFac = { "Nom", "Prénom", "facultative1" };
-            string[] MetaFalcSousFamillePaye = { "Nom", "Prénom", "facultative2" };
-
-            //branche, société, application ne peuvent pas être modifié par l'utilisateur
-            //affichage de ces méta-données
-            labelValueBranche.Text = metaData[0];
-            labelValueSociete.Text = metaData[1];
-            labelValueApplication.Text = metaData[2];
-            labelValueAuteur.Text = metaData[2];
-            //si la famille n'existe pas, l'utilisateur choisit une famille parmis la liste des familles existantes
-            //création d'une combobox qui permet d'effectuer un choix parmis une liste
-            if (metaData[3] != " " && metaData[3] != "")
-            {
-                //si la famille a été trouvé suppression de la liste déroulante
-                comboBoxFamille.Dispose();
-                //création d'un label pour afficher le résultat
-                Label textbox45 = new Label();
-                textbox45.Left = 115;
-                textbox45.Top = 150;
-                textbox45.Width = 120;
-                textbox45.Height = 30;
-                this.Controls.Add(textbox45);
-                //ce label correspond à la méta-données famille qui est la 4eme de la liste
-                textbox45.Text = metaData[3];
-            }
-            else
-            {
-                //si la famille a été trouvé proposition des famille sous forme de menu déroulant
-                comboBoxFamille.Items.Clear();
-                for (int i = 0; i < FamilleList.Length; i++)
-                {
-                    comboBoxFamille.Items.Add(FamilleList[i]);
-                }
-            }
-
-
-            //si la sous famille n'existe pas l'utilisateur choisi une sous-famille parmi la liste des sous-familles existantes 
-            if(metaData[4] != " " && metaData[4] != "")
-            {
-                //si la sous-famille est connue suppression de la liste déroulante
-                comboBoxSousFamille.Dispose();
-                //création d'un label pour afficher le résultat
-                Label textbox45 = new Label();
-                textbox45.Left = 115;
-                textbox45.Top = 205;
-                textbox45.Width = 120;
-                textbox45.Height = 30;
-                this.Controls.Add(textbox45);
-                //si l'on connait la sous-famille elle est la 5eme string de la liste
-                textbox45.Text = metaData[4];
-                
-            }
-
-            //meta données facultatives
-            textBoxNomClient.Text = "Dupond";
-            textBoxPrenomClient.Text = "Pierre";
-
-            //récupération des méta-données trouvé
-            //ordre remplissage : branche, société, application, famille, sous-famille, titre, description, auteur, nom, prénom 
-            //a tester
-            string[] metaDatas = new string[30];
-            metaDatas[0] = labelValueBranche.Text;//branche
-            metaDatas[1] = labelValueSociete.Text;//société
-            metaDatas[2] = labelValueApplication.Text;//application
-            if (metaData[3] != " " && metaData[3] != "") metaDatas[3] = metaData[3];//famille
-            else metaDatas[3] = comboBoxFamille.Text;
-
-            if (metaData[4] != " " && metaData[4] != "") metaDatas[4] = metaData[4];//sous-famille
-            else metaDatas[4] = comboBoxSousFamille.Text;
-
-            metaDatas[5] = textBoxTitre.Text;//titre
-            metaDatas[6] = textBoxDescription.Text;//description
-            metaDatas[7] = labelApplication.Text;//auteur = application
-            metaDatas[8] = textBoxNomClient.Text;//nom client
-            metaDatas[9] = textBoxPrenomClient.Text;//prénom
-        }
-
-        public Form1 (string[] metadatas)
-        {
+            metadatas.CopyTo(metadatasFromManual,0);
             InitializeComponent();
             int i = 0;
             
@@ -213,9 +126,43 @@ namespace ConsoleApplication1
         {
             //si oui la fenêtre se ferme
             //sinon on revient sur la page
+            Console.WriteLine("COUCOU");
             if (MessageBox.Show("Etes-vous sûr de vouloir quitter ?", "Quitter",
          MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                if (metadatasFromManual == null) {
+                metadatasFromManual[0] = labelValueBranche.Text;
+                metadatasFromManual[1] = labelValueSociete.Text;
+                metadatasFromManual[2] = labelValueApplication.Text;
+
+                metadatasFromManual[3] = comboBoxFamille.Text;
+                metadatasFromManual[4] = comboBoxSousFamille.Text;
+
+                metadatasFromManual[5] = textBoxTitre.Text;
+                metadatasFromManual[6] = textBoxDescription.Text;
+                metadatasFromManual[7] = labelValueApplication.Text;
+                metadatasFromManual[8] = textBoxNomClient.Text;
+                metadatasFromManual[9] = textBoxPrenomClient.Text;
+                }
+                else
+                {
+                    Console.WriteLine("COUCOU");
+                    if (metadatasFromManual.Length < 5)
+                    {
+                        if (metadatasFromManual.Length < 4)
+                        {
+                            metadatasFromManual[3] = comboBoxFamille.Text;
+                        }
+                        metadatasFromManual[4] = comboBoxSousFamille.Text;
+                    }
+                    metadatasFromManual[5] = textBoxTitre.Text;
+                    metadatasFromManual[6] = textBoxDescription.Text;
+                    metadatasFromManual[7] = labelValueApplication.Text;
+                    metadatasFromManual[8] = textBoxNomClient.Text;
+                    metadatasFromManual[9] = textBoxPrenomClient.Text;
+
+
+                }
                 Close();
             }
         }
@@ -286,6 +233,16 @@ namespace ConsoleApplication1
                     break;
                 }
             }
+        }
+
+        private void labelValueBranche_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxTitre_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

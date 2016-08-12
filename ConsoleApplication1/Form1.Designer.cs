@@ -140,6 +140,7 @@
             this.labelValueBranche.Size = new System.Drawing.Size(77, 13);
             this.labelValueBranche.TabIndex = 7;
             this.labelValueBranche.Text = "Value Branche";
+            this.labelValueBranche.Click += new System.EventHandler(this.labelValueBranche_Click);
             // 
             // labelValueSociete
             // 
@@ -268,6 +269,7 @@
             this.textBoxTitre.Name = "textBoxTitre";
             this.textBoxTitre.Size = new System.Drawing.Size(100, 20);
             this.textBoxTitre.TabIndex = 21;
+            this.textBoxTitre.TextChanged += new System.EventHandler(this.textBoxTitre_TextChanged);
             // 
             // textBoxDescription
             // 

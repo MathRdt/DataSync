@@ -170,8 +170,6 @@ namespace ConsoleApplication1
                                             if (listFamilles == null)
                                             {
                                                 listFamilles = new List<Famille>();
-                                                
-
                                             }
 
                                             famille = new Famille(familleValue, sousFamilleValue);
@@ -186,7 +184,11 @@ namespace ConsoleApplication1
                             }
                         }
                     }
-                }
+                } 
+            }
+            if (!famille.name.Equals(listFamilles[listFamilles.Count - 1].name))
+            {
+                listFamilles.Add(famille);
             }
             return listFamilles;
         }

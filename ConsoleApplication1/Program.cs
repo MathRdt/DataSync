@@ -205,25 +205,36 @@ namespace ConsoleApplication1
                         stringMetadaDatasOnlyUntilApp[0] = stringMetaDatas[0];
                         stringMetadaDatasOnlyUntilApp[1] = stringMetaDatas[1];
                         stringMetadaDatasOnlyUntilApp[2] = stringMetaDatas[2];
-                        System.Windows.Forms.Application.Run(new Form1(stringMetadaDatasOnlyUntilApp));
 
+                        conf = Conf.Charger(confFile);
+                        List<Famille> listFamilles = conf.getListFamilles("App1");
+
+                        Form1 form1 = new Form1() ;
+                        form1.listFamilles = listFamilles;
+                        form1.fillForm(stringMetadaDatasOnlyUntilApp);
+
+
+
+
+                        System.Windows.Forms.Application.Run(form1);
+                        
 
 
                         break;
 
                     case 7:
-                        conf = Conf.Charger(confFile);
-                        List<Famille> listFamille = conf.getListFamilles("App1");
+                        string file7 = "testChemin.XML";
+                        file7 = chemin + file7;
+                        stringPath = ExtractPath.conversion_path_xml(file7);
 
-                        for(int i=0;i < listFamille.Count; i++)
+                        stringMetaDatas = ExtractPath.getMetaData(stringPath);
+                        Form1 form2 = new Form1();
+                        form2.fillForm(stringMetaDatas);
+                        System.Windows.Forms.Application.Run(form2);
+                        for(int i = 0; i< form2.metadatasFromManual.Length; i++)
                         {
-                            Console.WriteLine("famille " + i + ": " + listFamille[i].name);
-                            for (int j=0;j< listFamille[i].sousFamille.Count; j++) { 
-                                Console.WriteLine("sous famille " + i + ", "+j+": " + listFamille[i].sousFamille[j]);
-                            }
+                            Console.WriteLine(form2.metadatasFromManual[i]);
                         }
-
-
 
                         break;
 
