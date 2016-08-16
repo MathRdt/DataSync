@@ -82,6 +82,8 @@ namespace ConsoleApplication1
         /// <param name="aspectsToAdd">Liste des aspects extraits du fichier de configuration </param>
         public void addAspects(List<Aspect> aspectsToAdd)
         {
+            int k = 0;
+            bool isMandatoryMetaDataCompleted;
             if(aspectsToAdd != null) {
                 for (int i = 0; i < aspectsToAdd.Count; i++)
                 {
@@ -91,18 +93,13 @@ namespace ConsoleApplication1
                     }
                     for(int j=0; j< aspectsToAdd[i].metadatas.Mandatory.Count;j++)
                     {
-
-                        if ((String) aspectsToAdd[i].metadatas.Mandatory[j].value != "")
-                        {
-                            this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Mandatory[j].type, aspectsToAdd[i].metadatas.Mandatory[j].value, true);
-                        }
+                        isMandatoryMetaDataCompleted =this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Mandatory[j].type, aspectsToAdd[i].metadatas.Mandatory[j].value, true);
+                        if (isMandatoryMetaDataCompleted) ReadyToSync.record(k);
+                        k++;
                     }
                     for (int j = 0; j < aspectsToAdd[i].metadatas.Optional.Count; j++)
                     {
-                        if ((String) aspectsToAdd[i].metadatas.Optional[j].value != "")
-                        {
-                            this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Optional[j].type, aspectsToAdd[i].metadatas.Optional[j].value, false);
-                        }
+                        this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Optional[j].type, aspectsToAdd[i].metadatas.Optional[j].value, false);
                     }
                 }
             }
@@ -142,8 +139,20 @@ namespace ConsoleApplication1
             }
         }
 
+        public bool isXMLComplete()
+        {
+            if (this.metadatas.Mandatory.Count == 0) return false;
+            for(int i=0; i< this.metadatas.Mandatory.Count; i++)
+            {
+                if ((string)this.metadatas.Mandatory[i].value == "") return false;
+                else ReadyToSync.record(i);
+            }
+            return true;
+        }
+
     }
 
+    
 
     
 

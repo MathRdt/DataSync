@@ -74,20 +74,19 @@ namespace ConsoleApplication1
         /// <param name="valueMetaData">la nouvelle valeur à prendre</param>
         /// <param name="mandatory">méta donnée obligatoire ou non</param>
 
-        public void changeMetaData(string typeMetaData, object valueMetaData, Boolean mandatory)
+        public bool changeMetaData(string typeMetaData, object valueMetaData, Boolean mandatory)
         {
-           
-
-            
             if (mandatory == true)
             {
                 for (int i = 0; i < this.Mandatory.Count; i++)
                 {
                     if (this.Mandatory[i].type == typeMetaData)
                     {
-
+                        if(valueMetaData != null && (string)valueMetaData != "") {
                             this.Mandatory[i].value = valueMetaData;
-                            return;
+                            return true;
+                        }
+                        return false;
 
                     }
                 }
@@ -98,14 +97,19 @@ namespace ConsoleApplication1
                 {
                     if (this.Optional[j].type == typeMetaData)
                     {
-                        
+
+                        if (valueMetaData != null && (string)valueMetaData != "")
+                        {
                             this.Optional[j].value = valueMetaData;
-                            return;
+                        }
+                        return false;
 
                     }
                 }
             }
             this.addMetaData(typeMetaData, valueMetaData, mandatory);
+            if (mandatory == true && (string)valueMetaData != "") return true;
+            return false;
         }
     }
 }

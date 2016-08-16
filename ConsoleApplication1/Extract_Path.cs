@@ -49,8 +49,10 @@ namespace ConsoleApplication1
             int taille = path.Length;
             string[] metaData = new string[taille - nbMeta]; //chaine de la taille des méta-données
             int i = 0;
-            for (i = nbMeta; i < taille; i++) metaData[i - nbMeta] = path[i]; //remplissage méta-données
-
+            for (i = nbMeta; i < taille; i++)
+            {
+                metaData[i - nbMeta] = path[i]; //remplissage méta-données
+            }
             return metaData;
         }
 
@@ -64,12 +66,18 @@ namespace ConsoleApplication1
             metadatas.changeMetaData("fiducial:domainContainerBranche", stringMetaDatas[0],true);
             metadatas.changeMetaData("fiducial:domainContainerSociete", stringMetaDatas[1], true);
             metadatas.changeMetaData("fiducial:domainContainerApplication", stringMetaDatas[2], true);
+            ReadyToSync.record(0);
+            ReadyToSync.record(1);
+            ReadyToSync.record(2);
 
             if (stringMetaDatas.Length >= 4)
             {
                 metadatas.changeMetaData("fiducial:domainContainerFamille", stringMetaDatas[3], true);
-                if (stringMetaDatas.Length >= 5)
+                ReadyToSync.record(3);
+                if (stringMetaDatas.Length >= 5) { 
                     metadatas.changeMetaData("fiducial:domainContainerSousFamille", stringMetaDatas[4], true);
+                    ReadyToSync.record(4);
+                }
                 else
                     metadatas.changeMetaData("fiducial:domainContainerSousFamille", "sousFamille", true);
 

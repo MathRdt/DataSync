@@ -25,6 +25,9 @@ namespace ConsoleApplication1
                     Console.WriteLine("3- Test de parsing de PDF");
                     Console.WriteLine("4- Test de Lecture de fichier de conf");
                     Console.WriteLine("5- Test creation XML + lecture du chemin + extraction fichier de conf");
+                    Console.WriteLine("6- Test windows form");
+                    Console.WriteLine("7- Test windows form + chemin + extraction meta données fichier de conf ");
+                    Console.WriteLine("8- Test creation XML + lecture du chemin + extraction fichier de conf");
                     UserEntry = Console.ReadLine();
                     IsOk = int.TryParse(UserEntry, out num);
                 } while (!IsOk && UserEntry != "q" && num > 0 && num < 6);
@@ -32,7 +35,7 @@ namespace ConsoleApplication1
 
                 string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\famille1\sousfamille1\";
                 string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\recette\paie\";
-
+                string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\";
                 GlobalMetaDatas globalmetadatas = new GlobalMetaDatas();
                 string[] stringPath;
                 string[] stringMetaDatas;
@@ -238,7 +241,78 @@ namespace ConsoleApplication1
 
                         break;
 
+                    case 8:
+                       
+                        string file8 = "testPourPdf.pdf";
 
+                        int extension8 = file8.LastIndexOf(".");
+                        string XMLfile8 = file8.Remove(extension8);
+                        XMLfile8 = XMLfile8 + ".xml";
+
+                        //Console.WriteLine(XMLfile8);
+                        file8 = partialPath + file8;
+                        XMLfile8 = partialPath + XMLfile8;
+
+
+
+                        try
+                        {
+                            if (!File.Exists(XMLfile8))
+                            {
+                                GlobalMetaDatas.createXML(XMLfile8);
+                                globalmetadatas = GlobalMetaDatas.Charger(XMLfile8);
+                                //Console.WriteLine("fichier " + XMLfile8 + " a été créé");
+                            }
+                            else
+                            {
+                                globalmetadatas = GlobalMetaDatas.Charger(XMLfile8);
+
+                                if (globalmetadatas.isXMLComplete())
+                                {
+                                    Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES XML");
+                                    break;
+                                }
+                            }
+
+                            Console.WriteLine("debut extraction chemin");
+                            stringPath = ExtractPath.conversion_path_xml(file8);
+                            stringMetaDatas = ExtractPath.getMetaData(stringPath);
+                            //for (int i = 0; i < stringMetaDatas.Length; i++)
+                            //{
+                            //    Console.WriteLine("metadonnee " + i + " : " + stringMetaDatas[i]);
+                            //}
+
+                            MetaDatas metaDatas = globalmetadatas.metadatas;
+                            ExtractPath.fillPathMetaDatas(stringMetaDatas, metaDatas);
+                            if (ReadyToSync.isReadyToSync())
+                            {
+                                Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES CHEMIN");
+                                break;
+                            }
+                            Console.WriteLine("debut extraction fichier de conf");
+
+                            globalmetadatas.typename = "fiducial_" + metaDatas.Mandatory[3].value + ":type_" + metaDatas.Mandatory[4].value;
+
+                            conf = Conf.Charger(confFile);
+                            globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
+                            globalmetadatas.Enregistrer(XMLfile8);
+
+                            string fileMimeType = MimeSniffer.getMimeFromFile(file8);
+                            Console.WriteLine(fileMimeType);
+                            string[] extractors = conf.extractorsByType(fileMimeType);
+
+                            for (int i = 0; i < extractors.Length; i++)
+                            {
+                                Console.WriteLine(extractors[i]);
+                            }
+
+
+                        }
+                        catch (NoPathFoundException e)
+                        {
+                            Console.WriteLine("{0}", e);
+                        }
+                        break;
                 }
                 do
                 {

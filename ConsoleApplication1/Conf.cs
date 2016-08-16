@@ -113,6 +113,8 @@ namespace ConsoleApplication1
             globalmetadatas.Enregistrer(fileName);
         }
 
+
+
         public string[] extractorsByType (string mimeType)
         {
             string[] extractors = null;
