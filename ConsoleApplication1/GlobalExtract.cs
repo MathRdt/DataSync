@@ -8,10 +8,10 @@ namespace ConsoleApplication1
 {
     public class GlobalExtract
     {
-        public string[] extract (string extractType, string file, string app,string family)
+        public static MetaDatas extract (string extractType, string file, string app,string family)
         {
-            string[] metaDataValues =null;
-            string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\famille1\sousfamille1\";
+            MetaDatas metaDataValues =new MetaDatas();
+            string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\";
             string confFile = "confUpdate.xml";
             confFile = chemin + confFile;
             List<Famille> listFamilles;
@@ -36,16 +36,14 @@ namespace ConsoleApplication1
 
                 case "PDF":
                     if (famille == "") {
-                        metaDataValues = new string[2];
+
                         famille = Extract_PDF.SearchTitleInList(file,familles);
                         if (famille == "") {
                             famille = Extract_PDF.SearchWordInList(file, familles);
                             if (famille == "") break;
                         }
-                        metaDataValues[0] = famille;
+                        metaDataValues.changeMetaData("fiducial:domainContainerFamille", famille, true);
                     }
-                    else metaDataValues = new string[1];
-
                     for (int i = 0; i < listFamilles.Count; i++)
                     {
                         if (listFamilles[i].name.Equals(famille))
@@ -64,7 +62,7 @@ namespace ConsoleApplication1
                         sousFamille = Extract_PDF.SearchWordInList(file, sousFamilles);
                         if (sousFamille == "") break;
                     }
-                    metaDataValues[metaDataValues.Length -1] = sousFamille;
+                    metaDataValues.changeMetaData("fiducial:domainContainerSousFamille", sousFamille, true);
                     break;
 
 
@@ -78,17 +76,16 @@ namespace ConsoleApplication1
                 case "Odt":
                     if (famille == "")
                     {
-                        metaDataValues = new string[2];
+                        
                         famille = Extract_ODT.SearchTitleInList(file, familles);
                         if (famille == "")
                         {
                             famille = Extract_ODT.SearchWordInList(file, familles);
                             if (famille == "") break;
                         }
-                        metaDataValues[0] = famille;
+                        metaDataValues.changeMetaData("fiducial:domainContainerFamille", famille, true);
                     }
-                    else metaDataValues = new string[1];
-
+                    
                     for (int i = 0; i < listFamilles.Count; i++)
                     {
                         if (listFamilles[i].name.Equals(famille))
@@ -107,23 +104,23 @@ namespace ConsoleApplication1
                         sousFamille = Extract_ODT.SearchWordInList(file, sousFamilles);
                         if (sousFamille == "") break;
                     }
-                    metaDataValues[metaDataValues.Length - 1] = sousFamille;
+                    metaDataValues.changeMetaData("fiducial:domainContainerSousFamille", sousFamille, true);
                     break;
                 case "Calc":
                     
                 case "Excel":
                     if (famille == "")
                     {
-                        metaDataValues = new string[2];
+                        
                         famille = Extract_ODS.SearchTitleInList(file, familles);
                         if (famille == "")
                         {
                             famille = Extract_ODS.SearchWordInList(file, familles);
                             if (famille == "") break;
                         }
-                        metaDataValues[0] = famille;
+                        metaDataValues.changeMetaData("fiducial:domainContainerFamille", famille, true);
                     }
-                    else metaDataValues = new string[1];
+                    
 
                     for (int i = 0; i < listFamilles.Count; i++)
                     {
@@ -143,10 +140,19 @@ namespace ConsoleApplication1
                         sousFamille = Extract_ODS.SearchWordInList(file, sousFamilles);
                         if (sousFamille == "") break;
                     }
-                    metaDataValues[metaDataValues.Length - 1] = sousFamille;
+                    metaDataValues.changeMetaData("fiducial:domainContainerSousFamille", sousFamille, true);
                     break;
                     
                 case "Manuel":
+                    Form1 form1 = new Form1();
+                    int extension = file.LastIndexOf(".");
+                    string XMLfile = file.Remove(extension);
+                    XMLfile = XMLfile + ".xml";
+                    GlobalMetaDatas globalMetaDatas = GlobalMetaDatas.Charger(XMLfile);
+                    MetaDatas metadatas = globalMetaDatas.metadatas;
+                    form1.fillForm(metadatas);
+                    System.Windows.Forms.Application.Run(form1);
+                    metaDataValues = form1.metadatasFromManual;
                     break;
 
             }

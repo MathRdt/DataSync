@@ -47,6 +47,12 @@ namespace ConsoleApplication1
         public MetaDatas()
         {
             this.Mandatory = new List<MetaData>();
+            //this.changeMetaData("fiducial:domainContainerBranche", "", true);
+            //this.changeMetaData("fiducial:domainContainerSociete", "", true);
+            //this.changeMetaData("fiducial:domainContainerApplication", "", true);
+            //this.changeMetaData("fiducial:domainContainerFamille", "", true);
+            //this.changeMetaData("fiducial:domainContainerSousFamille", "", true);
+
             this.Optional = new List<MetaData>();
         }
 
@@ -82,6 +88,7 @@ namespace ConsoleApplication1
                 {
                     if (this.Mandatory[i].type == typeMetaData)
                     {
+                        
                         if(valueMetaData != null && (string)valueMetaData != "") {
                             this.Mandatory[i].value = valueMetaData;
                             return true;

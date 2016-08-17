@@ -59,7 +59,7 @@ namespace ConsoleApplication1
         public static void fillPathMetaDatas(string[] stringMetaDatas, MetaDatas metadatas)
         {
 
-            if (stringMetaDatas.Length < 3)
+            if (stringMetaDatas.Length < 4)
             {
                 throw new NoPathFoundException();
             }
@@ -70,22 +70,22 @@ namespace ConsoleApplication1
             ReadyToSync.record(1);
             ReadyToSync.record(2);
 
-            if (stringMetaDatas.Length >= 4)
+            if (stringMetaDatas.Length >= 5)
             {
                 metadatas.changeMetaData("fiducial:domainContainerFamille", stringMetaDatas[3], true);
                 ReadyToSync.record(3);
-                if (stringMetaDatas.Length >= 5) { 
+                if (stringMetaDatas.Length >= 6) { 
                     metadatas.changeMetaData("fiducial:domainContainerSousFamille", stringMetaDatas[4], true);
                     ReadyToSync.record(4);
                 }
                 else
-                    metadatas.changeMetaData("fiducial:domainContainerSousFamille", "sousFamille", true);
+                    metadatas.changeMetaData("fiducial:domainContainerSousFamille", "", true);
 
             }
             else
             {
-                metadatas.changeMetaData("fiducial:domainContainerFamille", "famille", true);
-                metadatas.changeMetaData("fiducial:domainContainerSousFamille", "sousFamille", true);
+                metadatas.changeMetaData("fiducial:domainContainerFamille", "", true);
+                metadatas.changeMetaData("fiducial:domainContainerSousFamille", "", true);
             }
             metadatas.changeMetaData("fiducial:domainContainerNom", stringMetaDatas[stringMetaDatas.Length - 1], true);
 

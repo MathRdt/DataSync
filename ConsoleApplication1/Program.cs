@@ -33,9 +33,9 @@ namespace ConsoleApplication1
                 } while (!IsOk && UserEntry != "q" && num > 0 && num < 6);
 
 
-                string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\famille1\sousfamille1\";
-                string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\recette\paie\";
-                string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\appli1\";
+                string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\";
+                string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\recette\paie\";
+                string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\";
                 GlobalMetaDatas globalmetadatas = new GlobalMetaDatas();
                 string[] stringPath;
                 string[] stringMetaDatas;
@@ -95,13 +95,13 @@ namespace ConsoleApplication1
 
                         //test cherche si le titre fait partie d'une liste
                         string[] listNom = { "toto", "titi", "pdf", "nom" };
-                        bool test = Extract_PDF.SearchTitleInList(file3, listNom);
-                        Console.Write("test liste : " + test + "\n");
+                        //bool test = Extract_PDF.SearchTitleInList(file3, listNom);
+                        //Console.Write("test liste : " + test + "\n");
 
                         //test cherche si un mot du pdf fait partie d'une liste
                         string[] listNomPdf = { "toto", "titi", "pdf", "nom" };
-                        bool testPdf = Extract_PDF.SearchWordInList(file3, listNomPdf);
-                        Console.Write("test liste : " + testPdf + "\n");
+                        //bool testPdf = Extract_PDF.SearchWordInList(file3, listNomPdf);
+                        //Console.Write("test liste : " + testPdf + "\n");
 
                         //test cherche méta-données
                         string metaDataa = "postal";
@@ -204,17 +204,17 @@ namespace ConsoleApplication1
                        
                         stringMetaDatas = ExtractPath.getMetaData(stringPath);
 
-                        string[] stringMetadaDatasOnlyUntilApp = new string[3];
-                        stringMetadaDatasOnlyUntilApp[0] = stringMetaDatas[0];
-                        stringMetadaDatasOnlyUntilApp[1] = stringMetaDatas[1];
-                        stringMetadaDatasOnlyUntilApp[2] = stringMetaDatas[2];
+                        //string[] stringMetadaDatasOnlyUntilApp = new string[3];
+                        //stringMetadaDatasOnlyUntilApp[0] = stringMetaDatas[0];
+                        //stringMetadaDatasOnlyUntilApp[1] = stringMetaDatas[1];
+                        //stringMetadaDatasOnlyUntilApp[2] = stringMetaDatas[2];
 
                         conf = Conf.Charger(confFile);
                         List<Famille> listFamilles = conf.getListFamilles("App1");
 
                         Form1 form1 = new Form1() ;
                         form1.listFamilles = listFamilles;
-                        form1.fillForm(stringMetadaDatasOnlyUntilApp);
+                        //form1.fillForm(stringMetadaDatasOnlyUntilApp);
 
 
 
@@ -232,12 +232,12 @@ namespace ConsoleApplication1
 
                         stringMetaDatas = ExtractPath.getMetaData(stringPath);
                         Form1 form2 = new Form1();
-                        form2.fillForm(stringMetaDatas);
+                        //form2.fillForm(stringMetaDatas);
                         System.Windows.Forms.Application.Run(form2);
-                        for(int i = 0; i< form2.metadatasFromManual.Length; i++)
-                        {
-                            Console.WriteLine(form2.metadatasFromManual[i]);
-                        }
+                        //for(int i = 0; i< form2.metadatasFromManual.Length; i++)
+                        //{
+                        //    Console.WriteLine(form2.metadatasFromManual[i]);
+                        //}
 
                         break;
 
@@ -274,6 +274,12 @@ namespace ConsoleApplication1
                                 }
                             }
 
+                            for (int i = 0; i < globalmetadatas.metadatas.Mandatory.Count; i++)
+                            {
+                                Console.WriteLine(globalmetadatas.metadatas.Mandatory[i].type);
+                                Console.WriteLine(globalmetadatas.metadatas.Mandatory[i].value);
+                            }
+
                             Console.WriteLine("debut extraction chemin");
                             stringPath = ExtractPath.conversion_path_xml(file8);
                             stringMetaDatas = ExtractPath.getMetaData(stringPath);
@@ -281,9 +287,8 @@ namespace ConsoleApplication1
                             //{
                             //    Console.WriteLine("metadonnee " + i + " : " + stringMetaDatas[i]);
                             //}
-
-                            MetaDatas metaDatas = globalmetadatas.metadatas;
-                            ExtractPath.fillPathMetaDatas(stringMetaDatas, metaDatas);
+                            ExtractPath.fillPathMetaDatas(stringMetaDatas, globalmetadatas.metadatas);
+                            globalmetadatas.Enregistrer(XMLfile8);
                             if (ReadyToSync.isReadyToSync())
                             {
                                 Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES CHEMIN");
@@ -291,15 +296,41 @@ namespace ConsoleApplication1
                             }
                             Console.WriteLine("debut extraction fichier de conf");
                             conf = Conf.Charger(confFile);
-                            if ((string)metaDatas.Mandatory[3].value == "" || (string)metaDatas.Mandatory[4].value == "")
+                            if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
                             {
+
                                 string fileMimeType = MimeSniffer.getMimeFromFile(file8);
                                 string[] extractors = conf.extractorsByType(fileMimeType);
+                                for (int i = 0; i < extractors.Length; i++)
+                                {
+                                    MetaDatas tempMetaDatas;
+                                    tempMetaDatas = GlobalExtract.extract(extractors[i], file8, (string)globalmetadatas.metadatas.Mandatory[2].value, "");
+                                    for (int j = 0; j < tempMetaDatas.Mandatory.Count; j++)
+                                    {
+                                        globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Mandatory[j].type, tempMetaDatas.Mandatory[j].value, true);
+                                    }
+                                    for (int j = 0; j < tempMetaDatas.Optional.Count; j++)
+                                    {
+                                        globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Optional[j].type, tempMetaDatas.Optional[j].value, false);
+                                    }
+                                    globalmetadatas.Enregistrer(XMLfile8);
+                                }
+                                if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
+                                {
+                                    Console.WriteLine("FICHIER IMPOSSIBLE A SYNCHRO");
+                                    break;
+                                }
+                                else
+                                {
+                                    globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
+                                    Console.WriteLine("type de fichier à synchro " + globalmetadatas.typename);
+                                }
                             }
-                            else globalmetadatas.typename = "fiducial_" + metaDatas.Mandatory[3].value + ":type_" + metaDatas.Mandatory[4].value;
-                            
+                            else globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
                             globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
                             globalmetadatas.Enregistrer(XMLfile8);
+
+
                         }
                         catch (NoPathFoundException e)
                         {

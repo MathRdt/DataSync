@@ -21,14 +21,14 @@ using System.Text;
 
 namespace ConsoleApplication1
 {
-    class Extract_PDF
+    public class Extract_PDF
     {
         /// <summary>
         /// //fonction qui extrait un pdf en chaine de caractère
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private static string ExtractTextFromPdf(string path)
+        public static string ExtractTextFromPdf(string path)
         {
             PDDocument doc = null;
             try
@@ -147,7 +147,7 @@ namespace ConsoleApplication1
         /// <param name="path"></param>
         /// <param name="NameToSearch"></param>
         /// <returns></returns>
-        private static bool SearchTitle(string path, string NameToSearch)
+        public static bool SearchTitle(string path, string NameToSearch)
         {
             FileInfo oFileInfo = new FileInfo(path);
             string name = oFileInfo.Name; //recupere nom fichier
@@ -167,7 +167,7 @@ namespace ConsoleApplication1
         /// <param name="path"></param>
         /// <param name="NameToSearch"></param>
         /// <returns></returns>
-        private static bool SearchWord(string path, string NameToSearch)
+        public static bool SearchWord(string path, string NameToSearch)
         {
             string chainePdf = ExtractTextFromPdf(path); //extrait le pdf en chaine de caractère
             string chainepdf = chainePdf.ToLower();//met le pdf en minuscule
@@ -185,7 +185,7 @@ namespace ConsoleApplication1
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private static string SearchName(string path)
+        public static string SearchName(string path)
         {
             string chainePdf = ExtractTextFromPdf(path); //extrait le pdf en chaine de caractère
             string chainepdf = chainePdf.ToLower();//met le pdf en minuscule
@@ -225,7 +225,7 @@ namespace ConsoleApplication1
         /// <param name="path"></param>
         /// <param name="metaData"></param>
         /// <returns></returns>
-        private static string SearchMetaData(string path, string metaData)
+        public static string SearchMetaData(string path, string metaData)
         {
             string chainePdf = ExtractTextFromPdf(path); //extrait le pdf en chaine de caractère
             string chainepdf = chainePdf.ToLower();//met le pdf en minuscule
@@ -265,7 +265,7 @@ namespace ConsoleApplication1
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private static string SearchSurname(string path)
+        public static string SearchSurname(string path)
         {
             string chainePdf = ExtractTextFromPdf(path); //extrait le pdf en chaine de caractère
             string chainepdf = chainePdf.ToLower();//met le pdf en minuscule

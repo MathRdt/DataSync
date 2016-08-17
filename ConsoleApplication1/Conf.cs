@@ -85,15 +85,15 @@ namespace ConsoleApplication1
             int i = 0;
 
             GlobalMetaDatas globalmetadatas = GlobalMetaDatas.Charger(fileName);
-            MetaDatas metadatas = globalmetadatas.metadatas;
+            
 
             if (mandatory == true)
             {
-                for (i = 0; i < metadatas.Mandatory.Count; i++)
+                for (i = 0; i < globalmetadatas.metadatas.Mandatory.Count; i++)
                 {
-                    if (metadatas.Mandatory[i].type == typeMetaData)
+                    if (globalmetadatas.metadatas.Mandatory[i].type == typeMetaData)
                     {
-                        metadatas.Mandatory[i].value = valueMetaData;
+                        globalmetadatas.metadatas.Mandatory[i].value = valueMetaData;
                         break;
                     }
                 }
@@ -101,11 +101,11 @@ namespace ConsoleApplication1
 
             else
             {
-                for (i = 0; i < metadatas.Optional.Count; i++)
+                for (i = 0; i < globalmetadatas.metadatas.Optional.Count; i++)
                 {
-                    if (metadatas.Optional[i].type == typeMetaData)
+                    if (globalmetadatas.metadatas.Optional[i].type == typeMetaData)
                     {
-                        metadatas.Optional[i].value = valueMetaData;
+                        globalmetadatas.metadatas.Optional[i].value = valueMetaData;
                         break;
                     }
                 }
@@ -142,7 +142,7 @@ namespace ConsoleApplication1
                 i++;
             }
 
-            List<Famille> listFamilles = null;
+            List<Famille> listFamilles = new List<Famille>();
             Famille famille = new Famille();
 
             for (j = 0; j < this.applications[i].typeInfos.Count; j++)
@@ -169,11 +169,7 @@ namespace ConsoleApplication1
                                             famille.addSousFamille(sousFamilleValue);
                                         }
                                         else {
-                                            if (listFamilles == null)
-                                            {
-                                                listFamilles = new List<Famille>();
-                                            }
-
+                                            
                                             famille = new Famille(familleValue, sousFamilleValue);
                                             listFamilles.Add(famille);
 
@@ -188,7 +184,7 @@ namespace ConsoleApplication1
                     }
                 } 
             }
-            if (!famille.name.Equals(listFamilles[listFamilles.Count - 1].name))
+            if (listFamilles.Count ==0 ||!famille.name.Equals(listFamilles[listFamilles.Count - 1].name))
             {
                 listFamilles.Add(famille);
             }

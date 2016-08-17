@@ -10,16 +10,17 @@ namespace ConsoleApplication1
     public partial class Form1 : Form
     {
         public List<Famille> listFamilles;
-        public string[] metadatasFromManual=new string[10];
+        public MetaDatas metadatasFromManual=new MetaDatas();
        
-        public void fillForm (string[] metadatas)
+        public void fillForm (MetaDatas metadatas)
         {
-            metadatas.CopyTo(metadatasFromManual,0);
+            metadatasFromManual = metadatas;
+           
             InitializeComponent();
             int i = 0;
             
-            int length = metadatas.Length;
-            if(length < 3)
+            int length = metadatas.Mandatory.Count;
+            if((string)metadatasFromManual.Mandatory[0].value == "" || (string)metadatasFromManual.Mandatory[1].value == "" || (string)metadatasFromManual.Mandatory[2].value == "")
             {
                 Console.WriteLine("votre fichier doit être placé dans un dossier Fidusync/Branche/Société/Application");
                 return;
@@ -27,12 +28,18 @@ namespace ConsoleApplication1
 
             //branche, société, application ne peuvent pas être modifié par l'utilisateur
             //affichage de ces méta-données
-            labelValueBranche.Text = metadatas[0];
-            labelValueSociete.Text = metadatas[1];
-            labelValueApplication.Text = metadatas[2];
-            labelValueAuteur.Text = metadatas[2];
+            labelValueBranche.Text = (string)metadatasFromManual.Mandatory[0].value;
+            labelValueSociete.Text = (string)metadatasFromManual.Mandatory[1].value;
+            labelValueApplication.Text = (string)metadatasFromManual.Mandatory[2].value;
+            labelValueAuteur.Text = (string)metadatasFromManual.Mandatory[2].value;
 
-            if (length > 3)
+            string confFile = "confUpdate.xml";
+            string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\";
+            confFile = chemin + confFile;
+            Conf conf = Conf.Charger(confFile);
+            listFamilles = conf.getListFamilles((string)metadatasFromManual.Mandatory[2].value);
+
+            if ((string)metadatasFromManual.Mandatory[3].value != "")
             {
                 //si la famille a été trouvé suppression de la liste déroulante
                 comboBoxFamille.Dispose();
@@ -44,12 +51,15 @@ namespace ConsoleApplication1
                 textbox45.Height = 30;
                 this.Controls.Add(textbox45);
                 //ce label correspond à la méta-données famille qui est la 4eme de la liste
-                textbox45.Text = metadatas[3];
+                textbox45.Text = (string)metadatasFromManual.Mandatory[3].value;
             }
             else
             {
                 //si la famille n'a pas été trouvé proposition des famille sous forme de menu déroulant
                 comboBoxFamille.Items.Clear();
+
+
+                
                 for ( i = 0; i < listFamilles.Count; i++)
                 {
                     comboBoxFamille.Items.Add(listFamilles[i].name);
@@ -58,7 +68,7 @@ namespace ConsoleApplication1
 
 
             //si la sous famille n'existe pas l'utilisateur choisi une sous-famille parmi la liste des sous-familles existantes 
-            if (length > 4)
+            if ((string)metadatasFromManual.Mandatory[4].value != "")
             {
                 //si la sous-famille est connue suppression de la liste déroulante
                 comboBoxSousFamille.Dispose();
@@ -70,7 +80,7 @@ namespace ConsoleApplication1
                 textbox45.Height = 30;
                 this.Controls.Add(textbox45);
                 //si l'on connait la sous-famille elle est la 5eme string de la liste
-                textbox45.Text = metadatas[4];
+                textbox45.Text = (string)metadatasFromManual.Mandatory[4].value;
 
             }
             else
@@ -130,39 +140,17 @@ namespace ConsoleApplication1
             if (MessageBox.Show("Etes-vous sûr de vouloir quitter ?", "Quitter",
          MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                if (metadatasFromManual == null) {
-                metadatasFromManual[0] = labelValueBranche.Text;
-                metadatasFromManual[1] = labelValueSociete.Text;
-                metadatasFromManual[2] = labelValueApplication.Text;
-
-                metadatasFromManual[3] = comboBoxFamille.Text;
-                metadatasFromManual[4] = comboBoxSousFamille.Text;
-
-                metadatasFromManual[5] = textBoxTitre.Text;
-                metadatasFromManual[6] = textBoxDescription.Text;
-                metadatasFromManual[7] = labelValueApplication.Text;
-                metadatasFromManual[8] = textBoxNomClient.Text;
-                metadatasFromManual[9] = textBoxPrenomClient.Text;
-                }
-                else
-                {
-                    Console.WriteLine("COUCOU");
-                    if (metadatasFromManual.Length < 5)
+                    if ((string)metadatasFromManual.Mandatory[4].value != "")
                     {
-                        if (metadatasFromManual.Length < 4)
+                        if ((string)metadatasFromManual.Mandatory[3].value != "")
                         {
-                            metadatasFromManual[3] = comboBoxFamille.Text;
+                            metadatasFromManual.changeMetaData("fiducial:domainContainerFamille", comboBoxFamille.Text, true);
                         }
-                        metadatasFromManual[4] = comboBoxSousFamille.Text;
+                    metadatasFromManual.changeMetaData("fiducial:domainContainerSousFamille", comboBoxSousFamille.Text, true);
                     }
-                    metadatasFromManual[5] = textBoxTitre.Text;
-                    metadatasFromManual[6] = textBoxDescription.Text;
-                    metadatasFromManual[7] = labelValueApplication.Text;
-                    metadatasFromManual[8] = textBoxNomClient.Text;
-                    metadatasFromManual[9] = textBoxPrenomClient.Text;
-
-
-                }
+                metadatasFromManual.changeMetaData("cm:title", textBoxTitre.Text, false);
+                metadatasFromManual.changeMetaData("cm:description", textBoxDescription.Text, false);
+                
                 Close();
             }
         }
