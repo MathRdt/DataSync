@@ -29,3 +29,6 @@ C:\Users\adminprojetindus\Documents\projet indus\chemin\Extracteur_pdf\Extracteu
 C:\Users\adminprojetindus\Documents\projet indus\chemin\Extracteur_pdf\Extracteur_pdf\obj\Debug\Extracteur_pdf.csprojResolveAssemblyReference.cache
 C:\Users\adminprojetindus\Documents\projet indus\chemin\Extracteur_pdf\Extracteur_pdf\obj\Debug\Extracteur_pdf.exe
 C:\Users\adminprojetindus\Documents\projet indus\chemin\Extracteur_pdf\Extracteur_pdf\obj\Debug\Extracteur_pdf.pdb
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\Extracteur_pdf\Extracteur_pdf\bin\Debug\Extracteur_pdf.exe.config
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\Extracteur_pdf\Extracteur_pdf\obj\Debug\Extracteur_pdf.exe
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\Extracteur_pdf\Extracteur_pdf\obj\Debug\Extracteur_pdf.pdb

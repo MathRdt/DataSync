@@ -290,23 +290,16 @@ namespace ConsoleApplication1
                                 break;
                             }
                             Console.WriteLine("debut extraction fichier de conf");
-
-                            globalmetadatas.typename = "fiducial_" + metaDatas.Mandatory[3].value + ":type_" + metaDatas.Mandatory[4].value;
-
                             conf = Conf.Charger(confFile);
+                            if ((string)metaDatas.Mandatory[3].value == "" || (string)metaDatas.Mandatory[4].value == "")
+                            {
+                                string fileMimeType = MimeSniffer.getMimeFromFile(file8);
+                                string[] extractors = conf.extractorsByType(fileMimeType);
+                            }
+                            else globalmetadatas.typename = "fiducial_" + metaDatas.Mandatory[3].value + ":type_" + metaDatas.Mandatory[4].value;
+                            
                             globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
                             globalmetadatas.Enregistrer(XMLfile8);
-
-                            string fileMimeType = MimeSniffer.getMimeFromFile(file8);
-                            Console.WriteLine(fileMimeType);
-                            string[] extractors = conf.extractorsByType(fileMimeType);
-
-                            for (int i = 0; i < extractors.Length; i++)
-                            {
-                                Console.WriteLine(extractors[i]);
-                            }
-
-
                         }
                         catch (NoPathFoundException e)
                         {

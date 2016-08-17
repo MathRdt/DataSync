@@ -6,3 +6,6 @@ C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\Extrac
 C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\obj\Debug\ExtracteurPourOdt.csprojResolveAssemblyReference.cache
 C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\obj\Debug\ExtracteurPourOdt.exe
 C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourOdt\ExtracteurPourOdt\obj\Debug\ExtracteurPourOdt.pdb
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ExtracteurPourOdt\ExtracteurPourOdt\bin\Debug\ExtracteurPourOdt.exe.config
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ExtracteurPourOdt\ExtracteurPourOdt\obj\Debug\ExtracteurPourOdt.exe
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ExtracteurPourOdt\ExtracteurPourOdt\obj\Debug\ExtracteurPourOdt.pdb

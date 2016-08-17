@@ -2,8 +2,6 @@
 {
     public enum Extracteur
     {
-        Chemin,
-        Binaire,
         XML,
         OCR,
         PDF,
@@ -11,6 +9,7 @@
         Odt,
         Excel,
         Calc,
+        Text,
         Manuel
     }
 }

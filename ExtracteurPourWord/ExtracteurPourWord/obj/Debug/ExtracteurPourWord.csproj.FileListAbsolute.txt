@@ -39,3 +39,6 @@ C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourWord\Extra
 C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourWord\ExtracteurPourWord\bin\Debug\jempbox-1.8.2.dll
 C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourWord\ExtracteurPourWord\bin\Debug\junit.dll
 C:\Users\adminprojetindus\Documents\projet indus\chemin\ExtracteurPourWord\ExtracteurPourWord\bin\Debug\pdfbox-1.8.2.dll
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ExtracteurPourWord\ExtracteurPourWord\bin\Debug\ExtracteurPourWord.exe.config
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ExtracteurPourWord\ExtracteurPourWord\obj\Debug\ExtracteurPourWord.exe
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ExtracteurPourWord\ExtracteurPourWord\obj\Debug\ExtracteurPourWord.pdb
