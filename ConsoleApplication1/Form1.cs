@@ -49,7 +49,23 @@ namespace ConsoleApplication1
                 this.Controls.Add(textbox45);
                 //ce label correspond à la méta-données famille qui est la 4eme de la liste
                 textbox45.Text = (string)metadatasFromManual.Mandatory[3].value;
-            }
+                if ((string)metadatasFromManual.Mandatory[4].value == "")
+                {
+                    comboBoxSousFamille.Items.Clear();
+                    for (int j=0;j < listFamilles.Count; j++)
+                    {
+                        if(listFamilles[j].name == (string)metadatasFromManual.Mandatory[3].value)
+                        {
+                            for (int k = 0; k < listFamilles[j].sousFamille.Count; k++)
+                            {
+                                comboBoxSousFamille.Items.Add(listFamilles[j].sousFamille[k]);
+                            }
+                        }
+                    }
+                    return;
+                }
+
+                }
             else
             {
                 //si la famille n'a pas été trouvé proposition des famille sous forme de menu déroulant

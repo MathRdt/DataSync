@@ -35,44 +35,35 @@ namespace ConsoleApplication1
 
                     if (globalmetadatas.isXMLComplete())
                     {
-                        Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES XML");
+                        //Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES XML");
                         return true;
                     }
                 }
 
-                for (int i = 0; i < globalmetadatas.metadatas.Mandatory.Count; i++)
-                {
-                    Console.WriteLine(globalmetadatas.metadatas.Mandatory[i].type);
-                    Console.WriteLine(globalmetadatas.metadatas.Mandatory[i].value);
-                }
-
-                Console.WriteLine("debut extraction chemin");
+                // Debut extraction chemin
                 string[] stringPath = ExtractPath.conversion_path_xml(file);
                 string[] stringMetaDatas = ExtractPath.getMetaData(stringPath);
-                //for (int i = 0; i < stringMetaDatas.Length; i++)
-                //{
-                //    Console.WriteLine("metadonnee " + i + " : " + stringMetaDatas[i]);
-                //}
+                
                 ExtractPath.fillPathMetaDatas(stringMetaDatas, globalmetadatas.metadatas);
                 globalmetadatas.Enregistrer(XMLfile);
                 if (ReadyToSync.isReadyToSync())
                 {
-                    Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES CHEMIN");
+                    //Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES CHEMIN");
                     return true;
                 }
-                Console.WriteLine("debut extraction fichier de conf");
-                Console.WriteLine(Program.confFile);
+
+                // Debut extraction meta données fichier de conf
                 conf = Conf.Charger(Program.confFile);
                 if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
                 {
 
-                    string fileMimeType = MimeSniffer.getMimeFromFile(file);
-                    Console.WriteLine(fileMimeType);
+                    //string fileMimeType = MimeSniffer.getMimeFromFile(file);
+                    string fileMimeType = MimeTypes.GetContentType(file);
                     string[] extractors = conf.extractorsByType(fileMimeType);
                     for (int i = 0; i < extractors.Length; i++)
                     {
                         MetaDatas tempMetaDatas;
-                        tempMetaDatas = GlobalExtract.extract(extractors[i], file, (string)globalmetadatas.metadatas.Mandatory[2].value, "");
+                        tempMetaDatas = GlobalExtract.extract(extractors[i], file, (string)globalmetadatas.metadatas.Mandatory[2].value, (string)globalmetadatas.metadatas.Mandatory[3].value);
                         for (int j = 0; j < tempMetaDatas.Mandatory.Count; j++)
                         {
                             globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Mandatory[j].type, tempMetaDatas.Mandatory[j].value, true);
@@ -81,29 +72,24 @@ namespace ConsoleApplication1
                         {
                             globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Optional[j].type, tempMetaDatas.Optional[j].value, false);
                         }
-                        if ((string)globalmetadatas.metadatas.Mandatory[3].value != "" && (string)globalmetadatas.metadatas.Mandatory[4].value != "")
+                        if ((string)globalmetadatas.metadatas.Mandatory[3].value != "" && (string)globalmetadatas.metadatas.Mandatory[4].value != "" && !extractors[i].Equals("Manuel") )
                         {
+                            GlobalExtract.extract("Manuel", file, (string)globalmetadatas.metadatas.Mandatory[2].value, (string)globalmetadatas.metadatas.Mandatory[3].value);
                             break;
                         }
                     }
 
                     globalmetadatas.Enregistrer(XMLfile);
-
-                    for (int i = 0; i < globalmetadatas.metadatas.Mandatory.Count; i++)
-                    {
-                        Console.WriteLine("metadonnee " + i + " : " + globalmetadatas.metadatas.Mandatory[i].value);
-                    }
-
-
+                    
                     if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
                     {
-                        Console.WriteLine("FICHIER IMPOSSIBLE A SYNCHRO");
+                        //Console.WriteLine("FICHIER IMPOSSIBLE A SYNCHRO");
                         return false;
                     }
                     else
                     {
                         globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
-                        Console.WriteLine("type de fichier à synchro " + globalmetadatas.typename);
+                        //Console.WriteLine("type de fichier à synchro " + globalmetadatas.typename);
                     }
                 }
                 else globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
@@ -312,12 +298,6 @@ namespace ConsoleApplication1
                         stringPath = ExtractPath.conversion_path_xml(file6);
                        
                         stringMetaDatas = ExtractPath.getMetaData(stringPath);
-
-                        //string[] stringMetadaDatasOnlyUntilApp = new string[3];
-                        //stringMetadaDatasOnlyUntilApp[0] = stringMetaDatas[0];
-                        //stringMetadaDatasOnlyUntilApp[1] = stringMetaDatas[1];
-                        //stringMetadaDatasOnlyUntilApp[2] = stringMetaDatas[2];
-
                         conf = Conf.Charger(confFile);
                         List<Famille> listFamilles = conf.getListFamilles("App1");
 
@@ -341,18 +321,17 @@ namespace ConsoleApplication1
 
                         stringMetaDatas = ExtractPath.getMetaData(stringPath);
                         Form1 form2 = new Form1();
-                        //form2.fillForm(stringMetaDatas);
                         System.Windows.Forms.Application.Run(form2);
-                        //for(int i = 0; i< form2.metadatasFromManual.Length; i++)
-                        //{
-                        //    Console.WriteLine(form2.metadatasFromManual[i]);
-                        //}
 
                         break;
 
                     case 8:
-                        string file = partialPath + "test.txt";
+                        string file = partialPath + "test.xml";
                         Program.ExtractMetaDatas(file);
+                        break;
+                    case 9:
+                        string file9 = partialPath + "recette\\testDocx.docx.xml";
+                        Program.ExtractMetaDatas(file9);
                         break;
                 }
                 do
@@ -366,5 +345,4 @@ namespace ConsoleApplication1
             } while (UserEntry != "n");
         }
     }
-
 }

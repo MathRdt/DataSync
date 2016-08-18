@@ -179,6 +179,7 @@
     <Compile Include="Extract_ODS.cs" />
     <Compile Include="Extract_ODT.cs" />
     <Compile Include="Extract_Word.cs" />
+    <Compile Include="MimeTypes.cs" />
     <Compile Include="ReadyToSync.cs" />
     <Compile Include="GlobalExtract.cs" />
     <Compile Include="Famille.cs" />
