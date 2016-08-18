@@ -32,11 +32,8 @@ namespace ConsoleApplication1
             labelValueSociete.Text = (string)metadatasFromManual.Mandatory[1].value;
             labelValueApplication.Text = (string)metadatasFromManual.Mandatory[2].value;
             labelValueAuteur.Text = (string)metadatasFromManual.Mandatory[2].value;
-
-            string confFile = "confUpdate.xml";
-            string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\";
-            confFile = chemin + confFile;
-            Conf conf = Conf.Charger(confFile);
+            
+            Conf conf = Conf.Charger(Program.confFile);
             listFamilles = conf.getListFamilles((string)metadatasFromManual.Mandatory[2].value);
 
             if ((string)metadatasFromManual.Mandatory[3].value != "")
@@ -136,13 +133,12 @@ namespace ConsoleApplication1
         {
             //si oui la fenêtre se ferme
             //sinon on revient sur la page
-            Console.WriteLine("COUCOU");
             if (MessageBox.Show("Etes-vous sûr de vouloir quitter ?", "Quitter",
          MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                    if ((string)metadatasFromManual.Mandatory[4].value != "")
+                    if ((string)metadatasFromManual.Mandatory[4].value == "")
                     {
-                        if ((string)metadatasFromManual.Mandatory[3].value != "")
+                        if ((string)metadatasFromManual.Mandatory[3].value == "")
                         {
                             metadatasFromManual.changeMetaData("fiducial:domainContainerFamille", comboBoxFamille.Text, true);
                         }
@@ -150,7 +146,13 @@ namespace ConsoleApplication1
                     }
                 metadatasFromManual.changeMetaData("cm:title", textBoxTitre.Text, false);
                 metadatasFromManual.changeMetaData("cm:description", textBoxDescription.Text, false);
-                
+
+
+                for (int i = 0; i < metadatasFromManual.Mandatory.Count; i++)
+                {
+                    Console.WriteLine("metadonnee from manual " + i + " : " + metadatasFromManual.Mandatory[i].value);
+                }
+
                 Close();
             }
         }

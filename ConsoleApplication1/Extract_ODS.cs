@@ -183,44 +183,6 @@ namespace ConsoleApplication1
         }
 
         /// <summary>
-        /// fonction qui cherche le nom dans le document
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private static string SearchName(string path)
-        {
-            string chaineOds = OdsToString(path); //extrait le pdf en chaine de caractère
-            string chaineods = chaineOds.ToLower();//met le pdf en minuscule
-            string chaineOdsSansAccent = RemoveAccent(chaineods);
-            int result = chaineOdsSansAccent.IndexOf("nom"); //regarde si le mot qu'on cherche est sous-chaine du string pdf
-            string name = " ";
-
-            if (result > 0 || result == 0) //on cherche le nom si le mot nom est présent dans le document
-            {
-                int i = 0;
-                for (i = 0; i < 20; i++)
-                {
-                    if (chaineOdsSansAccent[result + i] == ':') break;
-                }
-                int j = 0;
-                for (j = i + 1; j < 20; j++)
-                {
-                    if (chaineOdsSansAccent[result + j] != ' ') break; //trouve le début du nom
-                }
-                int k = 0;
-                for (k = j + 1; k < 20; k++)
-                {
-                    if (chaineOdsSansAccent[result + k] == ' ' || chaineOdsSansAccent[result + k] == '\n' || chaineOdsSansAccent[result + k] == '\r' || chaineOdsSansAccent[result + k] == '\t') break; //trouve fin du nom
-                }
-                name = chaineods.Substring(result + j, k - j + 1); //extrait le nom
-
-            }
-            else name = "nom non trouvé";
-
-            return name;
-        }
-
-        /// <summary>
         /// fonction qui cherche une méta-données en particulier
         /// fonction qui cherche le nom dans le document
         /// </summary>
@@ -260,94 +222,6 @@ namespace ConsoleApplication1
             else name = "nom non trouvé";
 
             return name;
-        }
-
-        /// <summary>
-        /// fonction qui cherche le prénom dans le document
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private static string SearchSurname(string path)
-        {
-            string chaineOds = OdsToString(path); //extrait le pdf en chaine de caractère
-            string chaineods = chaineOds.ToLower();//met le pdf en minuscule
-            string chaineOdsSansAccent = RemoveAccent(chaineods);
-            int result = chaineOdsSansAccent.IndexOf("prenom"); //regarde si le mot qu'on cherche est sous-chaine du string pdf
-            string surname = " ";
-            if (result > 0 || result == 0) //on cherche le nom si le mot nom est présent dans le document
-            {
-                int i = 0;
-                for (i = 0; i < 20; i++)
-                {
-                    if (chaineOdsSansAccent[result + i] == ':') break;
-                }
-                int j = 0;
-                for (j = i + 1; j < 20; j++)
-                {
-                    if (chaineOdsSansAccent[result + j] != ' ') break; //trouve le début du nom
-                }
-                int k = 0;
-                for (k = j + 1; k < 20; k++)
-                {
-                    if (chaineOdsSansAccent[result + k] == ' ' || chaineOdsSansAccent[result + k] == '\n' || chaineOdsSansAccent[result + k] == '\r' || chaineOdsSansAccent[result + k] == '\t') break; //trouve fin du nom
-                }
-                surname = chaineods.Substring(result + j, k - j + 1); //extrait le nom
-
-            }
-            else surname = "prenom non présent";
-
-            return surname;
-        }
-
-        static void Main(string[] args)
-        {
-            string path = "C:\\Users\\adminprojetindus\\Documents\\projet indus\\testXlsx.xlsx";
-            string odsToString = " ";
-
-            try
-            {
-                odsToString = OdsToString(path);
-                Console.WriteLine("resultat : " + odsToString);
-            }
-            catch(SpreadsheetException e)
-            {
-                Console.WriteLine("IOException source: {0}", e.Source);
-            }
-
-            //regarde si le mot à cherche est dans le titre du pdf
-            bool isTitle = SearchTitle(path, "Test");
-            Console.WriteLine("si true c'est que c'est dans le titre : " + isTitle);
-
-            //regarde si le momt à chercher est dans le pdf
-            string aChercheText = "FacTUre";
-            bool isPdf = SearchWord(path, aChercheText);
-            Console.WriteLine("trouvé dans texte : si true oui " + isPdf);
-
-            //cherche si un nom est dans le document
-            string name = SearchName(path);
-            Console.WriteLine(name);
-
-            //cherche si un prénom est dans le document
-            string surname = SearchSurname(path);
-            Console.WriteLine(surname);
-
-            //test cherche si le titre fait partie d'une liste
-            string[] listNom = { "titi", "ff", "ods", "toto" };
-            string test = SearchTitleInList(path, listNom);
-            Console.Write("test liste titre : " + test + "\n");
-
-            //test cherche si un mot du pdf fait partie d'une liste
-            string[] listNomPdf = { "gzzze", "bnfk", "gh", "gh" };
-            string testPdf = SearchWordInList(path, listNomPdf);
-            Console.Write("test liste dans texte: " + testPdf + "\n");
-
-            //test cherche méta-données
-            string metaData = "postal";
-            string retour = SearchMetaData(path, metaData);
-            Console.WriteLine("code postal : " + retour + "\n");
-
-            string name2 = SearchName(path);
-            Console.WriteLine("test nom : " + name2);
         }
     }
 }

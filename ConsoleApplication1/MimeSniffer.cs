@@ -117,6 +117,33 @@ namespace ConsoleApplication1
                 System.IntPtr mimeTypePtr = new IntPtr(mimetype);
                 string mime = Marshal.PtrToStringUni(mimeTypePtr);
                 Marshal.FreeCoTaskMem(mimeTypePtr);
+
+                if (mime.Equals("application/x-zip-compressed"))
+                {
+                    int i = filename.LastIndexOf(".");
+                    string fileExtension = filename.Substring(i+1);
+                    switch (fileExtension)
+                    {
+                        case "odt":
+                            mime = "application/odt";
+                            break;
+                        case "ods":
+                        case "xls":
+                        case "xlsm":
+                        case "xlsx":
+                            mime = "application/calc";
+                            break;
+                        case "doc":
+                        case "docm":
+                        case "docx":
+                            mime = "application/word";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+
                 return mime;
             }
             catch (Exception e)

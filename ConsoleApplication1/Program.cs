@@ -4,9 +4,122 @@ using System.IO;
 
 namespace ConsoleApplication1
 {
-
+    
     class Program
     {
+
+        public static string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\";
+        public static string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\recette\paie\";
+        public static string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\";
+        public static string confFile = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\confUpdate.xml";
+
+
+        public static bool ExtractMetaDatas (string file)
+        {
+            int extension = file.LastIndexOf(".");
+            string XMLfile = file.Remove(extension);
+            XMLfile = XMLfile + ".xml";
+            GlobalMetaDatas globalmetadatas = new GlobalMetaDatas();
+            Conf conf;
+            try
+            {
+                if (!File.Exists(XMLfile))
+                {
+                    GlobalMetaDatas.createXML(XMLfile);
+                    globalmetadatas = GlobalMetaDatas.Charger(XMLfile);
+                    //Console.WriteLine("fichier " + XMLfile8 + " a été créé");
+                }
+                else
+                {
+                    globalmetadatas = GlobalMetaDatas.Charger(XMLfile);
+
+                    if (globalmetadatas.isXMLComplete())
+                    {
+                        Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES XML");
+                        return true;
+                    }
+                }
+
+                for (int i = 0; i < globalmetadatas.metadatas.Mandatory.Count; i++)
+                {
+                    Console.WriteLine(globalmetadatas.metadatas.Mandatory[i].type);
+                    Console.WriteLine(globalmetadatas.metadatas.Mandatory[i].value);
+                }
+
+                Console.WriteLine("debut extraction chemin");
+                string[] stringPath = ExtractPath.conversion_path_xml(file);
+                string[] stringMetaDatas = ExtractPath.getMetaData(stringPath);
+                //for (int i = 0; i < stringMetaDatas.Length; i++)
+                //{
+                //    Console.WriteLine("metadonnee " + i + " : " + stringMetaDatas[i]);
+                //}
+                ExtractPath.fillPathMetaDatas(stringMetaDatas, globalmetadatas.metadatas);
+                globalmetadatas.Enregistrer(XMLfile);
+                if (ReadyToSync.isReadyToSync())
+                {
+                    Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES CHEMIN");
+                    return true;
+                }
+                Console.WriteLine("debut extraction fichier de conf");
+                Console.WriteLine(Program.confFile);
+                conf = Conf.Charger(Program.confFile);
+                if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
+                {
+
+                    string fileMimeType = MimeSniffer.getMimeFromFile(file);
+                    Console.WriteLine(fileMimeType);
+                    string[] extractors = conf.extractorsByType(fileMimeType);
+                    for (int i = 0; i < extractors.Length; i++)
+                    {
+                        MetaDatas tempMetaDatas;
+                        tempMetaDatas = GlobalExtract.extract(extractors[i], file, (string)globalmetadatas.metadatas.Mandatory[2].value, "");
+                        for (int j = 0; j < tempMetaDatas.Mandatory.Count; j++)
+                        {
+                            globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Mandatory[j].type, tempMetaDatas.Mandatory[j].value, true);
+                        }
+                        for (int j = 0; j < tempMetaDatas.Optional.Count; j++)
+                        {
+                            globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Optional[j].type, tempMetaDatas.Optional[j].value, false);
+                        }
+                        if ((string)globalmetadatas.metadatas.Mandatory[3].value != "" && (string)globalmetadatas.metadatas.Mandatory[4].value != "")
+                        {
+                            break;
+                        }
+                    }
+
+                    globalmetadatas.Enregistrer(XMLfile);
+
+                    for (int i = 0; i < globalmetadatas.metadatas.Mandatory.Count; i++)
+                    {
+                        Console.WriteLine("metadonnee " + i + " : " + globalmetadatas.metadatas.Mandatory[i].value);
+                    }
+
+
+                    if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
+                    {
+                        Console.WriteLine("FICHIER IMPOSSIBLE A SYNCHRO");
+                        return false;
+                    }
+                    else
+                    {
+                        globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
+                        Console.WriteLine("type de fichier à synchro " + globalmetadatas.typename);
+                    }
+                }
+                else globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
+                globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
+                globalmetadatas.Enregistrer(XMLfile);
+                return true;
+
+            }
+            catch (NoPathFoundException e)
+            {
+                Console.WriteLine("{0}", e);
+                return false;
+            }
+        }
+
+
         [STAThreadAttribute]
         private static void Main()
         {
@@ -33,15 +146,11 @@ namespace ConsoleApplication1
                 } while (!IsOk && UserEntry != "q" && num > 0 && num < 6);
 
 
-                string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\";
-                string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\recette\paie\";
-                string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\";
+                
                 GlobalMetaDatas globalmetadatas = new GlobalMetaDatas();
                 string[] stringPath;
                 string[] stringMetaDatas;
-                string confFile = "confUpdate.xml";
-                confFile = chemin + confFile;
-
+                
                 Conf conf;
 
 
@@ -242,100 +351,8 @@ namespace ConsoleApplication1
                         break;
 
                     case 8:
-                       
-                        string file8 = "testPourPdf.pdf";
-
-                        int extension8 = file8.LastIndexOf(".");
-                        string XMLfile8 = file8.Remove(extension8);
-                        XMLfile8 = XMLfile8 + ".xml";
-
-                        //Console.WriteLine(XMLfile8);
-                        file8 = partialPath + file8;
-                        XMLfile8 = partialPath + XMLfile8;
-
-
-
-                        try
-                        {
-                            if (!File.Exists(XMLfile8))
-                            {
-                                GlobalMetaDatas.createXML(XMLfile8);
-                                globalmetadatas = GlobalMetaDatas.Charger(XMLfile8);
-                                //Console.WriteLine("fichier " + XMLfile8 + " a été créé");
-                            }
-                            else
-                            {
-                                globalmetadatas = GlobalMetaDatas.Charger(XMLfile8);
-
-                                if (globalmetadatas.isXMLComplete())
-                                {
-                                    Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES XML");
-                                    break;
-                                }
-                            }
-
-                            for (int i = 0; i < globalmetadatas.metadatas.Mandatory.Count; i++)
-                            {
-                                Console.WriteLine(globalmetadatas.metadatas.Mandatory[i].type);
-                                Console.WriteLine(globalmetadatas.metadatas.Mandatory[i].value);
-                            }
-
-                            Console.WriteLine("debut extraction chemin");
-                            stringPath = ExtractPath.conversion_path_xml(file8);
-                            stringMetaDatas = ExtractPath.getMetaData(stringPath);
-                            //for (int i = 0; i < stringMetaDatas.Length; i++)
-                            //{
-                            //    Console.WriteLine("metadonnee " + i + " : " + stringMetaDatas[i]);
-                            //}
-                            ExtractPath.fillPathMetaDatas(stringMetaDatas, globalmetadatas.metadatas);
-                            globalmetadatas.Enregistrer(XMLfile8);
-                            if (ReadyToSync.isReadyToSync())
-                            {
-                                Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES CHEMIN");
-                                break;
-                            }
-                            Console.WriteLine("debut extraction fichier de conf");
-                            conf = Conf.Charger(confFile);
-                            if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
-                            {
-
-                                string fileMimeType = MimeSniffer.getMimeFromFile(file8);
-                                string[] extractors = conf.extractorsByType(fileMimeType);
-                                for (int i = 0; i < extractors.Length; i++)
-                                {
-                                    MetaDatas tempMetaDatas;
-                                    tempMetaDatas = GlobalExtract.extract(extractors[i], file8, (string)globalmetadatas.metadatas.Mandatory[2].value, "");
-                                    for (int j = 0; j < tempMetaDatas.Mandatory.Count; j++)
-                                    {
-                                        globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Mandatory[j].type, tempMetaDatas.Mandatory[j].value, true);
-                                    }
-                                    for (int j = 0; j < tempMetaDatas.Optional.Count; j++)
-                                    {
-                                        globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Optional[j].type, tempMetaDatas.Optional[j].value, false);
-                                    }
-                                    globalmetadatas.Enregistrer(XMLfile8);
-                                }
-                                if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
-                                {
-                                    Console.WriteLine("FICHIER IMPOSSIBLE A SYNCHRO");
-                                    break;
-                                }
-                                else
-                                {
-                                    globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
-                                    Console.WriteLine("type de fichier à synchro " + globalmetadatas.typename);
-                                }
-                            }
-                            else globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
-                            globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
-                            globalmetadatas.Enregistrer(XMLfile8);
-
-
-                        }
-                        catch (NoPathFoundException e)
-                        {
-                            Console.WriteLine("{0}", e);
-                        }
+                        string file = partialPath + "test.txt";
+                        Program.ExtractMetaDatas(file);
                         break;
                 }
                 do

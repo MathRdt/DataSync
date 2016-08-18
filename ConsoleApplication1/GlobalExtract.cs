@@ -11,12 +11,9 @@ namespace ConsoleApplication1
         public static MetaDatas extract (string extractType, string file, string app,string family)
         {
             MetaDatas metaDataValues =new MetaDatas();
-            string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\";
-            string confFile = "confUpdate.xml";
-            confFile = chemin + confFile;
             List<Famille> listFamilles;
             Conf conf;
-            conf = Conf.Charger(confFile);
+            conf = Conf.Charger(Program.confFile);
             listFamilles = conf.getListFamilles(app);
             string[] familles = new string[listFamilles.Count];
 
@@ -71,8 +68,42 @@ namespace ConsoleApplication1
                     string path = Extract_Word.WordToPdf(file);
                     metaDataValues = extract("PDF", path, app, family);
                     break;
+
+
                 case "Text":
+                    if (famille == "")
+                    {
+
+                        famille = Extract_text.SearchTitleInList(file, familles);
+                        if (famille == "")
+                        {
+                            famille = Extract_text.SearchWordInList(file, familles);
+                            if (famille == "") break;
+                        }
+                        metaDataValues.changeMetaData("fiducial:domainContainerFamille", famille, true);
+                    }
+                    for (int i = 0; i < listFamilles.Count; i++)
+                    {
+                        if (listFamilles[i].name.Equals(famille))
+                        {
+                            sousFamilles = new string[listFamilles[i].sousFamille.Count];
+                            for (int j = 0; j < listFamilles[i].sousFamille.Count; j++)
+                            {
+                                sousFamilles[j] = listFamilles[i].sousFamille[j];
+                            }
+                            break;
+                        }
+                    }
+                    sousFamille = Extract_text.SearchTitleInList(file, sousFamilles);
+                    if (sousFamille == "")
+                    {
+                        sousFamille = Extract_text.SearchWordInList(file, sousFamilles);
+                        if (sousFamille == "") break;
+                    }
+                    metaDataValues.changeMetaData("fiducial:domainContainerSousFamille", sousFamille, true);
                     break;
+
+
                 case "Odt":
                     if (famille == "")
                     {
@@ -107,8 +138,6 @@ namespace ConsoleApplication1
                     metaDataValues.changeMetaData("fiducial:domainContainerSousFamille", sousFamille, true);
                     break;
                 case "Calc":
-                    
-                case "Excel":
                     if (famille == "")
                     {
                         

@@ -130,6 +130,11 @@ namespace ConsoleApplication1
                     break;
                 }
             }
+            if(extractors == null)
+            {
+                extractors = new string[1];
+                extractors[0] = "Manuel";
+            }
             return extractors;
         }
 

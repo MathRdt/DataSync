@@ -34,19 +34,14 @@
             this.labelSociete = new System.Windows.Forms.Label();
             this.labelFamille = new System.Windows.Forms.Label();
             this.labelSousFamille = new System.Windows.Forms.Label();
-            this.labelNomClient = new System.Windows.Forms.Label();
-            this.labelPrenomClient = new System.Windows.Forms.Label();
             this.labelValueBranche = new System.Windows.Forms.Label();
             this.labelValueSociete = new System.Windows.Forms.Label();
-            this.textBoxNomClient = new System.Windows.Forms.TextBox();
-            this.textBoxPrenomClient = new System.Windows.Forms.TextBox();
             this.comboBoxFamille = new System.Windows.Forms.ComboBox();
             this.comboBoxSousFamille = new System.Windows.Forms.ComboBox();
             this.buttonAnnuler = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelApplication = new System.Windows.Forms.Label();
             this.labelValueApplication = new System.Windows.Forms.Label();
-            this.buttonokTest = new System.Windows.Forms.Button();
             this.labelTitre = new System.Windows.Forms.Label();
             this.labelDescription = new System.Windows.Forms.Label();
             this.labelAuteur = new System.Windows.Forms.Label();
@@ -110,28 +105,6 @@
             this.labelSousFamille.Text = "Sous-famille :";
             this.labelSousFamille.Click += new System.EventHandler(this.labelSousFamille_Click);
             // 
-            // labelNomClient
-            // 
-            this.labelNomClient.AutoSize = true;
-            this.labelNomClient.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNomClient.Location = new System.Drawing.Point(21, 315);
-            this.labelNomClient.Name = "labelNomClient";
-            this.labelNomClient.Size = new System.Drawing.Size(63, 13);
-            this.labelNomClient.TabIndex = 5;
-            this.labelNomClient.Text = "Nom client :";
-            this.labelNomClient.Click += new System.EventHandler(this.labelNomClient_Click);
-            // 
-            // labelPrenomClient
-            // 
-            this.labelPrenomClient.AutoSize = true;
-            this.labelPrenomClient.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPrenomClient.Location = new System.Drawing.Point(21, 347);
-            this.labelPrenomClient.Name = "labelPrenomClient";
-            this.labelPrenomClient.Size = new System.Drawing.Size(77, 13);
-            this.labelPrenomClient.TabIndex = 6;
-            this.labelPrenomClient.Text = "Prénom client :";
-            this.labelPrenomClient.Click += new System.EventHandler(this.labelPrenomClient_Click);
-            // 
             // labelValueBranche
             // 
             this.labelValueBranche.AutoSize = true;
@@ -150,21 +123,6 @@
             this.labelValueSociete.Size = new System.Drawing.Size(73, 13);
             this.labelValueSociete.TabIndex = 8;
             this.labelValueSociete.Text = "Value Société";
-            // 
-            // textBoxNomClient
-            // 
-            this.textBoxNomClient.Location = new System.Drawing.Point(114, 308);
-            this.textBoxNomClient.Name = "textBoxNomClient";
-            this.textBoxNomClient.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNomClient.TabIndex = 9;
-            this.textBoxNomClient.TextChanged += new System.EventHandler(this.textBoxNomClient_TextChanged);
-            // 
-            // textBoxPrenomClient
-            // 
-            this.textBoxPrenomClient.Location = new System.Drawing.Point(114, 340);
-            this.textBoxPrenomClient.Name = "textBoxPrenomClient";
-            this.textBoxPrenomClient.Size = new System.Drawing.Size(100, 20);
-            this.textBoxPrenomClient.TabIndex = 10;
             // 
             // comboBoxFamille
             // 
@@ -222,16 +180,6 @@
             this.labelValueApplication.Size = new System.Drawing.Size(89, 13);
             this.labelValueApplication.TabIndex = 16;
             this.labelValueApplication.Text = "Value Application";
-            // 
-            // buttonokTest
-            // 
-            this.buttonokTest.Location = new System.Drawing.Point(258, 142);
-            this.buttonokTest.Name = "buttonokTest";
-            this.buttonokTest.Size = new System.Drawing.Size(36, 29);
-            this.buttonokTest.TabIndex = 17;
-            this.buttonokTest.Text = "ok";
-            this.buttonokTest.UseVisualStyleBackColor = true;
-            this.buttonokTest.Click += new System.EventHandler(this.buttonokTest_Click);
             // 
             // labelTitre
             // 
@@ -299,19 +247,14 @@
             this.Controls.Add(this.labelAuteur);
             this.Controls.Add(this.labelDescription);
             this.Controls.Add(this.labelTitre);
-            this.Controls.Add(this.buttonokTest);
             this.Controls.Add(this.labelValueApplication);
             this.Controls.Add(this.labelApplication);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonAnnuler);
             this.Controls.Add(this.comboBoxSousFamille);
             this.Controls.Add(this.comboBoxFamille);
-            this.Controls.Add(this.textBoxPrenomClient);
-            this.Controls.Add(this.textBoxNomClient);
             this.Controls.Add(this.labelValueSociete);
             this.Controls.Add(this.labelValueBranche);
-            this.Controls.Add(this.labelPrenomClient);
-            this.Controls.Add(this.labelNomClient);
             this.Controls.Add(this.labelSousFamille);
             this.Controls.Add(this.labelFamille);
             this.Controls.Add(this.labelSociete);
@@ -333,19 +276,14 @@
         private System.Windows.Forms.Label labelSociete;
         private System.Windows.Forms.Label labelFamille;
         private System.Windows.Forms.Label labelSousFamille;
-        private System.Windows.Forms.Label labelNomClient;
-        private System.Windows.Forms.Label labelPrenomClient;
         private System.Windows.Forms.Label labelValueBranche;
         private System.Windows.Forms.Label labelValueSociete;
-        private System.Windows.Forms.TextBox textBoxNomClient;
-        private System.Windows.Forms.TextBox textBoxPrenomClient;
         private System.Windows.Forms.ComboBox comboBoxFamille;
         private System.Windows.Forms.ComboBox comboBoxSousFamille;
         private System.Windows.Forms.Button buttonAnnuler;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Label labelApplication;
         private System.Windows.Forms.Label labelValueApplication;
-        private System.Windows.Forms.Button buttonokTest;
         private System.Windows.Forms.Label labelTitre;
         private System.Windows.Forms.Label labelDescription;
         private System.Windows.Forms.Label labelAuteur;

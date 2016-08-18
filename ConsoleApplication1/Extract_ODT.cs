@@ -40,10 +40,7 @@ namespace ConsoleApplication1
                         texte = texte + " " + itemc.Text;
                     }
                 }
-                        
-                
             }
-            Console.WriteLine(texte);
             return texte;
         }
         /// <summary>
@@ -225,45 +222,7 @@ namespace ConsoleApplication1
             return surname;
         }
 
-        /// <summary>
-        /// fonction qui cherche le prénom dans le document
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private static string SearchSurname(string path)
-        {
-            TextDocument doc = new TextDocument();
-            doc.Load(path);
-            string chaineOdt = OdtToString(doc);
-            string chaineodt = chaineOdt.ToLower();//met le pdf en minuscule
-            string chaineOdtSansAccent = RemoveAccent(chaineodt);
-            int result = chaineOdtSansAccent.IndexOf("pre"); //regarde si le mot qu'on cherche est sous-chaine du string pdf
-
-            string surname = " ";
-            if (result > 0 || result == 0) //on cherche le nom si le mot nom est présent dans le document
-            {
-                int i = 0;
-                for (i = 0; i < 20; i++)
-                {
-                    if (chaineOdtSansAccent[result + i] == ':') break;
-                }
-                int j = 0;
-                for (j = i + 1; j < 20; j++)
-                {
-                    if (chaineOdtSansAccent[result + j] != ' ') break; //trouve le début du nom
-                }
-                int k = 0;
-                for (k = j + 1; k < 20; k++)
-                {
-                    if (chaineOdtSansAccent[result + k] == ' ' || chaineOdtSansAccent[result + k] == '\n' || chaineOdtSansAccent[result + k] == '\r' || chaineOdtSansAccent[result + k] == '\t') break; //trouve fin du nom
-                }
-                surname = chaineOdt.Substring(result + j, k - j + 1); //extrait le nom
-
-            }
-            else surname = "prenom non présent";
-            
-            return surname;
-        }
+        
 
         /// <summary>
         /// fonction qui cherche une méta-données en particulier
@@ -307,78 +266,6 @@ namespace ConsoleApplication1
             else name = "nom non trouvé";
 
             return name;
-        }
-
-        static void Main(string[] args)
-        {
-            string path = @"C:\Users\adminprojetindus\Documents\projet indus\testDocx.docx";
-            TextDocument doc = new TextDocument();
-            //doc.Load(path);
-            //var content = doc.Content;
-            //doc.SaveTo(@"C:\Users\adminprojetindus\Documents\projet indus\testOdt.odt");
-            //string result = OdtToString(doc);
-            string[] meta = { "baba", "prenom","ii"};
-            string[] metat = { "yyyy", "odt", "tegregst" };
-
-            try
-            {
-                string resultCompareN = SearchWordInList(path, meta);
-                Console.WriteLine("resultat recherche compare word in list : " + resultCompareN);
-            }
-            catch(IOException e)
-            {
-                Console.WriteLine("IOException source: {0}", e.Source);
-            }
-            try
-            {
-                string resultMeta = SearchMetaData(path, "pre");
-                Console.WriteLine("resultat recherche compare meta data : " + resultMeta);
-            }
-            catch(IOException e)
-            {
-                Console.WriteLine("IOException source: {0}", e.Source);
-            }
-
-           
-            try
-            {
-                bool word = SearchWord(path, "pre");
-                Console.WriteLine("cherche mot : " + word);
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("IOException source: {0}", e.Source);
-            }
-
-             
-            try
-            {
-                string name = SearchName(path);
-                Console.WriteLine("nom : " + name);
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("IOException source: {0}", e.Source);
-            }
-
-            try
-            {
-                string surname = SearchSurname(path);
-                Console.WriteLine("prénom : " + surname);
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("IOException source: {0}", e.Source);
-            }
-
-            bool title = SearchTitle(path, "test");
-            Console.WriteLine("cherche titre : " + title);
-
-            string resultT = SearchTitleInList(path, metat);
-            Console.WriteLine("resultat recherche compare title in list : " + resultT);
-
-
-            Console.WriteLine("Hello World");
         }
     }
 }

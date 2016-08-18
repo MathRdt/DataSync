@@ -44,19 +44,5 @@ namespace ConsoleApplication1
             //    }
             //}
         }
-
-        
-
-        static void Main(string[] args)
-        {
-            string path = @"C:\Users\adminprojetindus\Documents\projet indus\testDocx.docx";
-            string result = WordToPdf(path);
-            //utiliser ensuite les fonctions de Extracteur_pdf.WriteLine("resultat :" + result);
-
-            Console.WriteLine(result);
-
-            Console.WriteLine("Hello Word");
-            
-        }
     }
 }

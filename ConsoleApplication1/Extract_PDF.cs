@@ -297,47 +297,6 @@ namespace ConsoleApplication1
             return surname;
         }
 
-        static void Main(string[] args)
-        {
-            string path = @"C:\Users\adminprojetindus\Documents\projet indus\fichier\testPdf.pdf";
-            string aChercheTitre = "tést";
-
-            //sotcke pdf dans une chaine de caractère
-            string pdf = ExtractTextFromPdf(path);
-            Console.WriteLine("pdf : \n" + pdf);
-
-            //regarde si le mot à cherche est dans le titre du pdf
-            bool isTitle = SearchTitle(path,aChercheTitre);
-            Console.WriteLine("si true c'est que c'est dans le titre : " + isTitle);
-
-            //regarde si le momt à chercher est dans le pdf
-            string aChercheText = "FacTUre";
-            bool isPdf = SearchWord(path, aChercheText);
-            Console.WriteLine("trouvé dans texte : si true oui " + isPdf);
-
-            //cherche si un nom est dans le document
-            string name = SearchName(path);
-            Console.WriteLine(name);
-
-            //cherche si un prénom est dans le document
-            string surname = SearchSurname(path);
-            Console.WriteLine(surname);
-
-            //test cherche si le titre fait partie d'une liste
-            string[] listNom = { "toto", "titi","dfg", "tést" };
-            string test = SearchTitleInList(path, listNom);
-            Console.Write("test liste titre : " + test + "\n");
-
-            //test cherche si un mot du pdf fait partie d'une liste
-            string[] listNomPdf = { "PreNom", "titi", "gh","gh"};
-            string testPdf = SearchWordInList(path, listNomPdf);
-            Console.Write("test liste dans texte: " + testPdf + "\n");
-
-            //test cherche méta-données
-            string metaData = "postal";
-            string retour = SearchMetaData(path, metaData);
-            Console.WriteLine("code postal : " + retour + "\n");
-
-        }
+        
     }
 }
