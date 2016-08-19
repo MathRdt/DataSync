@@ -139,7 +139,7 @@ namespace ConsoleApplication1
             }
         }
 
-        public bool isXMLComplete()
+        public bool isComplete()
         {
             if (this.metadatas.Mandatory.Count == 0) return false;
             for(int i=0; i< this.metadatas.Mandatory.Count; i++)

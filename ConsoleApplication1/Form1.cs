@@ -163,12 +163,6 @@ namespace ConsoleApplication1
                 metadatasFromManual.changeMetaData("cm:title", textBoxTitre.Text, false);
                 metadatasFromManual.changeMetaData("cm:description", textBoxDescription.Text, false);
 
-
-                for (int i = 0; i < metadatasFromManual.Mandatory.Count; i++)
-                {
-                    Console.WriteLine("metadonnee from manual " + i + " : " + metadatasFromManual.Mandatory[i].value);
-                }
-
                 Close();
             }
         }

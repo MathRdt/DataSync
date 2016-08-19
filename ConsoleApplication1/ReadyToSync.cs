@@ -19,11 +19,6 @@ namespace ConsoleApplication1
             {
                 metaDataDone.Add(false);
             }
-            for (int i = 0; i < metaDataDone.Count; i++)
-            {
-                Console.WriteLine(ReadyToSync.metaDataDone[i]);
-            }
-
         }
         
         public static void record (int i)

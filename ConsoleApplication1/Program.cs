@@ -27,15 +27,13 @@ namespace ConsoleApplication1
                 {
                     GlobalMetaDatas.createXML(XMLfile);
                     globalmetadatas = GlobalMetaDatas.Charger(XMLfile);
-                    //Console.WriteLine("fichier " + XMLfile8 + " a été créé");
                 }
                 else
                 {
                     globalmetadatas = GlobalMetaDatas.Charger(XMLfile);
 
-                    if (globalmetadatas.isXMLComplete())
+                    if (globalmetadatas.isComplete())
                     {
-                        //Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES XML");
                         return true;
                     }
                 }
@@ -48,7 +46,6 @@ namespace ConsoleApplication1
                 globalmetadatas.Enregistrer(XMLfile);
                 if (ReadyToSync.isReadyToSync())
                 {
-                    //Console.WriteLine("DOCUMENT OK POUR SYNCHRO APRES CHEMIN");
                     return true;
                 }
 
@@ -56,8 +53,6 @@ namespace ConsoleApplication1
                 conf = Conf.Charger(Program.confFile);
                 if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
                 {
-
-                    //string fileMimeType = MimeSniffer.getMimeFromFile(file);
                     string fileMimeType = MimeTypes.GetContentType(file);
                     string[] extractors = conf.extractorsByType(fileMimeType);
                     for (int i = 0; i < extractors.Length; i++)
@@ -72,7 +67,7 @@ namespace ConsoleApplication1
                         {
                             globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Optional[j].type, tempMetaDatas.Optional[j].value, false);
                         }
-                        if ((string)globalmetadatas.metadatas.Mandatory[3].value != "" && (string)globalmetadatas.metadatas.Mandatory[4].value != "" && !extractors[i].Equals("Manuel") )
+                        if (globalmetadatas.isComplete() && !extractors[i].Equals("Manuel") )
                         {
                             GlobalExtract.extract("Manuel", file, (string)globalmetadatas.metadatas.Mandatory[2].value, (string)globalmetadatas.metadatas.Mandatory[3].value);
                             break;
@@ -81,15 +76,13 @@ namespace ConsoleApplication1
 
                     globalmetadatas.Enregistrer(XMLfile);
                     
-                    if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
+                    if (!globalmetadatas.isComplete())
                     {
-                        //Console.WriteLine("FICHIER IMPOSSIBLE A SYNCHRO");
                         return false;
                     }
                     else
                     {
                         globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
-                        //Console.WriteLine("type de fichier à synchro " + globalmetadatas.typename);
                     }
                 }
                 else globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
@@ -326,11 +319,11 @@ namespace ConsoleApplication1
                         break;
 
                     case 8:
-                        string file = partialPath + "test.xml";
+                        string file = partialPath + "test.txt";
                         Program.ExtractMetaDatas(file);
                         break;
                     case 9:
-                        string file9 = partialPath + "recette\\testDocx.docx.xml";
+                        string file9 = partialPath + "recette\\testDocx.docx.odt";
                         Program.ExtractMetaDatas(file9);
                         break;
                 }
