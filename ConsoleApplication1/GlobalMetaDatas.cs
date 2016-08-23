@@ -123,7 +123,7 @@ namespace ConsoleApplication1
 
             for (i = 0; i < conf.applications.Count; i++)
             {
-                for (j = 0; i < conf.applications[i].typeInfos.Count; j++)
+                for (j = 0; j < conf.applications[i].typeInfos.Count; j++)
                 {
                     if (conf.applications[i].typeInfos[j].typename == documentType)
                     {

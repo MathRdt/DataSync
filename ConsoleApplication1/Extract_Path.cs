@@ -88,7 +88,7 @@ namespace ConsoleApplication1
                 metadatas.changeMetaData("fiducial:domainContainerFamille", "", true);
                 metadatas.changeMetaData("fiducial:domainContainerSousFamille", "", true);
             }
-            metadatas.changeMetaData("fiducial:domainContainerNom", stringMetaDatas[stringMetaDatas.Length - 1], true);
+            //metadatas.changeMetaData("fiducial:domainContainerNom", stringMetaDatas[stringMetaDatas.Length - 1], true);
 
         }
     }

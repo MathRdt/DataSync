@@ -11,14 +11,13 @@ namespace ConsoleApplication1
         public static string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\";
         public static string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\recette\paie\";
         public static string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\";
-        public static string confFile = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\confUpdate.xml";
+        public static string confFile = @"C:\Users\adminprojetindus\AppData\Roaming\cmissync\confUpdate.xml";
 
 
         public static bool ExtractMetaDatas (string file)
         {
             int extension = file.LastIndexOf(".");
-            string XMLfile = file.Remove(extension);
-            XMLfile = XMLfile + ".xml";
+            string XMLfile = file + ".metadata";
             GlobalMetaDatas globalmetadatas = new GlobalMetaDatas();
             Conf conf;
             try
@@ -319,7 +318,7 @@ namespace ConsoleApplication1
                         break;
 
                     case 8:
-                        string file = partialPath + "test.txt";
+                        string file = @"C:\Users\adminprojetindus\CmisSync\Branche\Societe\App1\recette\test.txt";
                         Program.ExtractMetaDatas(file);
                         break;
                     case 9:
