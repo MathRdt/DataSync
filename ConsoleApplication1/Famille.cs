@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ConsoleApplication1
 {
+    /// <summary>
+    /// Classe famille, qui donne le nom de la famille ainsi que toutes les sous familles qui la composent
+    /// </summary>
     public class Famille
     {
         public string name { get; set; }

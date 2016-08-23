@@ -8,6 +8,14 @@ namespace ConsoleApplication1
 {
     public class GlobalExtract
     {
+        /// <summary>
+        /// permet de réaliser l'extraction suivant les différents modules que l'on a implanté
+        /// </summary>
+        /// <param name="extractType">type d'extraction à réaliser</param>
+        /// <param name="file">le fichier sur lequel l'extraction va être réalisée</param>
+        /// <param name="app"></param>
+        /// <param name="family">permet de donner la famille du fichier si on la connait déjà</param>
+        /// <returns></returns>
         public static MetaDatas extract (string extractType, string file, string app,string family)
         {
             MetaDatas metaDataValues =new MetaDatas();

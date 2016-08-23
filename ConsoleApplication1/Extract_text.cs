@@ -33,7 +33,7 @@ namespace ConsoleApplication1
         }
 
         /// <summary>
-        /// fonction qui va regarder si le mot qu'on cherche est dans le pdf retourne true si le mot est dans le pdf
+        /// fonction qui va regarder si le mot qu'on cherche est dans le texte retourne true si le mot est dans le fichier
         /// cherche le mot a partir de la lilste des méta-données que l'on connait
         /// </summary>
         /// <param name="path"></param>

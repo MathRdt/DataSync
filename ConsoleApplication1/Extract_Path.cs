@@ -57,6 +57,11 @@ namespace ConsoleApplication1
             return metaData;
         }
 
+        /// <summary>
+        /// convertit les strings de meta données en MetaDatas
+        /// </summary>
+        /// <param name="stringMetaDatas">string à convertir</param>
+        /// <param name="metadatas">méta données qui vont être complétées par cette fonction</param>
         public static void fillPathMetaDatas(string[] stringMetaDatas, MetaDatas metadatas)
         {
 

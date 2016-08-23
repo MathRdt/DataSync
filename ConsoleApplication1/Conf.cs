@@ -51,10 +51,6 @@ namespace ConsoleApplication1
         /// </example>
         public void Enregistrer(string chemin)
         {
-            //if (!File.Exists(chemin))
-            //{
-            //    throw new NoPathFoundException();
-            //}
             XmlSerializer serializer = new XmlSerializer(typeof(Conf));
             StreamWriter writer = new StreamWriter(chemin);
             serializer.Serialize(writer, this);
@@ -62,7 +58,7 @@ namespace ConsoleApplication1
         }
 
         /// <summary>
-        /// déserialise un fichier XML, re donne le fichier XML sous forme de classes C#
+        /// déserialise un fichier XML, donne le fichier XML sous forme d'objet Conf C#
         /// </summary>
         /// <param name="chemin">chemin du fichier XML à déserialiser</param>
         /// <returns>retourne la liste des méta données du fichier observé</returns>
@@ -79,42 +75,12 @@ namespace ConsoleApplication1
 
             return conf;
         }
-        
-        public void changeMetaData(string fileName, string typeMetaData, object valueMetaData, Boolean mandatory)
-        {
-            int i = 0;
 
-            GlobalMetaDatas globalmetadatas = GlobalMetaDatas.Charger(fileName);
-            
-
-            if (mandatory == true)
-            {
-                for (i = 0; i < globalmetadatas.metadatas.Mandatory.Count; i++)
-                {
-                    if (globalmetadatas.metadatas.Mandatory[i].type == typeMetaData)
-                    {
-                        globalmetadatas.metadatas.Mandatory[i].value = valueMetaData;
-                        break;
-                    }
-                }
-            }
-
-            else
-            {
-                for (i = 0; i < globalmetadatas.metadatas.Optional.Count; i++)
-                {
-                    if (globalmetadatas.metadatas.Optional[i].type == typeMetaData)
-                    {
-                        globalmetadatas.metadatas.Optional[i].value = valueMetaData;
-                        break;
-                    }
-                }
-            }
-            globalmetadatas.Enregistrer(fileName);
-        }
-
-
-
+        /// <summary>
+        /// donne l'ordre dans lequel les différentes extractions doivent être appliquées suivant le type du fichier
+        /// </summary>
+        /// <param name="mimeType">type du fichier observé</param>
+        /// <returns>un tableau des différentes extractions à appliquer pour ce type de fichier</returns>
         public string[] extractorsByType (string mimeType)
         {
             string[] extractors = null;
@@ -138,6 +104,11 @@ namespace ConsoleApplication1
             return extractors;
         }
 
+        /// <summary>
+        /// retourne l'ensemble des familles présentes pour une application donnée ainsi que l'ensemble des sous familles pour chacune de ces familles.
+        /// </summary>
+        /// <param name="appli">application à regarder</param>
+        /// <returns>liste des familles avec toutes les sous familles qui les composent</returns>
         public List<Famille> getListFamilles(string appli)
         {
             int i = 0;

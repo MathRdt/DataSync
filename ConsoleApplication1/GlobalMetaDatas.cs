@@ -5,6 +5,9 @@ using System.Xml.Serialization;
 
 namespace ConsoleApplication1
 {
+    /// <summary>
+    /// structure qui permet la création du XML pour chaque fichier
+    /// </summary>
     [Serializable]
     public class GlobalMetaDatas
     {
@@ -35,14 +38,7 @@ namespace ConsoleApplication1
         /// Enregistre l'état courant de la classe dans un fichier au format XML.
         /// </summary>
         /// <param name="chemin">chemin pour enregistrer le fichier XML (jusqu'au nom du fichier .xml)</param>
-        /// <example> 
-        /// Mise en oeuvre : 
-        /// <code> 
-        ///   Metadatas metadatas1 = new Metadatas();
-        ///   ...
-        ///   metadatas1.Enregistrer("C:\\tmp\\test.xml");
-        /// </code> 
-        /// </example>
+        
         public void Enregistrer(string chemin)
         {
             //if (!File.Exists(chemin))
@@ -115,7 +111,11 @@ namespace ConsoleApplication1
             }
             return false;
         }
-
+        /// <summary>
+        /// ajoute ou modifie des méta données suivant les infos fournies par le fichier de configuration
+        /// </summary>
+        /// <param name="conf">chemin menant jusqu'au fichier de conf</param>
+        /// <param name="documentType">type du document que l'on observe</param>
         public void getMetaDatasFromConf(Conf conf, string documentType)
         {
             int i = 0;
@@ -139,6 +139,9 @@ namespace ConsoleApplication1
             }
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns>true si le fichier est prêt à être sychronisé, false sinon</returns>
         public bool isComplete()
         {
             if (this.metadatas.Mandatory.Count == 0) return false;

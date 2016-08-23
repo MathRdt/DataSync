@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {
+    /// <summary>
+    /// liste de booléens qui nous infome si un ficher est prêt à être synchronisé ou non
+    /// </summary>
     public static class ReadyToSync
     {
         static List<bool> metaDataDone {get;set;}

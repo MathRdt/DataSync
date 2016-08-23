@@ -13,7 +13,11 @@ namespace ConsoleApplication1
         public static string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\";
         public static string confFile = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\confUpdate.xml";
 
-
+        /// <summary>
+        /// foncion principale qui prends un fichier en entrée et en extrait les méta données dans un fichier XML, nous informe si le fichier est prêt à être synchronisé ou non 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public static bool ExtractMetaDatas (string file)
         {
             int extension = file.LastIndexOf(".");

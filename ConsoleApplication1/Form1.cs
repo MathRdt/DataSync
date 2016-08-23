@@ -12,6 +12,10 @@ namespace ConsoleApplication1
         public List<Famille> listFamilles;
         public MetaDatas metadatasFromManual=new MetaDatas();
        
+        /// <summary>
+        /// fonction qui va prendre les méta données prises en paramètre pour les initialiser dans le Form
+        /// </summary>
+        /// <param name="metadatas"></param>
         public void fillForm (MetaDatas metadatas)
         {
             metadatasFromManual = metadatas;
