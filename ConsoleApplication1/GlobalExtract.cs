@@ -183,8 +183,8 @@ namespace ConsoleApplication1
                 case "Manuel":
                     Form1 form1 = new Form1();
                     int extension = file.LastIndexOf(".");
-                    string XMLfile = file.Remove(extension);
-                    XMLfile = XMLfile + ".xml";
+                    string XMLfile = file;
+                    XMLfile = XMLfile + ".metadata";
                     GlobalMetaDatas globalMetaDatas = GlobalMetaDatas.Charger(XMLfile);
                     MetaDatas metadatas = globalMetaDatas.metadatas;
                     form1.fillForm(metadatas);
