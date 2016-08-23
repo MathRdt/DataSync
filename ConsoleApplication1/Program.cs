@@ -46,12 +46,14 @@ namespace ConsoleApplication1
                 string[] stringMetaDatas = ExtractPath.getMetaData(stringPath);
                 
                 ExtractPath.fillPathMetaDatas(stringMetaDatas, globalmetadatas.metadatas);
-                globalmetadatas.Enregistrer(XMLfile);
+                
                 if (ReadyToSync.isReadyToSync())
                 {
+                    globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
+                    globalmetadatas.Enregistrer(XMLfile);
                     return true;
                 }
-
+                globalmetadatas.Enregistrer(XMLfile);
                 // Debut extraction meta données fichier de conf
                 conf = Conf.Charger(Program.confFile);
                 if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
@@ -85,10 +87,10 @@ namespace ConsoleApplication1
                     }
                     else
                     {
-                        globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
+                        globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
                     }
                 }
-                else globalmetadatas.typename = "fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
+                else globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
                 globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
                 globalmetadatas.Enregistrer(XMLfile);
                 return true;
