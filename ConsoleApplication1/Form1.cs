@@ -24,7 +24,7 @@ namespace ConsoleApplication1
             int i = 0;
             
             int length = metadatas.Mandatory.Count;
-            if((string)metadatasFromManual.Mandatory[0].value == "" || (string)metadatasFromManual.Mandatory[1].value == "" || (string)metadatasFromManual.Mandatory[2].value == "")
+            if(metadatasFromManual.getBranche() == "" || metadatasFromManual.getSociete() == "" || metadatasFromManual.getApplication() == "")
             {
                 Console.WriteLine("votre fichier doit être placé dans un dossier Fidusync/Branche/Société/Application");
                 return;
@@ -32,15 +32,15 @@ namespace ConsoleApplication1
 
             //branche, société, application ne peuvent pas être modifié par l'utilisateur
             //affichage de ces méta-données
-            labelValueBranche.Text = (string)metadatasFromManual.Mandatory[0].value;
-            labelValueSociete.Text = (string)metadatasFromManual.Mandatory[1].value;
-            labelValueApplication.Text = (string)metadatasFromManual.Mandatory[2].value;
-            labelValueAuteur.Text = (string)metadatasFromManual.Mandatory[2].value;
-            
-            Conf conf = Conf.Charger(Program.confFile);
-            listFamilles = conf.getListFamilles((string)metadatasFromManual.Mandatory[2].value);
+            labelValueBranche.Text = metadatasFromManual.getBranche();
+            labelValueSociete.Text = metadatasFromManual.getSociete();
+            labelValueApplication.Text = metadatasFromManual.getApplication();
+            labelValueAuteur.Text = metadatasFromManual.getApplication();
 
-            if ((string)metadatasFromManual.Mandatory[3].value != "")
+            Conf conf = Conf.Charger(Program.confFile);
+            listFamilles = conf.getListFamilles(metadatasFromManual.getApplication());
+
+            if (metadatasFromManual.getFamille() != "")
             {
                 //si la famille a été trouvé suppression de la liste déroulante
                 comboBoxFamille.Dispose();
@@ -52,13 +52,13 @@ namespace ConsoleApplication1
                 textbox45.Height = 30;
                 this.Controls.Add(textbox45);
                 //ce label correspond à la méta-données famille qui est la 4eme de la liste
-                textbox45.Text = (string)metadatasFromManual.Mandatory[3].value;
-                if ((string)metadatasFromManual.Mandatory[4].value == "")
+                textbox45.Text = metadatasFromManual.getFamille();
+                if (metadatasFromManual.getSousFamille() == "")
                 {
                     comboBoxSousFamille.Items.Clear();
                     for (int j=0;j < listFamilles.Count; j++)
                     {
-                        if(listFamilles[j].name == (string)metadatasFromManual.Mandatory[3].value)
+                        if(listFamilles[j].name == metadatasFromManual.getFamille())
                         {
                             for (int k = 0; k < listFamilles[j].sousFamille.Count; k++)
                             {
@@ -85,7 +85,7 @@ namespace ConsoleApplication1
 
 
             //si la sous famille n'existe pas l'utilisateur choisi une sous-famille parmi la liste des sous-familles existantes 
-            if ((string)metadatasFromManual.Mandatory[4].value != "")
+            if (metadatasFromManual.getSousFamille() != "")
             {
                 //si la sous-famille est connue suppression de la liste déroulante
                 comboBoxSousFamille.Dispose();
@@ -97,7 +97,7 @@ namespace ConsoleApplication1
                 textbox45.Height = 30;
                 this.Controls.Add(textbox45);
                 //si l'on connait la sous-famille elle est la 5eme string de la liste
-                textbox45.Text = (string)metadatasFromManual.Mandatory[4].value;
+                textbox45.Text = metadatasFromManual.getSousFamille();
 
             }
             else
@@ -156,9 +156,9 @@ namespace ConsoleApplication1
             if (MessageBox.Show("Etes-vous sûr de vouloir quitter ?", "Quitter",
          MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                    if ((string)metadatasFromManual.Mandatory[4].value == "")
+                    if (metadatasFromManual.getSousFamille() == "")
                     {
-                        if ((string)metadatasFromManual.Mandatory[3].value == "")
+                        if (metadatasFromManual.getFamille() == "")
                         {
                             metadatasFromManual.changeMetaData("fiducial:domainContainerFamille", comboBoxFamille.Text, true);
                         }
@@ -182,31 +182,6 @@ namespace ConsoleApplication1
         {
             if (MessageBox.Show("Etes-vous certain de vouloir quitter ?", "Quitter", MessageBoxButtons.YesNo) == DialogResult.No)
                 e.Cancel = true;
-        }
-
-        //affiche la sous famille correspondant à la famille sélectionnée lorsque l'utilisateur clique sur le bouton ok à coté de famille
-        private void buttonokTest_Click(object sender, EventArgs e)
-        {
-            string[] SousFamilleFacture = { "Facture client", "Facture interne" };
-            string[] SousFamillePaye = { "Paye type 1", "Paye type 2" };
-
-            //en fonction de la famille choisi va s'afficher le menu correspondant des sous familles
-            if (comboBoxFamille.Text == "Facture")
-            {
-                comboBoxSousFamille.Items.Clear();
-                for (int i = 0; i < SousFamilleFacture.Length; i++)
-                {
-                    comboBoxSousFamille.Items.Add(SousFamilleFacture[i]);
-                }
-            }
-            else if (comboBoxFamille.Text == "Paye")
-            {
-                comboBoxSousFamille.Items.Clear();
-                for (int i = 0; i < SousFamillePaye.Length; i++)
-                {
-                    comboBoxSousFamille.Items.Add(SousFamillePaye[i]);
-                }
-            }
         }
 
         private void comboBoxSousFamille_SelectedIndexChanged(object sender, EventArgs e)

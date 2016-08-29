@@ -153,7 +153,7 @@ namespace ConsoleApplication1
             return true;
         }
 
-        public string getApp(Conf conf, string path )
+        public string getAppFromConf(Conf conf, string path )
         {
             string app = "";
             for(int i =0; i < conf.applications.Count; i++)
@@ -162,12 +162,16 @@ namespace ConsoleApplication1
                 {
                     if (conf.applications[i].folders[j].name == path)
                     {
-                        string[]pathString =  Extract_Path.conversion_path_xml(conf.applications[i].folders[j].remotePath);
+                        string[]pathString =  Extract_Path.conversionRemotePath(conf.applications[i].folders[j].remotePath);
+                        //for(int k = 0; k < pathString.Length; k++)
+                        //{
+                        //    Console.WriteLine(pathString[k]);
+                        //}
                         string[] stringMetaDatas = new string[3];
-                        stringMetaDatas[0] = pathString[pathString.Length - 4];
-                        stringMetaDatas[1] = pathString[pathString.Length - 3];
-                        stringMetaDatas[2] = pathString[pathString.Length - 2];
-
+                        stringMetaDatas[0] = pathString[pathString.Length - 3];
+                        stringMetaDatas[1] = pathString[pathString.Length - 2];
+                        stringMetaDatas[2] = pathString[pathString.Length - 1];
+                        
                         this.metadatas.changeMetaData("fiducial:domainContainerBranche", stringMetaDatas[0], true);
                         this.metadatas.changeMetaData("fiducial:domainContainerSociete", stringMetaDatas[1], true);
                         this.metadatas.changeMetaData("fiducial:domainContainerApplication", stringMetaDatas[2], true);
@@ -178,19 +182,97 @@ namespace ConsoleApplication1
             return app;
         }
 
+        public string getBranche()
+        {
+            for (int i = 0; i < this.metadatas.Mandatory.Count; i++)
+            {
+                if (this.metadatas.Mandatory[i].type == "fiducial:domainContainerBranche")
+                {
+                    return (string)this.metadatas.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+        public string getSociete()
+        {
+            for (int i = 0; i < this.metadatas.Mandatory.Count; i++)
+            {
+                if (this.metadatas.Mandatory[i].type == "fiducial:domainContainerSociete")
+                {
+                    return (string)this.metadatas.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+        public string getApp()
+        {
+            for (int i=0; i < this.metadatas.Mandatory.Count; i++)
+            {
+                if (this.metadatas.Mandatory[i].type == "fiducial:domainContainerApplication")
+                {
+                    return (string)this.metadatas.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+        public string getFamille()
+        {
+            for (int i=0; i < this.metadatas.Mandatory.Count; i++)
+            {
+                if (this.metadatas.Mandatory[i].type == "fiducial:domainContainerFamille")
+                {
+                    return (string)this.metadatas.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+        public string getSousFamille()
+        {
+            for (int i = 0; i < this.metadatas.Mandatory.Count; i++)
+            {
+                if (this.metadatas.Mandatory[i].type == "fiducial:domainContainerSousFamille")
+                {
+                    return (string)this.metadatas.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+
+
         public void DetermineType(Conf conf, string path)
         {
-            string app = getApp(conf, path);
+            string app = getAppFromConf(conf, path);
+            
             List<Famille> familles = conf.getListFamilles(app);
+            for(int i=0; i < familles.Count; i++)
+            {
+                Console.WriteLine(familles[i].name);
+                for(int j=0; j < familles[i].sousFamille.Count; j++)
+                {
+                    Console.WriteLine(familles[i].sousFamille[j]);
+                }
+            }
+
+
             for (int i =0; i < this.metadatas.Mandatory.Count; i++)
             {
                 if(this.metadatas.Mandatory[i].type == "fiducial:domainContainerFamille")
                 {
+                    if((string)this.metadatas.Mandatory[i].value == "" || (string)this.metadatas.Mandatory[i+1].value == "")
+                    {
+                        this.typename = "default Type";
+                    }
                     for (int j =0; j< familles.Count; j++)
                     {
                         if (familles[j].name == (string) this.metadatas.Mandatory[i].value)
                         {
-                            for(int k=0; k< familles[j].sousFamille.Count; k++)
+                            
+                            for (int k=0; k< familles[j].sousFamille.Count; k++)
                             {
                                 if(familles[j].sousFamille[k] == (string)this.metadatas.Mandatory[i + 1].value)
                                 {
@@ -225,6 +307,7 @@ namespace ConsoleApplication1
                                             if ((string)Conf.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[m + 1].value == sousFamille)
                                             {
                                                 type = Conf.applications[i].typeInfos[j].typename;
+                                                Console.WriteLine("get type 1: "+ type);
                                                 return type;
                                             }
                                             else break;
@@ -238,6 +321,7 @@ namespace ConsoleApplication1
             }
 
             type = "default Type";
+            Console.WriteLine("get type 2: " + type);
             return type;
         }
 

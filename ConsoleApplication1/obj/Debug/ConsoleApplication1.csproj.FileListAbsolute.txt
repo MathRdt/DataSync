@@ -41,3 +41,4 @@ C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\C
 C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ConsoleApplication1\bin\Debug\Bytescout.Spreadsheet.xml
 C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ConsoleApplication1\bin\Debug\Spire.Doc.xml
 C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ConsoleApplication1\bin\Debug\Spire.License.xml
+C:\Users\projetindus\Documents\Visual Studio 2015\Projects\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.Form2.resources

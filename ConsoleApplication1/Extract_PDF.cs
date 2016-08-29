@@ -18,6 +18,7 @@ using org.apache.pdfbox.util;
 using System.IO;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ConsoleApplication1
 {
@@ -255,10 +256,106 @@ namespace ConsoleApplication1
                 name = chainepdf.Substring(result + j, k - j + 1); //extrait le nom
 
             }
-            else name = "nom non trouvé";
+            else name = "non trouvé";
 
             return name;
         }
+
+        /// <summary>
+        /// fonction qui cherche une méta-données en particulier
+        /// fonction qui cherche le nom dans le document
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="metaData"></param>
+        /// <returns></returns>
+        public static string SearchMetaDataInList(string path, string metaData, string[] MetaDataList)
+        {
+            string chainePdf = ExtractTextFromPdf(path); //extrait le pdf en chaine de caractère
+            string chainepdf = chainePdf.ToLower();//met le pdf en minuscule
+            string chainePdfSansAccent = RemoveAccent(chainepdf);
+            string metadata = metaData.ToLower();
+            string metaDataSansAccent = RemoveAccent(metadata);
+            int result = chainePdfSansAccent.IndexOf(metaDataSansAccent); //regarde si le mot qu'on cherche est sous-chaine du string pdf
+            string name = " ";
+
+            if (result > 0 || result == 0) //on cherche le nom si le mot nom est présent dans le document
+            {
+                int i = 0;
+                for (i = 0; i < 20; i++)
+                {
+                    if (chainePdfSansAccent[result + i] == ':') break;
+                }
+                int j = 0;
+                for (j = i + 1; j < 20; j++)
+                {
+                    if (chainePdfSansAccent[result + j] != ' ') break; //trouve le début du nom
+                }
+                int k = 0;
+                for (k = j + 1; k < 20; k++)
+                {
+                    if (chainePdfSansAccent[result + k] == ' ' || chainePdfSansAccent[result + k] == '\n' || chainePdfSansAccent[result + k] == '\r' || chainePdfSansAccent[result + k] == '\t') break; //trouve fin du nom
+                }
+                name = chainepdf.Substring(result + j, k - j + 1); //extrait le nom
+
+                for (j = 0; j < MetaDataList.Length; j++)
+                {
+                    string nametosearch = MetaDataList[i].ToLower();//met le mot qu'on cherche en minuscule
+                    string nameToSearchSansAccent = RemoveAccent(nametosearch);
+
+                    if (name == nameToSearchSansAccent)
+                    {
+                        return name;
+                    }
+                }
+            }
+            else name = "non trouvé";
+
+            return name;
+        }
+
+        /// <summary>
+        /// fonction qui cherche une méta-données en particulier
+        /// fonction qui cherche le nom dans le document
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="metaData"></param>
+        /// <returns></returns>
+        public static string SearchMetaDataRegex(string path, string metaData, Regex regex)
+        {
+
+            string chainePdf = ExtractTextFromPdf(path); //extrait le pdf en chaine de caractère
+            string chainepdf = chainePdf.ToLower();//met le pdf en minuscule
+            string chainePdfSansAccent = RemoveAccent(chainepdf);
+            string metadata = metaData.ToLower();
+            string metaDataSansAccent = RemoveAccent(metadata);
+            int result = chainePdfSansAccent.IndexOf(metaDataSansAccent); //regarde si le mot qu'on cherche est sous-chaine du string pdf
+            string name = " ";
+
+            if (result > 0 || result == 0) //on cherche le nom si le mot nom est présent dans le document
+            {
+                int i = 0;
+                for (i = 0; i < 20; i++)
+                {
+                    if (chainePdfSansAccent[result + i] == ':') break;
+                }
+                int j = 0;
+                for (j = i + 1; j < 20; j++)
+                {
+                    if (chainePdfSansAccent[result + j] != ' ') break; //trouve le début du nom
+                }
+                int k = 0;
+                for (k = j + 1; k < 20; k++)
+                {
+                    if (chainePdfSansAccent[result + k] == ' ' || chainePdfSansAccent[result + k] == '\n' || chainePdfSansAccent[result + k] == '\r' || chainePdfSansAccent[result + k] == '\t') break; //trouve fin du nom
+                }
+                name = chainepdf.Substring(result + j, k - j + 1); //extrait le nom
+                
+            }
+            else name = "non trouvé";
+
+            return name;
+        }
+
 
         /// <summary>
         /// fonction qui cherche le prénom dans le document

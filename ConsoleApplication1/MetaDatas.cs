@@ -117,5 +117,87 @@ namespace ConsoleApplication1
             if (mandatory == true && (string)valueMetaData != "") return true;
             return false;
         }
+
+        public string getBranche()
+        {
+            for (int i = 0; i < this.Mandatory.Count; i++)
+            {
+                if (this.Mandatory[i].type == "fiducial:domainContainerBranche")
+                {
+                    return (string)this.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+        public string getSociete()
+        {
+            for (int i = 0; i < this.Mandatory.Count; i++)
+            {
+                if (this.Mandatory[i].type == "fiducial:domainContainerSociete")
+                {
+                    return (string)this.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+        public string getApplication()
+        {
+            for (int i = 0; i < this.Mandatory.Count; i++)
+            {
+                if (this.Mandatory[i].type == "fiducial:domainContainerApplication")
+                {
+                    return (string)this.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+        public string getFamille()
+        {
+            for (int i = 0; i < this.Mandatory.Count; i++)
+            {
+                if (this.Mandatory[i].type == "fiducial:domainContainerFamille")
+                {
+                    return (string)this.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+        public void setFamille(string famille)
+        {
+            for (int i = 0; i < this.Mandatory.Count; i++)
+            {
+                if (this.Mandatory[i].type == "fiducial:domainContainerFamille")
+                {
+                    this.Mandatory[i].value = famille;
+                }
+            }
+        }
+
+        public string getSousFamille()
+        {
+            for (int i = 0; i < this.Mandatory.Count; i++)
+            {
+                if (this.Mandatory[i].type == "fiducial:domainContainerSousFamille")
+                {
+                    return (string)this.Mandatory[i].value;
+                }
+            }
+            return null;
+        }
+
+        public void setSousFamille(string sousFamille)
+        {
+            for (int i = 0; i < this.Mandatory.Count; i++)
+            {
+                if (this.Mandatory[i].type == "fiducial:domainContainerSousFamille")
+                {
+                    this.Mandatory[i].value = sousFamille;
+                }
+            }
+        }
     }
 }

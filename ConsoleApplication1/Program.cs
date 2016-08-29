@@ -11,7 +11,7 @@ namespace ConsoleApplication1
         public static string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\famille1\sousfamille1\";
         public static string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\recette\paie\";
         public static string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\";
-        public static string confFile = @"C:\Users\adminprojetindus\AppData\Roaming\cmissync\confUpdate.xml";
+        public static string confFile = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\famille1\sousfamille1\confUpdate.xml";
 
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace ConsoleApplication1
         /// <returns></returns>
         public static bool ExtractMetaDatas (string file)
         {
-            int extension = file.LastIndexOf(".");
+            //int extension = file.LastIndexOf(".");
             string XMLfile = file + ".metadata";
             GlobalMetaDatas globalmetadatas = new GlobalMetaDatas();
             Conf conf;
@@ -48,29 +48,33 @@ namespace ConsoleApplication1
 
                 Extract_Path.fillPathMetaDatas(stringMetaDatas, globalmetadatas.metadatas);
                 
-                //if (ReadyToSync.isReadyToSync())
-                //{
-                //    globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
-                //    globalmetadatas.Enregistrer(XMLfile);
-                //    return true;
-                //}
                 globalmetadatas.Enregistrer(XMLfile);
                 // Debut extraction meta données fichier de conf
                 conf = Conf.Charger(Program.confFile);
-                int index = file.IndexOf("CmisSync");
-                string partialPath = file.Substring(index+9);
-                globalmetadatas.DetermineType(conf, partialPath);
+                int index = partialPath.IndexOf("CmisSync");
+                string partialChemin = partialPath.Substring(index+9);
+                index = partialChemin.Length;
+                partialChemin = partialChemin.Remove(index - 1);
+                Console.WriteLine("coucou" + partialChemin);
+                globalmetadatas.DetermineType(conf, partialChemin);
+
+                
+                if (globalmetadatas.typename != "default Type")
+                {
+                    globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
+                }
+                globalmetadatas.Enregistrer(XMLfile);
 
                 //A CONTINUER
-
-                if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
+                
+                string fileMimeType = MimeTypes.GetContentType(file);
+                string[] extractors = conf.extractorsByType(fileMimeType);
+                for (int i = 0; i < extractors.Length; i++)
                 {
-                    string fileMimeType = MimeTypes.GetContentType(file);
-                    string[] extractors = conf.extractorsByType(fileMimeType);
-                    for (int i = 0; i < extractors.Length; i++)
+                    if (!globalmetadatas.isComplete() || !extractors[i].Equals("Manuel"))
                     {
                         MetaDatas tempMetaDatas;
-                        tempMetaDatas = GlobalExtract.extract(extractors[i], file, (string)globalmetadatas.metadatas.Mandatory[2].value, (string)globalmetadatas.metadatas.Mandatory[3].value);
+                        tempMetaDatas = GlobalExtract.extract(extractors[i], file, globalmetadatas.getApp(), globalmetadatas.getFamille());
                         for (int j = 0; j < tempMetaDatas.Mandatory.Count; j++)
                         {
                             globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Mandatory[j].type, tempMetaDatas.Mandatory[j].value, true);
@@ -79,25 +83,25 @@ namespace ConsoleApplication1
                         {
                             globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Optional[j].type, tempMetaDatas.Optional[j].value, false);
                         }
-                        if (globalmetadatas.isComplete() && !extractors[i].Equals("Manuel") )
-                        {
-                            GlobalExtract.extract("Manuel", file, (string)globalmetadatas.metadatas.Mandatory[2].value, (string)globalmetadatas.metadatas.Mandatory[3].value);
-                            break;
-                        }
-                    }
-
-                    globalmetadatas.Enregistrer(XMLfile);
-                    
-                    if (!globalmetadatas.isComplete())
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
                     }
                 }
-                else globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
+
+                globalmetadatas.Enregistrer(XMLfile);
+                    
+                if (globalmetadatas.getSousFamille() == "")
+                {
+                    globalmetadatas.metadatas.setSousFamille("sousFamille");
+                    if (globalmetadatas.getFamille() == "")
+                    {
+                        globalmetadatas.metadatas.setFamille("famille");
+                    }
+                }
+                else
+                {
+                    globalmetadatas.getType(conf, globalmetadatas.getApp(), globalmetadatas.getFamille(), globalmetadatas.getSousFamille());
+                }
+                
+                //globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
                 globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
                 globalmetadatas.Enregistrer(XMLfile);
                 return true;
@@ -332,12 +336,19 @@ namespace ConsoleApplication1
                         break;
 
                     case 8:
-                        string file = @"C:\Users\adminprojetindus\CmisSync\Branche\Societe\App1\recette\test.pdf";
+                        string file = partialPath+"test.odt";
                         Program.ExtractMetaDatas(file);
                         break;
                     case 9:
                         string file9 = partialPath + "recette\\test.txt";
                         Program.ExtractMetaDatas(file9);
+                        break;
+                    case 10:
+                        ExprReg expreg = new ExprReg();
+                        string chaineTxt = File.ReadAllText(partialPath+ "testRegEx.txt");
+                        Console.WriteLine(expreg.ValidMail(chaineTxt));
+                        Console.WriteLine(expreg.ValidCP(chaineTxt));
+
                         break;
                 }
                 do

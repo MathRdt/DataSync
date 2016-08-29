@@ -23,6 +23,15 @@ namespace ConsoleApplication1
         }
 
         ///<summary>
+        ///fonction qui récupère chaque composante du chemin
+        /// </summary>
+        public static string[] conversionRemotePath(string filePath)
+        {
+            string[] words = filePath.Split('/'); //permet de séparer les répertoires et les stocke dans un tableau
+            return words;
+        }
+
+        ///<summary>
         ///fonction qui permet de récupérer l'indice à partir duquel les méta-données nous intéressent (branche, société, ...)
         /// </summary>
         public static int getNbMetaData(string[] path) //paramètre : tableau contenant les répertoires donné par conversion_path_xml

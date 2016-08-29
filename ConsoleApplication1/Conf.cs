@@ -172,59 +172,59 @@ namespace ConsoleApplication1
         /// </summary>
         /// <param name="appli">application à regarder</param>
         /// <returns>liste des branches avec toutes les sociétés qui les composent</returns>
-        public List<Branche> getListBranches()
-        {
-            int i = 0;
-            int j = 0;
+        //public List<Branche> getListBranches()
+        //{
+        //    int i = 0;
+        //    int j = 0;
             
-            List<Branche> listBranches = new List<Branche>();
-            Branche branche = new Branche();
+        //    List<Branche> listBranches = new List<Branche>();
+        //    Branche branche = new Branche();
 
-            for (j = 0; j < this..Count; j++)
-            {
-                for (int k = 0; k < this.applications[i].typeInfos[j].aspects.Count; k++)
-                {
-                    if (this.applications[i].typeInfos[j].aspects[k].name == "fiducial:domainContainer")
-                    {
-                        for (int p = 0; p < this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory.Count; p++)
-                        {
-                            string familleValue;
-                            string sousFamilleValue;
-                            if (this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p].type.Equals("fiducial:domainContainerFamille"))
-                            {
+        //    for (j = 0; j < this..Count; j++)
+        //    {
+        //        for (int k = 0; k < this.applications[i].typeInfos[j].aspects.Count; k++)
+        //        {
+        //            if (this.applications[i].typeInfos[j].aspects[k].name == "fiducial:domainContainer")
+        //            {
+        //                for (int p = 0; p < this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory.Count; p++)
+        //                {
+        //                    string familleValue;
+        //                    string sousFamilleValue;
+        //                    if (this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p].type.Equals("fiducial:domainContainerFamille"))
+        //                    {
 
-                                familleValue = (string)this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p].value;
-                                for (int q = 0; q < this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory.Count - p; q++)
-                                {
-                                    if (this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p + q].type.Equals("fiducial:domainContainerSousFamille"))
-                                    {
-                                        sousFamilleValue = (string)this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p + q].value;
-                                        if (famille.name.Equals(familleValue))
-                                        {
-                                            famille.addSousFamille(sousFamilleValue);
-                                        }
-                                        else
-                                        {
+        //                        familleValue = (string)this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p].value;
+        //                        for (int q = 0; q < this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory.Count - p; q++)
+        //                        {
+        //                            if (this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p + q].type.Equals("fiducial:domainContainerSousFamille"))
+        //                            {
+        //                                sousFamilleValue = (string)this.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[p + q].value;
+        //                                if (famille.name.Equals(familleValue))
+        //                                {
+        //                                    famille.addSousFamille(sousFamilleValue);
+        //                                }
+        //                                else
+        //                                {
 
-                                            famille = new Famille(familleValue, sousFamilleValue);
-                                            listFamilles.Add(famille);
+        //                                    famille = new Famille(familleValue, sousFamilleValue);
+        //                                    listFamilles.Add(famille);
 
-                                        }
+        //                                }
 
-                                        break;
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            if (listFamilles.Count == 0 || !famille.name.Equals(listFamilles[listFamilles.Count - 1].name))
-            {
-                listFamilles.Add(famille);
-            }
-            return listFamilles;
-        }
+        //                                break;
+        //                            }
+        //                        }
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    if (listFamilles.Count == 0 || !famille.name.Equals(listFamilles[listFamilles.Count - 1].name))
+        //    {
+        //        listFamilles.Add(famille);
+        //    }
+        //    return listFamilles;
+        //}
     }
 }
