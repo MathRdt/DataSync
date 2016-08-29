@@ -85,7 +85,7 @@ namespace ConsoleApplication1
                 {
                     if (!this.aspects.Contains(aspectsToAdd[i].name))
                     {
-                        this.aspects.Add(aspectsToAdd[i].name);
+                        this.aspects.Add("P:"+aspectsToAdd[i].name);
                     }
                     for(int j=0; j< aspectsToAdd[i].metadatas.Mandatory.Count;j++)
                     {
@@ -151,6 +151,94 @@ namespace ConsoleApplication1
                 else ReadyToSync.record(i);
             }
             return true;
+        }
+
+        public string getApp(Conf conf, string path )
+        {
+            string app = "";
+            for(int i =0; i < conf.applications.Count; i++)
+            {
+                for (int j = 0; j < conf.applications[i].folders.Count; j++)
+                {
+                    if (conf.applications[i].folders[j].name == path)
+                    {
+                        string[]pathString =  Extract_Path.conversion_path_xml(conf.applications[i].folders[j].remotePath);
+                        string[] stringMetaDatas = new string[3];
+                        stringMetaDatas[0] = pathString[pathString.Length - 4];
+                        stringMetaDatas[1] = pathString[pathString.Length - 3];
+                        stringMetaDatas[2] = pathString[pathString.Length - 2];
+
+                        this.metadatas.changeMetaData("fiducial:domainContainerBranche", stringMetaDatas[0], true);
+                        this.metadatas.changeMetaData("fiducial:domainContainerSociete", stringMetaDatas[1], true);
+                        this.metadatas.changeMetaData("fiducial:domainContainerApplication", stringMetaDatas[2], true);
+                        return stringMetaDatas[2];
+                    }
+                }
+            }
+            return app;
+        }
+
+        public void DetermineType(Conf conf, string path)
+        {
+            string app = getApp(conf, path);
+            List<Famille> familles = conf.getListFamilles(app);
+            for (int i =0; i < this.metadatas.Mandatory.Count; i++)
+            {
+                if(this.metadatas.Mandatory[i].type == "fiducial:domainContainerFamille")
+                {
+                    for (int j =0; j< familles.Count; j++)
+                    {
+                        if (familles[j].name == (string) this.metadatas.Mandatory[i].value)
+                        {
+                            for(int k=0; k< familles[j].sousFamille.Count; k++)
+                            {
+                                if(familles[j].sousFamille[k] == (string)this.metadatas.Mandatory[i + 1].value)
+                                {
+                                    this.typename = this.getType(conf, app,(string) this.metadatas.Mandatory[i].value, (string) this.metadatas.Mandatory[i + 1].value);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public string getType (Conf Conf,string app, string famille, string sousFamille)
+        {
+            string type = "";
+            for (int i=0; i < Conf.applications.Count; i++)
+            {
+                if (Conf.applications[i].user == app)
+                {
+                    for(int j=0; j< Conf.applications[i].typeInfos.Count; j++)
+                    {
+                        for(int k=0; k < Conf.applications[i].typeInfos[j].aspects.Count; k++)
+                        {
+                            if(Conf.applications[i].typeInfos[j].aspects[k].name == "fiducial:domainContainer")
+                            {
+                                for(int m=0;m< Conf.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory.Count; m++)
+                                {
+                                    if (Conf.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[m].type == "fiducial:domainContainerFamille")
+                                    {
+                                        if ((string) Conf.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[m].value == famille)
+                                        {
+                                            if ((string)Conf.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[m + 1].value == sousFamille)
+                                            {
+                                                type = Conf.applications[i].typeInfos[j].typename;
+                                                return type;
+                                            }
+                                            else break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            type = "default Type";
+            return type;
         }
 
     }

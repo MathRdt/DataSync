@@ -8,10 +8,11 @@ namespace ConsoleApplication1
     class Program
     {
 
-        public static string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\famille1\sousfamille1\";
-        public static string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\recette\paie\";
-        public static string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\branche1\societe1\app1\";
+        public static string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\famille1\sousfamille1\";
+        public static string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\recette\paie\";
+        public static string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\";
         public static string confFile = @"C:\Users\adminprojetindus\AppData\Roaming\cmissync\confUpdate.xml";
+
 
         /// <summary>
         /// foncion principale qui prends un fichier en entrée et en extrait les méta données dans un fichier XML, nous informe si le fichier est prêt à être synchronisé ou non 
@@ -42,20 +43,26 @@ namespace ConsoleApplication1
                 }
 
                 // Debut extraction chemin
-                string[] stringPath = ExtractPath.conversion_path_xml(file);
-                string[] stringMetaDatas = ExtractPath.getMetaData(stringPath);
+                string[] stringPath = Extract_Path.conversion_path_xml(file);
+                string[] stringMetaDatas = Extract_Path.getMetaData(stringPath);
+
+                Extract_Path.fillPathMetaDatas(stringMetaDatas, globalmetadatas.metadatas);
                 
-                ExtractPath.fillPathMetaDatas(stringMetaDatas, globalmetadatas.metadatas);
-                
-                if (ReadyToSync.isReadyToSync())
-                {
-                    globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
-                    globalmetadatas.Enregistrer(XMLfile);
-                    return true;
-                }
+                //if (ReadyToSync.isReadyToSync())
+                //{
+                //    globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
+                //    globalmetadatas.Enregistrer(XMLfile);
+                //    return true;
+                //}
                 globalmetadatas.Enregistrer(XMLfile);
                 // Debut extraction meta données fichier de conf
                 conf = Conf.Charger(Program.confFile);
+                int index = file.IndexOf("CmisSync");
+                string partialPath = file.Substring(index+9);
+                globalmetadatas.DetermineType(conf, partialPath);
+
+                //A CONTINUER
+
                 if ((string)globalmetadatas.metadatas.Mandatory[3].value == "" || (string)globalmetadatas.metadatas.Mandatory[4].value == "")
                 {
                     string fileMimeType = MimeTypes.GetContentType(file);
@@ -124,7 +131,8 @@ namespace ConsoleApplication1
                     Console.WriteLine("5- Test creation XML + lecture du chemin + extraction fichier de conf");
                     Console.WriteLine("6- Test windows form");
                     Console.WriteLine("7- Test windows form + chemin + extraction meta données fichier de conf ");
-                    Console.WriteLine("8- Test creation XML + lecture du chemin + extraction fichier de conf");
+                    Console.WriteLine("8- Test complet pdf");
+                    Console.WriteLine("9- Test complet txt");
                     UserEntry = Console.ReadLine();
                     IsOk = int.TryParse(UserEntry, out num);
                 } while (!IsOk && UserEntry != "q" && num > 0 && num < 6);
@@ -151,8 +159,8 @@ namespace ConsoleApplication1
                     case 2:
                         string file2 = "testChemin.XML";
                         file2 = chemin + file2;
-                        stringPath = ExtractPath.conversion_path_xml(chemin);
-                        stringMetaDatas = ExtractPath.getMetaData(stringPath);
+                        stringPath = Extract_Path.conversion_path_xml(chemin);
+                        stringMetaDatas = Extract_Path.getMetaData(stringPath);
                         for (int i = 0; i < stringMetaDatas.Length; i++)
                         {
                             Console.WriteLine("metadonnee " + i + " : " + stringMetaDatas[i]);
@@ -252,15 +260,15 @@ namespace ConsoleApplication1
                             globalmetadatas = GlobalMetaDatas.Charger(XMLfile5);
 
                             Console.WriteLine("debut extraction chemin");
-                            stringPath = ExtractPath.conversion_path_xml(cheminBis);
-                            stringMetaDatas = ExtractPath.getMetaData(stringPath);
+                            stringPath = Extract_Path.conversion_path_xml(cheminBis);
+                            stringMetaDatas = Extract_Path.getMetaData(stringPath);
                             for (int i = 0; i < stringMetaDatas.Length; i++)
                             {
                                 Console.WriteLine("metadonnee " + i + " : " + stringMetaDatas[i]);
                             }
 
                             MetaDatas metaDatas = globalmetadatas.metadatas;
-                            ExtractPath.fillPathMetaDatas(stringMetaDatas, metaDatas);
+                            Extract_Path.fillPathMetaDatas(stringMetaDatas, metaDatas);
 
                             Console.WriteLine("debut extraction fichier de conf");
 
@@ -293,9 +301,9 @@ namespace ConsoleApplication1
                     case 6:
                         string file6 = "testChemin.XML";
                         file6 = chemin + file6;
-                        stringPath = ExtractPath.conversion_path_xml(file6);
+                        stringPath = Extract_Path.conversion_path_xml(file6); 
                        
-                        stringMetaDatas = ExtractPath.getMetaData(stringPath);
+                        stringMetaDatas = Extract_Path.getMetaData(stringPath);
                         conf = Conf.Charger(confFile);
                         List<Famille> listFamilles = conf.getListFamilles("App1");
 
@@ -315,20 +323,20 @@ namespace ConsoleApplication1
                     case 7:
                         string file7 = "testChemin.XML";
                         file7 = chemin + file7;
-                        stringPath = ExtractPath.conversion_path_xml(file7);
+                        stringPath = Extract_Path.conversion_path_xml(file7);
 
-                        stringMetaDatas = ExtractPath.getMetaData(stringPath);
+                        stringMetaDatas = Extract_Path.getMetaData(stringPath);
                         Form1 form2 = new Form1();
                         System.Windows.Forms.Application.Run(form2);
 
                         break;
 
                     case 8:
-                        string file = @"C:\Users\adminprojetindus\CmisSync\Branche\Societe\App1\recette\test.txt";
+                        string file = @"C:\Users\adminprojetindus\CmisSync\Branche\Societe\App1\recette\test.pdf";
                         Program.ExtractMetaDatas(file);
                         break;
                     case 9:
-                        string file9 = partialPath + "recette\\testDocx.docx.odt";
+                        string file9 = partialPath + "recette\\test.txt";
                         Program.ExtractMetaDatas(file9);
                         break;
                 }

@@ -3,7 +3,7 @@ using System.IO;
 
 namespace ConsoleApplication1
 {
-    class ExtractPath
+    class Extract_Path
     {
         public static string getPath(string path)
         {
@@ -65,24 +65,22 @@ namespace ConsoleApplication1
         public static void fillPathMetaDatas(string[] stringMetaDatas, MetaDatas metadatas)
         {
 
-            if (stringMetaDatas.Length < 4)
+            if (stringMetaDatas.Length < 2)
             {
                 throw new NoPathFoundException();
             }
-            metadatas.changeMetaData("fiducial:domainContainerBranche", stringMetaDatas[0],true);
-            metadatas.changeMetaData("fiducial:domainContainerSociete", stringMetaDatas[1], true);
-            metadatas.changeMetaData("fiducial:domainContainerApplication", stringMetaDatas[2], true);
+            //metadatas.changeMetaData("fiducial:domainContainerBranche", stringMetaDatas[0],true);
+            //metadatas.changeMetaData("fiducial:domainContainerSociete", stringMetaDatas[1], true);
+            metadatas.changeMetaData("fiducial:domainContainerApplication", stringMetaDatas[0], true);
             ReadyToSync.record(0);
-            ReadyToSync.record(1);
-            ReadyToSync.record(2);
 
-            if (stringMetaDatas.Length >= 5)
+            if (stringMetaDatas.Length >= 3)
             {
-                metadatas.changeMetaData("fiducial:domainContainerFamille", stringMetaDatas[3], true);
-                ReadyToSync.record(3);
-                if (stringMetaDatas.Length >= 6) { 
-                    metadatas.changeMetaData("fiducial:domainContainerSousFamille", stringMetaDatas[4], true);
-                    ReadyToSync.record(4);
+                metadatas.changeMetaData("fiducial:domainContainerFamille", stringMetaDatas[1], true);
+                ReadyToSync.record(1);
+                if (stringMetaDatas.Length >= 4) { 
+                    metadatas.changeMetaData("fiducial:domainContainerSousFamille", stringMetaDatas[2], true);
+                    ReadyToSync.record(2);
                 }
                 else
                     metadatas.changeMetaData("fiducial:domainContainerSousFamille", "", true);
