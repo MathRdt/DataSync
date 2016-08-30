@@ -17,8 +17,24 @@ namespace ConsoleApplication1
     {
         public string type { get; set; }
         public object value { get; set; }
+
         [XmlIgnore]
         public List<string> keyWords { get; set; }
+
+        [XmlIgnore]
+        public List<Object> listValues { get; set; }
+
+        [XmlIgnore]
+        public string regEx { get; set; }
+
+        [XmlIgnore]
+        public string valueType { get; set; }
+
+        [XmlIgnore]
+        public object min { get; set; }
+
+        [XmlIgnore]
+        public object max { get; set; }
 
         public Boolean isSameType(String typeOfMetadata)
         {
@@ -81,6 +97,7 @@ namespace ConsoleApplication1
 
         public bool changeMetaData(string typeMetaData, object valueMetaData, Boolean mandatory)
         {
+            //Console.WriteLine(valueMetaData.GetType().ToString());
             if (mandatory == true)
             {
                 for (int i = 0; i < this.Mandatory.Count; i++)

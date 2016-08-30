@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ConsoleApplication1
 {
@@ -344,10 +345,12 @@ namespace ConsoleApplication1
                         Program.ExtractMetaDatas(file9);
                         break;
                     case 10:
-                        ExprReg expreg = new ExprReg();
+                        Constraint expreg = new Constraint();
                         string chaineTxt = File.ReadAllText(partialPath+ "testRegEx.txt");
-                        Console.WriteLine(expreg.ValidMail(chaineTxt));
-                        Console.WriteLine(expreg.ValidCP(chaineTxt));
+                        //Console.WriteLine(chaineTxt);
+                        Regex regex = new Regex(@"^([\w]+)@([\w]+)\.([\w]+)");
+                        Console.WriteLine(expreg.matchRegEx(chaineTxt, regex));
+                        //Console.WriteLine(expreg.ValidCP(chaineTxt));
 
                         break;
                 }

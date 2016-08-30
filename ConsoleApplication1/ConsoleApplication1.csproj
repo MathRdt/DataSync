@@ -175,7 +175,7 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Aspect.cs" />
-    <Compile Include="ExprReg.cs" />
+    <Compile Include="Constraint.cs" />
     <Compile Include="Extract_OCR.cs" />
     <Compile Include="ContentType.cs" />
     <Compile Include="Extract_text.cs" />
