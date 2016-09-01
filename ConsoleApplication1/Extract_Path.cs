@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace ConsoleApplication1
@@ -80,25 +81,25 @@ namespace ConsoleApplication1
             }
             //metadatas.changeMetaData("fiducial:domainContainerBranche", stringMetaDatas[0],true);
             //metadatas.changeMetaData("fiducial:domainContainerSociete", stringMetaDatas[1], true);
-            metadatas.changeMetaData("fiducial:domainContainerApplication", stringMetaDatas[0], true);
+            metadatas.changeMetaData("fiducial:domainContainerApplication", stringMetaDatas[0], true,new List<string>(), new List<string>(),"",Double.MinValue, Double.MaxValue, "string");
             ReadyToSync.record(0);
 
             if (stringMetaDatas.Length >= 3)
             {
-                metadatas.changeMetaData("fiducial:domainContainerFamille", stringMetaDatas[1], true);
+                metadatas.changeMetaData("fiducial:domainContainerFamille", stringMetaDatas[1], true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
                 ReadyToSync.record(1);
                 if (stringMetaDatas.Length >= 4) { 
-                    metadatas.changeMetaData("fiducial:domainContainerSousFamille", stringMetaDatas[2], true);
+                    metadatas.changeMetaData("fiducial:domainContainerSousFamille", stringMetaDatas[2], true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
                     ReadyToSync.record(2);
                 }
                 else
-                    metadatas.changeMetaData("fiducial:domainContainerSousFamille", "", true);
+                    metadatas.changeMetaData("fiducial:domainContainerSousFamille", "", true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
 
             }
             else
             {
-                metadatas.changeMetaData("fiducial:domainContainerFamille", "", true);
-                metadatas.changeMetaData("fiducial:domainContainerSousFamille", "", true);
+                metadatas.changeMetaData("fiducial:domainContainerFamille", "", true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
+                metadatas.changeMetaData("fiducial:domainContainerSousFamille", "", true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
             }
             //metadatas.changeMetaData("fiducial:domainContainerNom", stringMetaDatas[stringMetaDatas.Length - 1], true);
 

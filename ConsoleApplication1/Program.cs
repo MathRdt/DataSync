@@ -56,7 +56,7 @@ namespace ConsoleApplication1
                 string partialChemin = partialPath.Substring(index+9);
                 index = partialChemin.Length;
                 partialChemin = partialChemin.Remove(index - 1);
-                Console.WriteLine("coucou" + partialChemin);
+                //Console.WriteLine("coucou" + partialChemin);
                 globalmetadatas.DetermineType(conf, partialChemin);
 
                 
@@ -74,16 +74,16 @@ namespace ConsoleApplication1
                 {
                     if (!globalmetadatas.isComplete() || !extractors[i].Equals("Manuel"))
                     {
-                        MetaDatas tempMetaDatas;
-                        tempMetaDatas = GlobalExtract.extract(extractors[i], file, globalmetadatas.getApp(), globalmetadatas.getFamille());
-                        for (int j = 0; j < tempMetaDatas.Mandatory.Count; j++)
-                        {
-                            globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Mandatory[j].type, tempMetaDatas.Mandatory[j].value, true);
-                        }
-                        for (int j = 0; j < tempMetaDatas.Optional.Count; j++)
-                        {
-                            globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Optional[j].type, tempMetaDatas.Optional[j].value, false);
-                        }
+                        
+                        GlobalExtract.extract(extractors[i], file, globalmetadatas.getApp(), globalmetadatas);
+                        //for (int j = 0; j < tempMetaDatas.Mandatory.Count; j++)
+                        //{
+                        //    globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Mandatory[j].type, tempMetaDatas.Mandatory[j].value, true);
+                        //}
+                        //for (int j = 0; j < tempMetaDatas.Optional.Count; j++)
+                        //{
+                        //    globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Optional[j].type, tempMetaDatas.Optional[j].value, false);
+                        //}
                     }
                 }
 
@@ -182,22 +182,22 @@ namespace ConsoleApplication1
                         string pdf = Extract_PDF.ExtractTextFromPdf(file3);
                         Console.WriteLine("pdf : \n" + pdf);
 
-                        //regarde si le mot à cherche est dans le titre du pdf
-                        bool isTitle = Extract_PDF.SearchTitle(file3, aChercheTitre);
-                        Console.WriteLine("si true c'est que c'est dans le titre : " + isTitle);
+                        ////regarde si le mot à cherche est dans le titre du pdf
+                        //bool isTitle = Extract_PDF.SearchTitle(file3, aChercheTitre);
+                        //Console.WriteLine("si true c'est que c'est dans le titre : " + isTitle);
 
-                        //regarde si le momt à chercher est dans le pdf
-                        string aChercheText = "FacTUre";
-                        bool isPdf = Extract_PDF.SearchWord(file3, aChercheText);
-                        Console.WriteLine("trouvé dans texte : si true oui " + isPdf);
+                        ////regarde si le momt à chercher est dans le pdf
+                        //string aChercheText = "FacTUre";
+                        //bool isPdf = Extract_PDF.SearchWord(file3, aChercheText);
+                        //Console.WriteLine("trouvé dans texte : si true oui " + isPdf);
 
-                        //cherche si un nom est dans le document
-                        string name = Extract_PDF.SearchName(file3);
-                        Console.WriteLine(name);
+                        ////cherche si un nom est dans le document
+                        //string name = Extract_PDF.SearchName(file3);
+                        //Console.WriteLine(name);
 
-                        //cherche si un prénom est dans le document
-                        string surname = Extract_PDF.SearchSurname(file3);
-                        Console.WriteLine(surname);
+                        ////cherche si un prénom est dans le document
+                        //string surname = Extract_PDF.SearchSurname(file3);
+                        //Console.WriteLine(surname);
 
                         //test cherche si le titre fait partie d'une liste
                         string[] listNom = { "toto", "titi", "pdf", "nom" };
@@ -209,10 +209,10 @@ namespace ConsoleApplication1
                         //bool testPdf = Extract_PDF.SearchWordInList(file3, listNomPdf);
                         //Console.Write("test liste : " + testPdf + "\n");
 
-                        //test cherche méta-données
-                        string metaDataa = "postal";
-                        string retour = Extract_PDF.SearchMetaData(file3, metaDataa);
-                        Console.WriteLine("code postal : " + retour + "\n");
+                        ////test cherche méta-données
+                        //string metaDataa = "postal";
+                        //string retour = Extract_PDF.SearchMetaData(file3, metaDataa);
+                        //Console.WriteLine("code postal : " + retour + "\n");
                         break;
 
                     case 4:
@@ -337,7 +337,7 @@ namespace ConsoleApplication1
                         break;
 
                     case 8:
-                        string file = partialPath+"test.odt";
+                        string file = cheminBis+"testRegEx.txt";
                         Program.ExtractMetaDatas(file);
                         break;
                     case 9:
@@ -345,11 +345,13 @@ namespace ConsoleApplication1
                         Program.ExtractMetaDatas(file9);
                         break;
                     case 10:
-                        Constraint expreg = new Constraint();
+                       
                         string chaineTxt = File.ReadAllText(partialPath+ "testRegEx.txt");
                         //Console.WriteLine(chaineTxt);
                         Regex regex = new Regex(@"^([\w]+)@([\w]+)\.([\w]+)");
-                        Console.WriteLine(expreg.matchRegEx(chaineTxt, regex));
+                        Console.WriteLine(chaineTxt);
+                        Console.WriteLine(regex);
+                        Console.WriteLine(Constraint.matchRegEx(chaineTxt, regex));
                         //Console.WriteLine(expreg.ValidCP(chaineTxt));
 
                         break;

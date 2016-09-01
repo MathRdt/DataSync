@@ -27,7 +27,7 @@ namespace ConsoleApplication1
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
-        public static string OdtToString(TextDocument document)
+        public static string ExtractFromODT(TextDocument document)
         {
             var content = document.Content;
             string texte = " ";
@@ -43,6 +43,17 @@ namespace ConsoleApplication1
             }
             return texte;
         }
+
+        public static string ODTtoString(string file)
+        {
+            TextDocument doc = new TextDocument();
+            doc.Load(file);
+            string chaineODT = ExtractFromODT(doc); //extrait le pdf en chaine de caractère
+            string chaineodt = chaineODT.ToLower();//met le pdf en minuscule
+            return GlobalExtract.RemoveAccent(chaineodt);
+
+        }
+
         /// <summary>
         /// fonction qui permet de transformer une chaine de caractères en lui enlevant tous ces accents
         /// </summary>
@@ -65,207 +76,207 @@ namespace ConsoleApplication1
             return (sb.ToString().Normalize(NormalizationForm.FormC));
         }
 
-        /// <summary>
-        /// fonction qui va regarder si le mot qu'on cherche est dans le pdf retourne true si le mot est dans le pdf
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="NameToSearch"></param>
-        /// <returns></returns>
-        private static bool SearchWord(string path, string NameToSearch)
-        {
-            TextDocument doc = new TextDocument();
-            doc.Load(path);
-            string chaineOdt = OdtToString(doc);
-            string chaineodt = chaineOdt.ToLower();//met le pdf en minuscule
-            string chaineOdtSansAccent = RemoveAccent(chaineodt); //transforme le odt sans accent
-            string nametosearch = NameToSearch.ToLower();//met le mot qu'on cherche en minuscule
-            string nameToSearchSansAccent = RemoveAccent(nametosearch); //transforme le nom à chercher sans accent
+        ///// <summary>
+        ///// fonction qui va regarder si le mot qu'on cherche est dans le pdf retourne true si le mot est dans le pdf
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="NameToSearch"></param>
+        ///// <returns></returns>
+        //private static bool SearchWord(string path, string NameToSearch)
+        //{
+        //    TextDocument doc = new TextDocument();
+        //    doc.Load(path);
+        //    string chaineOdt = OdtToString(doc);
+        //    string chaineodt = chaineOdt.ToLower();//met le pdf en minuscule
+        //    string chaineOdtSansAccent = RemoveAccent(chaineodt); //transforme le odt sans accent
+        //    string nametosearch = NameToSearch.ToLower();//met le mot qu'on cherche en minuscule
+        //    string nameToSearchSansAccent = RemoveAccent(nametosearch); //transforme le nom à chercher sans accent
 
-            int result = chaineOdtSansAccent.IndexOf(nameToSearchSansAccent); //regarde si le mot qu'on cherche est sous-chaine du string pdf
+        //    int result = chaineOdtSansAccent.IndexOf(nameToSearchSansAccent); //regarde si le mot qu'on cherche est sous-chaine du string pdf
 
-            if (result > 0 || result == 0) return true; //si oui retourne vrai
-            else return false; //sinon retourne faux
-        }
+        //    if (result > 0 || result == 0) return true; //si oui retourne vrai
+        //    else return false; //sinon retourne faux
+        //}
 
-        /// <summary>
-        /// fonction qui va regarder si le mot qu'on cherche est dans le pdf retourne true si le mot est dans le pdf
-        /// cherche le mot a partir de la lilste des méta-données que l'on connait
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="MetaDataList"></param>
-        /// <returns></returns>
-        public static string SearchWordInList(string path, string[] MetaDataList)
-        {
-            TextDocument doc = new TextDocument();
-            doc.Load(path);
-            string chaineOdt = OdtToString(doc);
-            string chaineodt = chaineOdt.ToLower();//met le pdf en minuscule
-            string chaineOdtSansAccent = RemoveAccent(chaineodt);//transforme le odt sans accent
-            int i = 0;
-            int taille = MetaDataList.Length;
-            string nametosearch = " ";
-            string nameToSearchSansAccent = " ";
-            string resultR = " ";
-            int result = 0;
-            int cpt = 0;
-            for (i = 0; i < taille; i++)
-            {
-                nametosearch = MetaDataList[i].ToLower();//met le mot qu'on cherche en minuscule
-                nameToSearchSansAccent = RemoveAccent(nametosearch);//transforme le mot à chercher sans accent
-                result = chaineOdtSansAccent.IndexOf(nameToSearchSansAccent);//regarde si le mot qu'on cherche est sous chaine du titre
-                if (result > 0 || result == 0)
-                {
-                    resultR = nametosearch;
-                    cpt++;
-                    break;
-                }
-                else resultR = "";
-            }
-            return resultR;
+        ///// <summary>
+        ///// fonction qui va regarder si le mot qu'on cherche est dans le pdf retourne true si le mot est dans le pdf
+        ///// cherche le mot a partir de la lilste des méta-données que l'on connait
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="MetaDataList"></param>
+        ///// <returns></returns>
+        //public static string SearchWordInList(string path, string[] MetaDataList)
+        //{
+        //    TextDocument doc = new TextDocument();
+        //    doc.Load(path);
+        //    string chaineOdt = OdtToString(doc);
+        //    string chaineodt = chaineOdt.ToLower();//met le pdf en minuscule
+        //    string chaineOdtSansAccent = RemoveAccent(chaineodt);//transforme le odt sans accent
+        //    int i = 0;
+        //    int taille = MetaDataList.Length;
+        //    string nametosearch = " ";
+        //    string nameToSearchSansAccent = " ";
+        //    string resultR = " ";
+        //    int result = 0;
+        //    int cpt = 0;
+        //    for (i = 0; i < taille; i++)
+        //    {
+        //        nametosearch = MetaDataList[i].ToLower();//met le mot qu'on cherche en minuscule
+        //        nameToSearchSansAccent = RemoveAccent(nametosearch);//transforme le mot à chercher sans accent
+        //        result = chaineOdtSansAccent.IndexOf(nameToSearchSansAccent);//regarde si le mot qu'on cherche est sous chaine du titre
+        //        if (result > 0 || result == 0)
+        //        {
+        //            resultR = nametosearch;
+        //            cpt++;
+        //            break;
+        //        }
+        //        else resultR = "";
+        //    }
+        //    return resultR;
             
-        }
+        //}
 
-        /// <summary>
-        /// fonction qui regarder si le mot que l'on cherche est dans le titre du fichier retourne true si le mot est dans le titre du pdf
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="NameToSearch"></param>
-        /// <returns></returns>
-        public static bool SearchTitle(string path, string NameToSearch)
-        {
-            FileInfo oFileInfo = new FileInfo(path);
-            string name = oFileInfo.Name; //recupere nom fichier
-            string Name = name.ToLower(); //met le titre en minuscule
-            string nameSansAccent = RemoveAccent(Name);//transforme le nom du fichier sans accent
-            string nametosearch = NameToSearch.ToLower();//met le mot qu'on cherche en minuscule
-            string nameToSearchSansAccent = RemoveAccent(nametosearch);//trnasforme le nom à chercher sans accent
-            int result = nameSansAccent.IndexOf(nameToSearchSansAccent);//regarde si le mot qu'on cherche est sous chaine du titre
+        ///// <summary>
+        ///// fonction qui regarder si le mot que l'on cherche est dans le titre du fichier retourne true si le mot est dans le titre du pdf
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="NameToSearch"></param>
+        ///// <returns></returns>
+        //public static bool SearchTitle(string path, string NameToSearch)
+        //{
+        //    FileInfo oFileInfo = new FileInfo(path);
+        //    string name = oFileInfo.Name; //recupere nom fichier
+        //    string Name = name.ToLower(); //met le titre en minuscule
+        //    string nameSansAccent = RemoveAccent(Name);//transforme le nom du fichier sans accent
+        //    string nametosearch = NameToSearch.ToLower();//met le mot qu'on cherche en minuscule
+        //    string nameToSearchSansAccent = RemoveAccent(nametosearch);//trnasforme le nom à chercher sans accent
+        //    int result = nameSansAccent.IndexOf(nameToSearchSansAccent);//regarde si le mot qu'on cherche est sous chaine du titre
 
-            if (result > 0 || result == 0) return true; //si oui retourne vrai
-            else return false; //sinon retourne faux
-        }
+        //    if (result > 0 || result == 0) return true; //si oui retourne vrai
+        //    else return false; //sinon retourne faux
+        //}
 
-        /// <summary>
-        /// fonction qui regarder si le mot que l'on cherche est dans le titre du fichier retourne true si le mot est dans le titre du pdf
-        ///cherche le mot a partir de la lilste des méta-données que l'on connait
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="MetaDataList"></param>
-        /// <returns></returns>
-        public static string SearchTitleInList(string path, string[] MetaDataList)
-        {
-            FileInfo oFileInfo = new FileInfo(path);
-            string name = oFileInfo.Name; //recupere nom fichier
-            string Name = name.ToLower(); //met le titre en minuscule
-            string nameSansAccent = RemoveAccent(Name);//transforme le nom du fichier sans accent
+        ///// <summary>
+        ///// fonction qui regarder si le mot que l'on cherche est dans le titre du fichier retourne true si le mot est dans le titre du pdf
+        /////cherche le mot a partir de la lilste des méta-données que l'on connait
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="MetaDataList"></param>
+        ///// <returns></returns>
+        //public static string SearchTitleInList(string path, string[] MetaDataList)
+        //{
+        //    FileInfo oFileInfo = new FileInfo(path);
+        //    string name = oFileInfo.Name; //recupere nom fichier
+        //    string Name = name.ToLower(); //met le titre en minuscule
+        //    string nameSansAccent = RemoveAccent(Name);//transforme le nom du fichier sans accent
 
-            int i = 0;
-            int taille = MetaDataList.Length;
-            string nametosearch = " ";
-            string nameToSearchSansAccent = " ";
-            int result = 0;
-            string resultTest = " ";
-            int cpt = 0;
-            for (i = 0; i < taille; i++)
-            {
-                nametosearch = MetaDataList[i].ToLower();//met le mot qu'on cherche en minuscule
-                nameToSearchSansAccent = RemoveAccent(nametosearch);//transforme le nom à chercher sans accent
-                result = nameSansAccent.IndexOf(nameToSearchSansAccent);//regarde si le mot qu'on cherche est sous chaine du titre
-                if (result > 0 || result == 0)
-                {
-                    resultTest = nametosearch;
-                    cpt++;
-                    break;
-                }
-                else resultTest = "";
-            }
-            return resultTest;
-        }     
+        //    int i = 0;
+        //    int taille = MetaDataList.Length;
+        //    string nametosearch = " ";
+        //    string nameToSearchSansAccent = " ";
+        //    int result = 0;
+        //    string resultTest = " ";
+        //    int cpt = 0;
+        //    for (i = 0; i < taille; i++)
+        //    {
+        //        nametosearch = MetaDataList[i].ToLower();//met le mot qu'on cherche en minuscule
+        //        nameToSearchSansAccent = RemoveAccent(nametosearch);//transforme le nom à chercher sans accent
+        //        result = nameSansAccent.IndexOf(nameToSearchSansAccent);//regarde si le mot qu'on cherche est sous chaine du titre
+        //        if (result > 0 || result == 0)
+        //        {
+        //            resultTest = nametosearch;
+        //            cpt++;
+        //            break;
+        //        }
+        //        else resultTest = "";
+        //    }
+        //    return resultTest;
+        //}     
 
-        /// <summary>
-        /// fonction qui cherche le nom dans le document
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private static string SearchName(string path)
-        {
-            TextDocument doc = new TextDocument();
-            doc.Load(path);
-            string chaineOdt = OdtToString(doc);
-            string chaineodt = chaineOdt.ToLower();//met le pdf en minuscule
-            string chaineOdtSansAccent = RemoveAccent(chaineodt);
-            int result = chaineOdtSansAccent.IndexOf("nom"); //regarde si le mot qu'on cherche est sous-chaine du string pdf
+        ///// <summary>
+        ///// fonction qui cherche le nom dans le document
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <returns></returns>
+        //private static string SearchName(string path)
+        //{
+        //    TextDocument doc = new TextDocument();
+        //    doc.Load(path);
+        //    string chaineOdt = OdtToString(doc);
+        //    string chaineodt = chaineOdt.ToLower();//met le pdf en minuscule
+        //    string chaineOdtSansAccent = RemoveAccent(chaineodt);
+        //    int result = chaineOdtSansAccent.IndexOf("nom"); //regarde si le mot qu'on cherche est sous-chaine du string pdf
 
-            string surname = " ";
-            if (result > 0 || result == 0) //on cherche le nom si le mot nom est présent dans le document
-            {
-                int i = 0;
-                for (i = 0; i < 20; i++)
-                {
-                    if (chaineOdtSansAccent[result + i] == ':') break;
-                }
-                int j = 0;
-                for (j = i + 1; j < 20; j++)
-                {
-                    if (chaineOdtSansAccent[result + j] != ' ') break; //trouve le début du nom
-                }
-                int k = 0;
-                for (k = j + 1; k < 20; k++)
-                {
-                    if (chaineOdtSansAccent[result + k] == ' ' || chaineOdtSansAccent[result + k] == '\n' || chaineOdtSansAccent[result + k] == '\r' || chaineOdtSansAccent[result + k] == '\t') break; //trouve fin du nom
-                }
-                surname = chaineOdt.Substring(result + j, k - j + 1); //extrait le nom
+        //    string surname = " ";
+        //    if (result > 0 || result == 0) //on cherche le nom si le mot nom est présent dans le document
+        //    {
+        //        int i = 0;
+        //        for (i = 0; i < 20; i++)
+        //        {
+        //            if (chaineOdtSansAccent[result + i] == ':') break;
+        //        }
+        //        int j = 0;
+        //        for (j = i + 1; j < 20; j++)
+        //        {
+        //            if (chaineOdtSansAccent[result + j] != ' ') break; //trouve le début du nom
+        //        }
+        //        int k = 0;
+        //        for (k = j + 1; k < 20; k++)
+        //        {
+        //            if (chaineOdtSansAccent[result + k] == ' ' || chaineOdtSansAccent[result + k] == '\n' || chaineOdtSansAccent[result + k] == '\r' || chaineOdtSansAccent[result + k] == '\t') break; //trouve fin du nom
+        //        }
+        //        surname = chaineOdt.Substring(result + j, k - j + 1); //extrait le nom
 
-            }
-            else surname = "prenom non présent";
+        //    }
+        //    else surname = "prenom non présent";
 
-            return surname;
-        }
+        //    return surname;
+        //}
 
         
 
-        /// <summary>
-        /// fonction qui cherche une méta-données en particulier
-        /// fonction qui cherche le nom dans le document
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="metaData"></param>
-        /// <returns></returns>
-        private static string SearchMetaData(string path, string metaData)
-        {
-            TextDocument doc = new TextDocument();
-            doc.Load(path);
-            string chaineOdt = OdtToString(doc);
-            string chaineodt = chaineOdt.ToLower();//met le pdf en minuscule
-            string chaineOdtSansAccent = RemoveAccent(chaineodt);
-            string metadata = metaData.ToLower();
-            string metaDataSansAccent = RemoveAccent(metadata);
-            int result = chaineOdtSansAccent.IndexOf(metaDataSansAccent); //regarde si le mot qu'on cherche est sous-chaine du string pdf
-            string name = " ";
+        ///// <summary>
+        ///// fonction qui cherche une méta-données en particulier
+        ///// fonction qui cherche le nom dans le document
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="metaData"></param>
+        ///// <returns></returns>
+        //private static string SearchMetaData(string path, string metaData)
+        //{
+        //    TextDocument doc = new TextDocument();
+        //    doc.Load(path);
+        //    string chaineOdt = OdtToString(doc);
+        //    string chaineodt = chaineOdt.ToLower();//met le pdf en minuscule
+        //    string chaineOdtSansAccent = RemoveAccent(chaineodt);
+        //    string metadata = metaData.ToLower();
+        //    string metaDataSansAccent = RemoveAccent(metadata);
+        //    int result = chaineOdtSansAccent.IndexOf(metaDataSansAccent); //regarde si le mot qu'on cherche est sous-chaine du string pdf
+        //    string name = " ";
 
-            if (result > 0 || result == 0) //on cherche le nom si le mot nom est présent dans le document
-            {
-                int i = 0;
-                for (i = 0; i < 20; i++)
-                {
-                    if (chaineOdtSansAccent[result + i] == ':') break;
-                }
-                int j = 0;
-                for (j = i + 1; j < 20; j++)
-                {
-                    if (chaineOdtSansAccent[result + j] != ' ') break; //trouve le début du nom
-                }
-                int k = 0;
-                for (k = j + 1; k < 20; k++)
-                {
-                    if (chaineOdtSansAccent[result + k] == ' ' || chaineOdtSansAccent[result + k] == '\n' || chaineOdtSansAccent[result + k] == '\r' || chaineOdtSansAccent[result + k] == '\t') break; //trouve fin du nom
-                }
-                name = chaineOdt.Substring(result + j, k - j + 1); //extrait le nom
+        //    if (result > 0 || result == 0) //on cherche le nom si le mot nom est présent dans le document
+        //    {
+        //        int i = 0;
+        //        for (i = 0; i < 20; i++)
+        //        {
+        //            if (chaineOdtSansAccent[result + i] == ':') break;
+        //        }
+        //        int j = 0;
+        //        for (j = i + 1; j < 20; j++)
+        //        {
+        //            if (chaineOdtSansAccent[result + j] != ' ') break; //trouve le début du nom
+        //        }
+        //        int k = 0;
+        //        for (k = j + 1; k < 20; k++)
+        //        {
+        //            if (chaineOdtSansAccent[result + k] == ' ' || chaineOdtSansAccent[result + k] == '\n' || chaineOdtSansAccent[result + k] == '\r' || chaineOdtSansAccent[result + k] == '\t') break; //trouve fin du nom
+        //        }
+        //        name = chaineOdt.Substring(result + j, k - j + 1); //extrait le nom
 
-            }
-            else name = "nom non trouvé";
+        //    }
+        //    else name = "nom non trouvé";
 
-            return name;
-        }
+        //    return name;
+        //}
     }
 }

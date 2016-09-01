@@ -89,13 +89,14 @@ namespace ConsoleApplication1
                     }
                     for(int j=0; j< aspectsToAdd[i].metadatas.Mandatory.Count;j++)
                     {
-                        isMandatoryMetaDataCompleted =this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Mandatory[j].type, aspectsToAdd[i].metadatas.Mandatory[j].value, true);
+                        isMandatoryMetaDataCompleted = this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Mandatory[j].type, aspectsToAdd[i].metadatas.Mandatory[j].value, true, aspectsToAdd[i].metadatas.Mandatory[j].keyWords, aspectsToAdd[i].metadatas.Mandatory[j].listValues, aspectsToAdd[i].metadatas.Mandatory[j].regEx, aspectsToAdd[i].metadatas.Mandatory[j].min, aspectsToAdd[i].metadatas.Mandatory[j].max, aspectsToAdd[i].metadatas.Mandatory[j].valueType);
+                        //aspectsToAdd[i].metadatas.Mandatory[j].listValues;
                         if (isMandatoryMetaDataCompleted) ReadyToSync.record(k);
                         k++;
                     }
                     for (int j = 0; j < aspectsToAdd[i].metadatas.Optional.Count; j++)
                     {
-                        this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Optional[j].type, aspectsToAdd[i].metadatas.Optional[j].value, false);
+                        this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Optional[j].type, aspectsToAdd[i].metadatas.Optional[j].value, false, aspectsToAdd[i].metadatas.Optional[j].keyWords, aspectsToAdd[i].metadatas.Optional[j].listValues, aspectsToAdd[i].metadatas.Optional[j].regEx, aspectsToAdd[i].metadatas.Optional[j].min, aspectsToAdd[i].metadatas.Optional[j].max, aspectsToAdd[i].metadatas.Optional[j].valueType);
                     }
                 }
             }
@@ -172,9 +173,9 @@ namespace ConsoleApplication1
                         stringMetaDatas[1] = pathString[pathString.Length - 2];
                         stringMetaDatas[2] = pathString[pathString.Length - 1];
                         
-                        this.metadatas.changeMetaData("fiducial:domainContainerBranche", stringMetaDatas[0], true);
-                        this.metadatas.changeMetaData("fiducial:domainContainerSociete", stringMetaDatas[1], true);
-                        this.metadatas.changeMetaData("fiducial:domainContainerApplication", stringMetaDatas[2], true);
+                        this.metadatas.changeMetaData("fiducial:domainContainerBranche", stringMetaDatas[0], true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
+                        this.metadatas.changeMetaData("fiducial:domainContainerSociete", stringMetaDatas[1], true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
+                        this.metadatas.changeMetaData("fiducial:domainContainerApplication", stringMetaDatas[2], true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
                         return stringMetaDatas[2];
                     }
                 }
@@ -307,7 +308,7 @@ namespace ConsoleApplication1
                                             if ((string)Conf.applications[i].typeInfos[j].aspects[k].metadatas.Mandatory[m + 1].value == sousFamille)
                                             {
                                                 type = Conf.applications[i].typeInfos[j].typename;
-                                                Console.WriteLine("get type 1: "+ type);
+                                                
                                                 return type;
                                             }
                                             else break;
@@ -321,7 +322,7 @@ namespace ConsoleApplication1
             }
 
             type = "default Type";
-            Console.WriteLine("get type 2: " + type);
+            
             return type;
         }
 

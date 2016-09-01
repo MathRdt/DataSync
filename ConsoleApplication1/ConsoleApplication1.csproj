@@ -183,12 +183,6 @@
     <Compile Include="Extract_ODT.cs" />
     <Compile Include="Extract_Word.cs" />
     <Compile Include="Branche.cs" />
-    <Compile Include="Form2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
-    </Compile>
     <Compile Include="MimeTypes.cs" />
     <Compile Include="ReadyToSync.cs" />
     <Compile Include="GlobalExtract.cs" />
@@ -221,9 +215,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -32,6 +32,17 @@ namespace ConsoleApplication1
             return (sb.ToString().Normalize(NormalizationForm.FormC));
         }
 
+
+        public static string TxtToString(string file)
+        {
+            if (!File.Exists(file))
+                throw new FileNotFoundException(file + " not found");
+            string chaineTxt = File.ReadAllText(file);
+            chaineTxt = chaineTxt.ToLower();//met le pdf en minuscule
+            string chaineTxtSansAccent = RemoveAccent(chaineTxt);//transforme le odt sans accent
+            return chaineTxtSansAccent;
+        }
+
         /// <summary>
         /// fonction qui va regarder si le mot qu'on cherche est dans le texte retourne true si le mot est dans le fichier
         /// cherche le mot a partir de la lilste des méta-données que l'on connait

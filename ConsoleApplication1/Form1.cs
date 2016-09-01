@@ -160,12 +160,12 @@ namespace ConsoleApplication1
                     {
                         if (metadatasFromManual.getFamille() == "")
                         {
-                            metadatasFromManual.changeMetaData("fiducial:domainContainerFamille", comboBoxFamille.Text, true);
+                            metadatasFromManual.changeMetaData("fiducial:domainContainerFamille", comboBoxFamille.Text, true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
                         }
-                    metadatasFromManual.changeMetaData("fiducial:domainContainerSousFamille", comboBoxSousFamille.Text, true);
+                    metadatasFromManual.changeMetaData("fiducial:domainContainerSousFamille", comboBoxSousFamille.Text, true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
                     }
-                metadatasFromManual.changeMetaData("cm:title", textBoxTitre.Text, false);
-                metadatasFromManual.changeMetaData("cm:description", textBoxDescription.Text, false);
+                metadatasFromManual.changeMetaData("cm:title", textBoxTitre.Text, false, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
+                metadatasFromManual.changeMetaData("cm:description", textBoxDescription.Text, false, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
 
                 Close();
             }

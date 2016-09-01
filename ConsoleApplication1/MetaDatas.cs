@@ -18,23 +18,23 @@ namespace ConsoleApplication1
         public string type { get; set; }
         public object value { get; set; }
 
-        [XmlIgnore]
+        //[XmlIgnore]
         public List<string> keyWords { get; set; }
 
-        [XmlIgnore]
-        public List<Object> listValues { get; set; }
+        //[XmlIgnore]
+        public List<string> listValues { get; set; }
 
-        [XmlIgnore]
+        //[XmlIgnore]
         public string regEx { get; set; }
 
-        [XmlIgnore]
+        //[XmlIgnore]
         public string valueType { get; set; }
 
-        [XmlIgnore]
-        public object min { get; set; }
+        //[XmlIgnore]
+        public double min { get; set; }
 
-        [XmlIgnore]
-        public object max { get; set; }
+        //[XmlIgnore]
+        public double max { get; set; }
 
         public Boolean isSameType(String typeOfMetadata)
         {
@@ -78,13 +78,13 @@ namespace ConsoleApplication1
         /// <param name="typeMetaData"> le type de la nouvelle meta donnée </param>
         /// <param name="valueMetaData">la valeur affectée à cette nouvelle méta donnée</param>
         /// <param name="mandatory"> cette méta donnée est-elle obligatoire ou non</param>
-        public void addMetaData(string typeMetaData, object valueMetaData, Boolean mandatory)
+        public void addMetaData(string typeMetaData, object valueMetaData, bool mandatory,List<string> listKeyWords, List<string> listValuesMetaData, string regex, double minValue, double maxValue, string valuetype)
         {
             if (mandatory == true)
-                this.Mandatory.Add(new MetaData() { type = typeMetaData, value = valueMetaData });
-
+                this.Mandatory.Add(new MetaData() { type = typeMetaData, value = valueMetaData, keyWords = listKeyWords, listValues = listValuesMetaData , max = maxValue, min = minValue, regEx = regex, valueType = valuetype });
+                
             else
-                this.Optional.Add(new MetaData() { type = typeMetaData, value = valueMetaData });
+                this.Optional.Add(new MetaData() { type = typeMetaData, value = valueMetaData, keyWords = listKeyWords, listValues = listValuesMetaData, max = maxValue, min = minValue, regEx = regex, valueType = valuetype });
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace ConsoleApplication1
         /// <param name="valueMetaData">la nouvelle valeur à prendre</param>
         /// <param name="mandatory">méta donnée obligatoire ou non</param>
 
-        public bool changeMetaData(string typeMetaData, object valueMetaData, Boolean mandatory)
+        public bool changeMetaData(string typeMetaData, object valueMetaData, bool mandatory, List<string> listKeyWords, List<string> listValuesMetaData, string regex, double minValue, double maxValue, string valuetype)
         {
             //Console.WriteLine(valueMetaData.GetType().ToString());
             if (mandatory == true)
@@ -130,7 +130,7 @@ namespace ConsoleApplication1
                     }
                 }
             }
-            this.addMetaData(typeMetaData, valueMetaData, mandatory);
+            this.addMetaData(typeMetaData, valueMetaData, mandatory,listKeyWords,listValuesMetaData,regex,minValue,maxValue,valuetype);
             if (mandatory == true && (string)valueMetaData != "") return true;
             return false;
         }
