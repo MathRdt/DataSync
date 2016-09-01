@@ -337,7 +337,7 @@ namespace ConsoleApplication1
                         break;
 
                     case 8:
-                        string file = cheminBis+"testRegEx.txt";
+                        string file = partialPath + "testRegEx.txt";
                         Program.ExtractMetaDatas(file);
                         break;
                     case 9:

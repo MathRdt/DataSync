@@ -75,17 +75,17 @@ namespace ConsoleApplication1
 
                 for (int i = 0; i < listFamilles.Count; i++)
                 {
-                    familles[i] = listFamilles[i].name;
+                    familles.Add(listFamilles[i].name);
                 }
-                List<string> sousFamilles = null;
+                List<string> sousFamilles = new List<string>();
             
                 if (famille == "")
                 {
 
-                    famille = SearchTitleInList(text, familles);
+                    famille = SearchTitleInList(file, familles);
                     if (famille == "")
                     {
-                        famille = SearchWordInList(text, familles);
+                        famille = SearchWordInList(file, familles);
                         if (famille != "") globalMetaDatas.metadatas.changeMetaData("fiducial:domainContainerFamille", famille, true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
 
                     }
@@ -99,15 +99,15 @@ namespace ConsoleApplication1
                         sousFamilles = new List<string>(listFamilles[i].sousFamille.Count);
                         for (int j = 0; j < listFamilles[i].sousFamille.Count; j++)
                         {
-                            sousFamilles[j] = listFamilles[i].sousFamille[j];
+                            sousFamilles.Add(listFamilles[i].sousFamille[j]);
                         }
                         break;
                     }
                 }
-                sousFamille = SearchTitleInList(text, sousFamilles);
+                sousFamille = SearchTitleInList(file, sousFamilles);
                 if (sousFamille == "")
                 {
-                    sousFamille = SearchWordInList(text, sousFamilles);
+                    sousFamille = SearchWordInList(file, sousFamilles);
                     if (sousFamille != "") globalMetaDatas.metadatas.changeMetaData("fiducial:domainContainerSousFamille", sousFamille, true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
                 }
                 else globalMetaDatas.metadatas.changeMetaData("fiducial:domainContainerSousFamille", sousFamille, true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
@@ -374,12 +374,12 @@ namespace ConsoleApplication1
             string name = oFileInfo.Name; //recupere nom fichier
             string Name = name.ToLower(); //met le titre en minuscule
             string nameSansAccent = RemoveAccent(Name);
-            string nameToSearchSansAccent = " ";
+            string nameToSearchSansAccent = "";
             int i = 0;
             int taille = MetaDataList.Count;
-            string nametosearch = " ";
+            string nametosearch = "";
             int result = 0;
-            string resultTest = " ";
+            string resultTest = "";
             int cpt = 0;
             for (i = 0; i < taille; i++)
             {
@@ -410,10 +410,10 @@ namespace ConsoleApplication1
             
             int i = 0;
             int taille = MetaDataList.Count;
-            string nametosearch = " ";
-            string nameToSearchSansAccent = " ";
+            string nametosearch = "";
+            string nameToSearchSansAccent = "";
             int result = 0;
-            string resultTest = " ";
+            string resultTest = "";
             int cpt = 0;
             for (i = 0; i < taille; i++)
             {
