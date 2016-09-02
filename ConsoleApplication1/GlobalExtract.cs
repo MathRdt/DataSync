@@ -450,17 +450,19 @@ namespace ConsoleApplication1
             if (result >= 0) //on cherche le nom si le mot nom est présent dans le document
             {
                 int i = 0;
-                for (i = 0; i < 20; i++)
+                int length = text.Length; 
+
+                for (i = 0; i < Math.Min(20,length-result); i++)
                 {
                     if (text[result + i] == ':') break;
                 }
                 int j = 0;
-                for (j = i + 1; j < 20; j++)
+                for (j = i + 1; j < Math.Min(20, length - (result+i)); j++)
                 {
                     if (text[result + j] != ' ') break; //trouve le début du nom
                 }
                 int k = 0;
-                for (k = j + 1; k < 20; k++)
+                for (k = j + 1; k < Math.Min(20, length - (result + i+j)); k++)
                 {
                     if (text[result + k] == ' ' || text[result + k] == '\n' || text[result + k] == '\r' || text[result + k] == '\t') break; //trouve fin du nom
                 }
@@ -489,12 +491,12 @@ namespace ConsoleApplication1
             if (result >= 0) //on cherche le nom si le mot nom est présent dans le document
             {
                 int i = 0;
-                for (i = 0; i < 20; i++)
+                int length = text.Length;
+                for (i = 0; i < Math.Min(20, length - result); i++)
                 {
                     if (text[result + i] == ':') break;
                 }
                 text = text.Substring(result + i+1);
-                Console.WriteLine(text);
                 name = Constraint.matchRegEx(text, regex);
             }
             Console.WriteLine(name);
@@ -518,17 +520,18 @@ namespace ConsoleApplication1
             if (result >= 0) //on cherche le nom si le mot nom est présent dans le document
             {
                 int i = 0;
-                for (i = 0; i < 20; i++)
+                int length = text.Length;
+                for (i = 0; i < Math.Min(20, length - result); i++)
                 {
                     if (text[result + i] == ':') break;
                 }
                 int j = 0;
-                for (j = i + 1; j < 20; j++)
+                for (j = i + 1; j < Math.Min(20, length - (result+i)); j++)
                 {
                     if (text[result + j] != ' ') break; //trouve le début du nom
                 }
                 int k = 0;
-                for (k = j + 1; k < 20; k++)
+                for (k = j + 1; k < Math.Min(20, length - (result + i+j)); k++)
                 {
                     if (text[result + k] == ' ' || text[result + k] == '\n' || text[result + k] == '\r' || text[result + k] == '\t') break; //trouve fin du nom
                 }

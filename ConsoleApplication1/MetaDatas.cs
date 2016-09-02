@@ -105,7 +105,7 @@ namespace ConsoleApplication1
                     if (this.Mandatory[i].type == typeMetaData)
                     {
                         
-                        if(valueMetaData != null && (string)valueMetaData != "") {
+                        if(valueMetaData != null && valueMetaData.ToString() != "") {
                             this.Mandatory[i].value = valueMetaData;
                             return true;
                         }
@@ -121,7 +121,7 @@ namespace ConsoleApplication1
                     if (this.Optional[j].type == typeMetaData)
                     {
 
-                        if (valueMetaData != null && (string)valueMetaData != "")
+                        if (valueMetaData != null && valueMetaData.ToString() != "")
                         {
                             this.Optional[j].value = valueMetaData;
                         }
@@ -141,7 +141,7 @@ namespace ConsoleApplication1
             {
                 if (this.Mandatory[i].type == "fiducial:domainContainerBranche")
                 {
-                    return (string)this.Mandatory[i].value;
+                    return this.Mandatory[i].value.ToString();
                 }
             }
             return null;
@@ -153,7 +153,7 @@ namespace ConsoleApplication1
             {
                 if (this.Mandatory[i].type == "fiducial:domainContainerSociete")
                 {
-                    return (string)this.Mandatory[i].value;
+                    return this.Mandatory[i].value.ToString();
                 }
             }
             return null;
@@ -165,7 +165,7 @@ namespace ConsoleApplication1
             {
                 if (this.Mandatory[i].type == "fiducial:domainContainerApplication")
                 {
-                    return (string)this.Mandatory[i].value;
+                    return this.Mandatory[i].value.ToString();
                 }
             }
             return null;
@@ -177,7 +177,7 @@ namespace ConsoleApplication1
             {
                 if (this.Mandatory[i].type == "fiducial:domainContainerFamille")
                 {
-                    return (string)this.Mandatory[i].value;
+                    return this.Mandatory[i].value.ToString();
                 }
             }
             return null;

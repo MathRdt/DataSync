@@ -60,7 +60,7 @@ namespace ConsoleApplication1
                 globalmetadatas.DetermineType(conf, partialChemin);
 
                 
-                if (globalmetadatas.typename != "default Type")
+                if (globalmetadatas.typename != "cmis:document")
                 {
                     globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
                 }
@@ -74,16 +74,24 @@ namespace ConsoleApplication1
                 {
                     if (!globalmetadatas.isComplete() || !extractors[i].Equals("Manuel"))
                     {
-                        
+
                         GlobalExtract.extract(extractors[i], file, globalmetadatas.getApp(), globalmetadatas);
-                        //for (int j = 0; j < tempMetaDatas.Mandatory.Count; j++)
-                        //{
-                        //    globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Mandatory[j].type, tempMetaDatas.Mandatory[j].value, true);
-                        //}
-                        //for (int j = 0; j < tempMetaDatas.Optional.Count; j++)
-                        //{
-                        //    globalmetadatas.metadatas.changeMetaData(tempMetaDatas.Optional[j].type, tempMetaDatas.Optional[j].value, false);
-                        //}
+                        if (extractors[i].Equals("Manuel"))
+                        {
+                            globalmetadatas.DetermineType(conf, partialChemin);
+                            if (globalmetadatas.typename != "cmis:document")
+                            {
+                                globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
+                            
+                                for (int j = 0; j < extractors.Length; j++)
+                                {
+                                    if (!extractors[j].Equals("Manuel"))
+                                    {
+                                        GlobalExtract.extract(extractors[j], file, globalmetadatas.getApp(), globalmetadatas);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -101,8 +109,10 @@ namespace ConsoleApplication1
                 {
                     globalmetadatas.getType(conf, globalmetadatas.getApp(), globalmetadatas.getFamille(), globalmetadatas.getSousFamille());
                 }
-                
-                //globalmetadatas.typename = "D:fiducial_" + globalmetadatas.metadatas.Mandatory[3].value + ":type_" + globalmetadatas.metadatas.Mandatory[4].value;
+                if (globalmetadatas.typename != "cmis:document")
+                {
+                    globalmetadatas.typename = "D:" + globalmetadatas.typename;
+                }
                 globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
                 globalmetadatas.Enregistrer(XMLfile);
                 return true;

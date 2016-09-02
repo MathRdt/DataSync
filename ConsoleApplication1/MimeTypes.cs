@@ -30,6 +30,7 @@ public class MimeTypes
             string headerType = ScanFileForMimeType(fileName);
             if (headerType != "application/octet-stream" || string.IsNullOrEmpty(contentType))
                 contentType = headerType;
+            
         }
         return contentType;
     }

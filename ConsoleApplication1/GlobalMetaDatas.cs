@@ -168,10 +168,10 @@ namespace ConsoleApplication1
                         //{
                         //    Console.WriteLine(pathString[k]);
                         //}
-                        string[] stringMetaDatas = new string[3];
-                        stringMetaDatas[0] = pathString[pathString.Length - 3];
-                        stringMetaDatas[1] = pathString[pathString.Length - 2];
-                        stringMetaDatas[2] = pathString[pathString.Length - 1];
+                        string[] stringMetaDatas = new string[4];
+                        stringMetaDatas[0] = pathString[pathString.Length - 4];
+                        stringMetaDatas[1] = pathString[pathString.Length - 3];
+                        stringMetaDatas[2] = pathString[pathString.Length - 2];
                         
                         this.metadatas.changeMetaData("fiducial:domainContainerBranche", stringMetaDatas[0], true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
                         this.metadatas.changeMetaData("fiducial:domainContainerSociete", stringMetaDatas[1], true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
@@ -266,7 +266,7 @@ namespace ConsoleApplication1
                 {
                     if((string)this.metadatas.Mandatory[i].value == "" || (string)this.metadatas.Mandatory[i+1].value == "")
                     {
-                        this.typename = "default Type";
+                        this.typename = "cmis:document";
                     }
                     for (int j =0; j< familles.Count; j++)
                     {
@@ -321,7 +321,7 @@ namespace ConsoleApplication1
                 }
             }
 
-            type = "default Type";
+            type = "cmis:document";
             
             return type;
         }
