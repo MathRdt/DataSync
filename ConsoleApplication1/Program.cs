@@ -6,13 +6,13 @@ using System.Text.RegularExpressions;
 namespace ConsoleApplication1
 {
     
-    class Program
+    public class Program
     {
 
         public static string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\famille1\sousfamille1\";
         public static string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\recette\paie\";
-        public static string partialPath = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\";
-        public static string confFile = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\famille1\sousfamille1\confUpdate.xml";
+        public static string partialPath = @"C:\Users\adminprojetindus\CmisSync\App1\";
+        public static string confFile = @"C:\Users\adminprojetindus\AppData\Roaming\cmissync\confUpdate.xml";
 
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace ConsoleApplication1
                         break;
 
                     case 8:
-                        string file = partialPath + "testRegEx.txt";
+                        string file = partialPath + "File.txt";
                         Program.ExtractMetaDatas(file);
                         break;
                     case 9:

@@ -132,7 +132,7 @@ namespace ConsoleApplication1
                         break;
                     }
                 }
-                if (conf.applications[i].typeInfos[j].typename == documentType)
+                if (j< conf.applications[i].typeInfos.Count && conf.applications[i].typeInfos[j].typename == documentType)
                 {
                     break;
                 }
