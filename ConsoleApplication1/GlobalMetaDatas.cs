@@ -261,9 +261,7 @@ namespace ConsoleApplication1
             }
             return null;
         }
-
-
-
+        
         public void DetermineType(Conf conf, string path)
         {
             string app = getAppFromConf(conf, path);
@@ -347,14 +345,7 @@ namespace ConsoleApplication1
         }
 
     }
-
     
-
-    
-
-
-
-
     [Serializable()]
     public class NoPathFoundException : System.Exception
     {
