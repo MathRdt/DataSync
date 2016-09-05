@@ -140,6 +140,28 @@ namespace ConsoleApplication1
             }
         }
 
+        public void checkFamille (List<Famille> listFamilles, string app)
+        {
+            string famille = this.getFamille();
+            string sousFamille = this.getSousFamille();
+            for(int i =0; i < listFamilles.Count; i++)
+            {
+                if (listFamilles[i].name == famille)
+                {
+                    for (int j = 0; i < listFamilles[i].sousFamille.Count; j++)
+                    {
+                        if (listFamilles[i].sousFamille[j] == sousFamille)
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+            this.metadatas.changeMetaData("fiducial:domainContainerFamille", "", true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
+            this.metadatas.changeMetaData("fiducial:domainContainerSousFamille", "", true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
+
+        }
+
         /// <summary>
         /// </summary>
         /// <returns>true si le fichier est prêt à être sychronisé, false sinon</returns>
@@ -164,10 +186,7 @@ namespace ConsoleApplication1
                     if (conf.applications[i].folders[j].name == path)
                     {
                         string[]pathString =  Extract_Path.conversionRemotePath(conf.applications[i].folders[j].remotePath);
-                        //for(int k = 0; k < pathString.Length; k++)
-                        //{
-                        //    Console.WriteLine(pathString[k]);
-                        //}
+                        
                         string[] stringMetaDatas = new string[4];
                         stringMetaDatas[0] = pathString[pathString.Length - 4];
                         stringMetaDatas[1] = pathString[pathString.Length - 3];
@@ -248,8 +267,9 @@ namespace ConsoleApplication1
         public void DetermineType(Conf conf, string path)
         {
             string app = getAppFromConf(conf, path);
-            
             List<Famille> familles = conf.getListFamilles(app);
+            checkFamille(familles, path);
+            
             for(int i=0; i < familles.Count; i++)
             {
                 Console.WriteLine(familles[i].name);
@@ -278,10 +298,12 @@ namespace ConsoleApplication1
                                 if(familles[j].sousFamille[k] == (string)this.metadatas.Mandatory[i + 1].value)
                                 {
                                     this.typename = this.getType(conf, app,(string) this.metadatas.Mandatory[i].value, (string) this.metadatas.Mandatory[i + 1].value);
+                                    return;
                                 }
                             }
                         }
                     }
+                    this.typename = "cmis:document";
                 }
             }
         }
@@ -320,9 +342,7 @@ namespace ConsoleApplication1
                     }
                 }
             }
-
             type = "cmis:document";
-            
             return type;
         }
 
