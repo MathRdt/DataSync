@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     public class Application
     {

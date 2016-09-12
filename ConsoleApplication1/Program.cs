@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     
     public class Program
@@ -12,8 +12,20 @@ namespace ConsoleApplication1
         public static string chemin = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\famille1\sousfamille1\";
         public static string cheminBis = @"C:\Users\projetindus\Documents\projetindus\CmisSync\compta\recette\paie\";
         public static string partialPath = @"C:\Users\adminprojetindus\CmisSync\App1\";
-        public static string confFile = @"C:\Users\adminprojetindus\AppData\Roaming\cmissync\confUpdate.xml";
+        public static string confFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "cmissync", "ConfExtracteurs.xml");
 
+        public string file;
+
+        public Program(string file)
+        {
+            this.file = file;
+        }
+
+        [STAThread]
+        public void DoWork()
+        {
+            ExtractMetaDatas(this.file);
+        }
 
         /// <summary>
         /// foncion principale qui prends un fichier en entrée et en extrait les méta données dans un fichier XML, nous informe si le fichier est prêt à être synchronisé ou non 
@@ -65,8 +77,6 @@ namespace ConsoleApplication1
                     globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
                 }
                 globalmetadatas.Enregistrer(XMLfile);
-
-                //A CONTINUER
                 
                 string fileMimeType = MimeTypes.GetContentType(file);
                 string[] extractors = conf.extractorsByType(fileMimeType);
@@ -104,6 +114,8 @@ namespace ConsoleApplication1
                     {
                         globalmetadatas.metadatas.setFamille("famille");
                     }
+                    globalmetadatas.aspects.Add("P:fiducial:domainContainer");
+                    globalmetadatas.aspects.Add("P:cm:titled");
                 }
                 else
                 {
@@ -111,9 +123,9 @@ namespace ConsoleApplication1
                 }
                 if (globalmetadatas.typename != "cmis:document")
                 {
+                    globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
                     globalmetadatas.typename = "D:" + globalmetadatas.typename;
                 }
-                globalmetadatas.getMetaDatasFromConf(conf, globalmetadatas.typename);
                 globalmetadatas.Enregistrer(XMLfile);
                 return true;
 

@@ -9,7 +9,7 @@ using org.apache.pdfbox.pdmodel;
 using org.apache.pdfbox.util;
 
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     class Extract_Word
     {

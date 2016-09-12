@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     /// <summary>
     /// Classe famille, qui donne le nom de la famille ainsi que toutes les sous familles qui la composent

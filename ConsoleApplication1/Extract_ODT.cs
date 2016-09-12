@@ -18,7 +18,7 @@ using AODL.Document.Content.Text;
 using System.IO;
 using System.Globalization;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     class Extract_ODT
     {

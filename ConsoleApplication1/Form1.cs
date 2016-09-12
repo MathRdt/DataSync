@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     public partial class Form1 : Form
     {

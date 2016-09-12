@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     /// <summary>
     /// liste de booléens qui nous infome si un ficher est prêt à être synchronisé ou non

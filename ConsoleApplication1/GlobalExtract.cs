@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     public class GlobalExtract
     {
@@ -19,10 +19,10 @@ namespace ConsoleApplication1
         /// <param name="app"></param>
         /// <param name="family">permet de donner la famille du fichier si on la connait déjà</param>
         /// <returns></returns>
-        public static void extract (string extractType, string file, string app,GlobalMetaDatas globalMetaDatas)
+        public static void extract(string extractType, string file, string app, GlobalMetaDatas globalMetaDatas)
         {
             string text = "";
-            
+
             switch (extractType)
             {
                 case "OCR":
@@ -51,22 +51,29 @@ namespace ConsoleApplication1
                     text = Extract_ODS.ODStoString(file);
                     break;
                 case "Manuel":
-                    Form1 form1 = new Form1();
-                    int extension = file.LastIndexOf(".");
-                    string XMLfile = file;
-                    XMLfile = XMLfile + ".metadata";
-                    MetaDatas metadatas = globalMetaDatas.metadatas;
-                    form1.fillForm(metadatas);
-                    System.Windows.Forms.Application.Run(form1);
+                    Form1 form1 = null;
+                    try
+                    {
+                        form1 = new Form1();
+                        form1.AllowDrop = false;
+                        int extension = file.LastIndexOf(".");
+                        string XMLfile = file;
+                        XMLfile = XMLfile + ".metadata";
+                        MetaDatas metadatas = globalMetaDatas.metadatas;
+                        form1.fillForm(metadatas);
+                        System.Windows.Forms.Application.Run(form1);
+                    }
+                    catch (Exception e)
+                    {
+                    }
                     globalMetaDatas.metadatas = form1.metadatasFromManual;
-
                     return;
-
             }
 
             string famille = globalMetaDatas.getFamille();
             string sousFamille = globalMetaDatas.getSousFamille();
-            if(sousFamille == "") { 
+            if (sousFamille == "")
+            {
                 List<Famille> listFamilles;
                 Conf conf;
                 conf = Conf.Charger(Program.confFile);
@@ -78,7 +85,7 @@ namespace ConsoleApplication1
                     familles.Add(listFamilles[i].name);
                 }
                 List<string> sousFamilles = new List<string>();
-            
+
                 if (famille == "")
                 {
 
@@ -112,15 +119,16 @@ namespace ConsoleApplication1
                 }
                 else globalMetaDatas.metadatas.changeMetaData("fiducial:domainContainerSousFamille", sousFamille, true, new List<string>(), new List<string>(), "", Double.MinValue, Double.MaxValue, "string");
             }
-            
+
             foreach (MetaData metaData in globalMetaDatas.metadatas.Optional)
             {
-                
+
                 if (metaData.listValues.Equals(new List<string>()))
                 {
-                    if ( metaData.keyWords.Equals(new List<string>()))
+                    if (metaData.keyWords.Equals(new List<string>()))
                     {
-                        for (int i =0;i < metaData.keyWords.Count; i++) {
+                        for (int i = 0; i < metaData.keyWords.Count; i++)
+                        {
                             string result = SearchMetaDataInList(text, metaData.keyWords[i], metaData.listValues);
                             if (result != "")
                             {
@@ -211,7 +219,7 @@ namespace ConsoleApplication1
                 }
                 else if (metaData.regEx != "")
                 {
-                    
+
                     Regex regex = new Regex(metaData.regEx);
                     Console.WriteLine("Helloo !:" + regex);
                     if (metaData.keyWords.Equals(new List<string>()))
@@ -306,7 +314,7 @@ namespace ConsoleApplication1
                             }
                         }
                     }
-                    
+
                 }
                 else
                 {
@@ -407,7 +415,7 @@ namespace ConsoleApplication1
         /// <returns></returns>
         public static string SearchWordInList(string text, List<string> MetaDataList)
         {
-            
+
             int i = 0;
             int taille = MetaDataList.Count;
             string nametosearch = "";
@@ -450,19 +458,19 @@ namespace ConsoleApplication1
             if (result >= 0) //on cherche le nom si le mot nom est présent dans le document
             {
                 int i = 0;
-                int length = text.Length; 
+                int length = text.Length;
 
-                for (i = 0; i < Math.Min(20,length-result); i++)
+                for (i = 0; i < Math.Min(20, length - result); i++)
                 {
                     if (text[result + i] == ':') break;
                 }
                 int j = 0;
-                for (j = i + 1; j < Math.Min(20, length - (result+i)); j++)
+                for (j = i + 1; j < Math.Min(20, length - (result + i)); j++)
                 {
                     if (text[result + j] != ' ') break; //trouve le début du nom
                 }
                 int k = 0;
-                for (k = j + 1; k < Math.Min(20, length - (result + i+j)); k++)
+                for (k = j + 1; k < Math.Min(20, length - (result + i + j)); k++)
                 {
                     if (text[result + k] == ' ' || text[result + k] == '\n' || text[result + k] == '\r' || text[result + k] == '\t') break; //trouve fin du nom
                 }
@@ -481,7 +489,7 @@ namespace ConsoleApplication1
         /// <param name="path"></param>
         /// <param name="metaData"></param>
         /// <returns></returns>
-        public static string SearchMetaDataRegEx(string text, string keyWord,Regex regex)
+        public static string SearchMetaDataRegEx(string text, string keyWord, Regex regex)
         {
             string keyword = keyWord.ToLower();
             string keywordSansAccent = RemoveAccent(keyword);
@@ -496,7 +504,7 @@ namespace ConsoleApplication1
                 {
                     if (text[result + i] == ':') break;
                 }
-                text = text.Substring(result + i+1);
+                text = text.Substring(result + i + 1);
                 name = Constraint.matchRegEx(text, regex);
             }
             Console.WriteLine(name);
@@ -526,12 +534,12 @@ namespace ConsoleApplication1
                     if (text[result + i] == ':') break;
                 }
                 int j = 0;
-                for (j = i + 1; j < Math.Min(20, length - (result+i)); j++)
+                for (j = i + 1; j < Math.Min(20, length - (result + i)); j++)
                 {
                     if (text[result + j] != ' ') break; //trouve le début du nom
                 }
                 int k = 0;
-                for (k = j + 1; k < Math.Min(20, length - (result + i+j)); k++)
+                for (k = j + 1; k < Math.Min(20, length - (result + i + j)); k++)
                 {
                     if (text[result + k] == ' ' || text[result + k] == '\n' || text[result + k] == '\r' || text[result + k] == '\t') break; //trouve fin du nom
                 }

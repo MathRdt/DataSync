@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     /// <summary>
     /// structure qui permet la création du XML pour chaque fichier
@@ -89,14 +89,14 @@ namespace ConsoleApplication1
                     }
                     for(int j=0; j< aspectsToAdd[i].metadatas.Mandatory.Count;j++)
                     {
-                        isMandatoryMetaDataCompleted = this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Mandatory[j].type, aspectsToAdd[i].metadatas.Mandatory[j].value, true, aspectsToAdd[i].metadatas.Mandatory[j].keyWords, aspectsToAdd[i].metadatas.Mandatory[j].listValues, aspectsToAdd[i].metadatas.Mandatory[j].regEx, aspectsToAdd[i].metadatas.Mandatory[j].min, aspectsToAdd[i].metadatas.Mandatory[j].max, aspectsToAdd[i].metadatas.Mandatory[j].valueType);
+                        isMandatoryMetaDataCompleted = this.metadatas.changeMetaDataFromConf(aspectsToAdd[i].metadatas.Mandatory[j].type, aspectsToAdd[i].metadatas.Mandatory[j].value, true, aspectsToAdd[i].metadatas.Mandatory[j].keyWords, aspectsToAdd[i].metadatas.Mandatory[j].listValues, aspectsToAdd[i].metadatas.Mandatory[j].regEx, aspectsToAdd[i].metadatas.Mandatory[j].min, aspectsToAdd[i].metadatas.Mandatory[j].max, aspectsToAdd[i].metadatas.Mandatory[j].valueType);
                         //aspectsToAdd[i].metadatas.Mandatory[j].listValues;
                         if (isMandatoryMetaDataCompleted) ReadyToSync.record(k);
                         k++;
                     }
                     for (int j = 0; j < aspectsToAdd[i].metadatas.Optional.Count; j++)
                     {
-                        this.metadatas.changeMetaData(aspectsToAdd[i].metadatas.Optional[j].type, aspectsToAdd[i].metadatas.Optional[j].value, false, aspectsToAdd[i].metadatas.Optional[j].keyWords, aspectsToAdd[i].metadatas.Optional[j].listValues, aspectsToAdd[i].metadatas.Optional[j].regEx, aspectsToAdd[i].metadatas.Optional[j].min, aspectsToAdd[i].metadatas.Optional[j].max, aspectsToAdd[i].metadatas.Optional[j].valueType);
+                        this.metadatas.changeMetaDataFromConf(aspectsToAdd[i].metadatas.Optional[j].type, aspectsToAdd[i].metadatas.Optional[j].value, false, aspectsToAdd[i].metadatas.Optional[j].keyWords, aspectsToAdd[i].metadatas.Optional[j].listValues, aspectsToAdd[i].metadatas.Optional[j].regEx, aspectsToAdd[i].metadatas.Optional[j].min, aspectsToAdd[i].metadatas.Optional[j].max, aspectsToAdd[i].metadatas.Optional[j].valueType);
                     }
                 }
             }
@@ -148,7 +148,7 @@ namespace ConsoleApplication1
             {
                 if (listFamilles[i].name == famille)
                 {
-                    for (int j = 0; i < listFamilles[i].sousFamille.Count; j++)
+                    for (int j = 0; j < listFamilles[i].sousFamille.Count; j++)
                     {
                         if (listFamilles[i].sousFamille[j] == sousFamille)
                         {

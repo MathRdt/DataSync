@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
 
    
@@ -105,7 +105,48 @@ namespace ConsoleApplication1
                     if (this.Mandatory[i].type == typeMetaData)
                     {
                         
-                        if(valueMetaData != null && valueMetaData.ToString() != "") {
+                        if(valueMetaData != null) {
+                            this.Mandatory[i].value = valueMetaData;
+                            return true;
+                        }
+                        return false;
+
+                    }
+                }
+            }
+            else
+            {
+                for (int j = 0; j < this.Optional.Count; j++)
+                {
+                    if (this.Optional[j].type == typeMetaData)
+                    {
+
+                        if (valueMetaData != null )
+                        {
+                            this.Optional[j].value = valueMetaData;
+                        }
+                        return false;
+
+                    }
+                }
+            }
+            this.addMetaData(typeMetaData, valueMetaData, mandatory,listKeyWords,listValuesMetaData,regex,minValue,maxValue,valuetype);
+            if (mandatory == true && (string)valueMetaData != "") return true;
+            return false;
+        }
+
+        public bool changeMetaDataFromConf(string typeMetaData, object valueMetaData, bool mandatory, List<string> listKeyWords, List<string> listValuesMetaData, string regex, double minValue, double maxValue, string valuetype)
+        {
+            //Console.WriteLine(valueMetaData.GetType().ToString());
+            if (mandatory == true)
+            {
+                for (int i = 0; i < this.Mandatory.Count; i++)
+                {
+                    if (this.Mandatory[i].type == typeMetaData)
+                    {
+
+                        if (valueMetaData != null && valueMetaData.ToString() != "")
+                        {
                             this.Mandatory[i].value = valueMetaData;
                             return true;
                         }
@@ -130,7 +171,7 @@ namespace ConsoleApplication1
                     }
                 }
             }
-            this.addMetaData(typeMetaData, valueMetaData, mandatory,listKeyWords,listValuesMetaData,regex,minValue,maxValue,valuetype);
+            this.addMetaData(typeMetaData, valueMetaData, mandatory, listKeyWords, listValuesMetaData, regex, minValue, maxValue, valuetype);
             if (mandatory == true && (string)valueMetaData != "") return true;
             return false;
         }

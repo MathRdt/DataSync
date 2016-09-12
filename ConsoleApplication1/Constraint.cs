@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     class Constraint
     {

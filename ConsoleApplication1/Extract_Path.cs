@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     class Extract_Path
     {

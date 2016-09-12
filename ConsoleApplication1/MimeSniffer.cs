@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace ConsoleApplication1
+namespace Extractors
 {
     /// <summary>
     /// Helper class to detect the MIME type based on the file header signature.

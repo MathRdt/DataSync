@@ -1,4 +1,4 @@
-﻿namespace ConsoleApplication1
+﻿namespace Extractors
 {
     partial class Form1
     {
