@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extractors", "ConsoleApplication1\Extractors.csproj", "{FC12E686-CEF0-42A1-9B8C-BAAED2CBF062}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extractors", "Extractors\Extractors.csproj", "{FC12E686-CEF0-42A1-9B8C-BAAED2CBF062}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testAppli2", "testAppli2\testAppli2\testAppli2.csproj", "{CF38C3A4-D979-4FA3-8BF4-AD97E904F176}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testOcr", "testOcr\testOcr\testOcr.csproj", "{592D58F1-604C-4883-AFAF-554F950BC9C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{FC12E686-CEF0-42A1-9B8C-BAAED2CBF062}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC12E686-CEF0-42A1-9B8C-BAAED2CBF062}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC12E686-CEF0-42A1-9B8C-BAAED2CBF062}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF38C3A4-D979-4FA3-8BF4-AD97E904F176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF38C3A4-D979-4FA3-8BF4-AD97E904F176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF38C3A4-D979-4FA3-8BF4-AD97E904F176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF38C3A4-D979-4FA3-8BF4-AD97E904F176}.Release|Any CPU.Build.0 = Release|Any CPU
+		{592D58F1-604C-4883-AFAF-554F950BC9C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{592D58F1-604C-4883-AFAF-554F950BC9C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{592D58F1-604C-4883-AFAF-554F950BC9C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{592D58F1-604C-4883-AFAF-554F950BC9C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
